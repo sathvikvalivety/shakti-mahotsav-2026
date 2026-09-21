@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sparkles, Calendar, Menu, X, Volume2, VolumeX } from 'lucide-react';
+import { Menu, X, Volume2, VolumeX } from 'lucide-react';
 
 interface HeaderProps {
   onOpenRegister: () => void;
@@ -8,6 +8,33 @@ interface HeaderProps {
   isAudioPlaying?: boolean;
   onToggleAudio?: () => void;
 }
+
+// Visible keyboard focus for every control in the bar.
+const FOCUS_RING =
+  'focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-[#E6C27A]';
+
+// Contact opens the existing "connect" panel; Sponsors stays in the footer.
+const NAV_ITEMS = [
+  { id: 'home', label: 'Home' },
+  { id: 'about', label: 'About' },
+  { id: 'events', label: 'Events' },
+  { id: 'schedule', label: 'Schedule' },
+  { id: 'gallery', label: 'Gallery' },
+  { id: 'team', label: 'Team' },
+  { id: 'connect', label: 'Contact' },
+];
+
+const AmritaLogo: React.FC<{ className?: string }> = ({ className = '' }) => (
+  <div className={`items-center ${className}`}>
+    <img
+      src="/images/brand/amrita-logo.svg"
+      alt="Amrita Vishwa Vidyapeetham"
+      className="h-[clamp(24px,2vw,36px)] w-auto"
+      width={244}
+      height={55}
+    />
+  </div>
+);
 
 export const Header: React.FC<HeaderProps> = ({
   onOpenRegister,
@@ -18,133 +45,142 @@ export const Header: React.FC<HeaderProps> = ({
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const navItems = [
-    { id: 'home', label: 'Home' },
-    { id: 'about', label: 'About' },
-    { id: 'events', label: 'Events' },
-    { id: 'gallery', label: 'Gallery' },
-    { id: 'team', label: 'Team' },
-    { id: 'suggestions', label: 'Suggestions' },
-  ];
+  const navigate = (section: string) => {
+    onNavigateSection(section);
+    setMobileMenuOpen(false);
+  };
+
+  const audioButton = (className: string, id?: string) =>
+    onToggleAudio && (
+      <button
+        id={id}
+        onClick={onToggleAudio}
+        className={`h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full border bg-[rgba(3,12,32,0.45)] transition-[border-color,color,box-shadow] duration-[250ms] cursor-pointer hover:border-[#E6C27A] hover:text-[#F5D58A] hover:shadow-[0_0_10px_rgba(212,168,79,0.22)] ${FOCUS_RING} ${
+          isAudioPlaying ? 'border-[#E6C27A] text-[#F5D58A]' : 'border-[#C9A55A]/60 text-[#EBD3A0]'
+        } ${className}`}
+        title={isAudioPlaying ? 'Mute Celestial Chimes' : 'Play Celestial Chimes Atmosphere'}
+        aria-label="Toggle ambient atmosphere sound"
+        aria-pressed={isAudioPlaying}
+      >
+        {isAudioPlaying ? <Volume2 size={15} /> : <VolumeX size={15} />}
+      </button>
+    );
 
   return (
-    <header className="sticky top-0 z-40 w-full backdrop-blur-md bg-[#061426]/80 border-b border-[#D4A84F]/15 transition-colors">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-        {/* Brand Logo */}
+    // Translucent navy: the site's fixed night sky (stars, corner mandalas,
+    // ornaments) continues behind the bar, softened just enough for legible
+    // navigation. The hairline is an inset shadow so it adds no height.
+    <header className="sticky top-0 z-40 w-full bg-[rgba(3,12,32,0.72)] backdrop-blur-[8px] shadow-[inset_0_-1px_0_rgba(212,170,75,0.12),0_4px_20px_rgba(0,0,0,0.18)]">
+
+      <div className="relative mx-auto flex h-[var(--site-header-h)] max-w-[1920px] items-center gap-[clamp(10px,1.4vw,32px)] px-[clamp(14px,2.4vw,52px)]">
+        {/* Festival branding */}
         <button
           id="btn-brand-logo"
-          onClick={() => onNavigateSection('home')}
-          className="flex items-center gap-3 text-left group focus:outline-none"
+          onClick={() => navigate('home')}
+          className={`group flex shrink-0 flex-col items-center rounded-sm text-center leading-none cursor-pointer ${FOCUS_RING}`}
+          aria-label="Shakti Mahotsav 2026 — go to Home"
         >
-          {/* Sacred Diya / Lunar Emblem */}
-          <div className="w-10 h-10 rounded-full border border-[#D4A84F]/40 flex items-center justify-center bg-[#0B1F3A] relative group-hover:border-[#F5D58A] transition-colors shadow-[0_0_15px_rgba(212,168,79,0.2)]">
-            <div className="w-2.5 h-2.5 rounded-full bg-[#F5D58A] animate-pulse" />
-            <div className="absolute inset-0 rounded-full border border-dashed border-[#D4A84F]/30 animate-spin-slow" />
-          </div>
-
-          <div>
-            <div className="font-heading text-lg sm:text-xl font-bold tracking-wider text-[#F8F2E3] group-hover:text-[#F5D58A] transition-colors leading-tight">
-              SHAKTI MAHOTSAV
-            </div>
-            <div className="text-[11px] uppercase tracking-[0.25em] text-[#D4A84F] font-semibold flex items-center gap-1.5">
-              <span>2026</span>
-              <span className="inline-block w-1 h-1 rounded-full bg-[#D4A84F]/60" />
-              <span className="text-[#F8F2E3]/70 font-normal">Oct 11 – Oct 20</span>
-            </div>
-          </div>
+          <span className="hidden md:block font-manrope font-semibold uppercase text-[clamp(7.5px,0.55vw,10px)] tracking-[0.28em] text-[#D4A84F]">
+            A Festival of Culture &amp; Community
+          </span>
+          <span className="font-heading text-[15px] min-[400px]:text-[17px] md:text-[clamp(18px,1.6vw,30px)] tracking-[0.06em] text-[#F8F2E3] group-hover:text-[#F5D58A] transition-colors md:mt-[0.3em]">
+            SHAKTI MAHOTSAV
+          </span>
+          <span className="mt-[0.25em] flex items-center gap-1.5 font-heading text-[11px] md:text-[clamp(11px,0.9vw,16px)] tracking-[0.2em] text-[#E6C27A]">
+            <span className="h-px w-[clamp(14px,1.9vw,38px)] bg-gradient-to-r from-transparent to-[#D4A84F]" />
+            <span className="text-[0.7em]">✦</span>
+            <span>2026</span>
+            <span className="text-[0.7em]">✦</span>
+            <span className="h-px w-[clamp(14px,1.9vw,38px)] bg-gradient-to-l from-transparent to-[#D4A84F]" />
+          </span>
+          <span className="hidden md:block mt-[0.45em] font-manrope uppercase text-[clamp(7px,0.5vw,9.5px)] tracking-[0.34em] text-[#F8F2E3]/80">
+            Culture · Devotion · Togetherness
+          </span>
         </button>
 
-        {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center gap-8">
-          {navItems.map((item) => {
-            const isSelected = activeSection === item.id || (item.id === 'events' && activeSection === 'events');
+        {/* Desktop navigation */}
+        <nav
+          aria-label="Primary"
+          className="hidden min-[1200px]:flex flex-1 items-center justify-center gap-[clamp(14px,1.9vw,40px)]"
+        >
+          {NAV_ITEMS.map((item) => {
+            const isSelected = activeSection === item.id;
             return (
               <button
                 key={item.id}
                 id={`nav-${item.id}`}
-                onClick={() => {
-                  onNavigateSection(item.id);
-                  setMobileMenuOpen(false);
-                }}
-                className={`relative py-2 text-sm font-medium tracking-wide transition-colors ${
+                onClick={() => navigate(item.id)}
+                aria-current={isSelected ? 'true' : undefined}
+                className={`group relative py-2 font-cormorant font-semibold text-[clamp(16px,1.12vw,21px)] tracking-wide transition-colors duration-[250ms] cursor-pointer ${FOCUS_RING} ${
                   isSelected
-                    ? 'text-[#F5D58A] font-semibold'
-                    : 'text-[#F8F2E3]/80 hover:text-[#F8F2E3]'
+                    ? 'text-[#F5D58A] [text-shadow:0_0_14px_rgba(245,213,138,0.3)]'
+                    : 'text-[#F8EFDD]/90 hover:text-[#E6C27A]'
                 }`}
               >
-                <span>{item.label}</span>
-                {/* Elegant golden underline for Events / selected item */}
-                {isSelected && (
-                  <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#D4A84F] to-transparent shadow-[0_0_8px_rgba(212,168,79,0.6)]" />
-                )}
+                {item.label}
+                <span
+                  aria-hidden="true"
+                  className={`absolute -left-1 -right-1 bottom-0.5 h-px bg-gradient-to-r from-transparent via-[#E6C27A] to-transparent transition-opacity duration-[250ms] ${
+                    isSelected ? 'opacity-100 shadow-[0_0_6px_rgba(230,194,122,0.45)]' : 'opacity-0 group-hover:opacity-50'
+                  }`}
+                />
               </button>
             );
           })}
         </nav>
 
-        {/* Right Action Bar */}
-        <div className="flex items-center gap-3">
-          {/* Ambient Chimes/Sound Toggle (Optional atmosphere) */}
-          {onToggleAudio && (
-            <button
-              id="btn-toggle-sound"
-              onClick={onToggleAudio}
-              className="p-2.5 rounded-full border border-[#D4A84F]/25 bg-[#0B1F3A]/60 text-[#F5D58A] hover:bg-[#142B4F] hover:border-[#D4A84F]/50 transition-all text-xs flex items-center justify-center"
-              title={isAudioPlaying ? "Mute Celestial Atmosphere" : "Play Celestial Atmosphere"}
-              aria-label="Toggle ambient atmosphere sound"
-            >
-              {isAudioPlaying ? <Volume2 size={16} /> : <VolumeX size={16} />}
-            </button>
-          )}
+        {/* Actions */}
+        <div className="ml-auto flex shrink-0 items-center gap-[clamp(10px,1.25vw,24px)] min-[1200px]:ml-0">
+          {audioButton('hidden sm:flex', 'btn-toggle-sound')}
 
-          {/* REGISTER NOW Button */}
           <button
             id="btn-register-header"
             onClick={onOpenRegister}
-            className="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-[#D4A84F] via-[#F5D58A] to-[#D4A84F] text-[#061426] text-xs uppercase tracking-widest font-bold shadow-[0_0_20px_rgba(212,168,79,0.35)] hover:shadow-[0_0_28px_rgba(245,213,138,0.55)] hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
+            className={`rounded-[11px] border border-[#D4A84F]/75 bg-gradient-to-b from-[#62101A] to-[#3A080D] px-[clamp(14px,1.4vw,26px)] py-[clamp(6px,0.55vw,10px)] font-cormorant font-semibold text-[14px] md:text-[clamp(15px,1.05vw,19px)] tracking-wide text-[#F8EFDD] shadow-[inset_0_0_0_3px_rgba(58,8,13,0.9),inset_0_0_0_4px_rgba(212,168,79,0.26)] hover:border-[#E6C27A] hover:text-[#FFF6E4] hover:shadow-[inset_0_0_0_3px_rgba(58,8,13,0.9),inset_0_0_0_4px_rgba(230,194,122,0.45),0_0_12px_rgba(212,168,79,0.22)] transition-[border-color,box-shadow,color] duration-[250ms] cursor-pointer whitespace-nowrap ${FOCUS_RING}`}
           >
-            <span>REGISTER NOW</span>
-            <span className="text-sm leading-none font-bold">→</span>
+            <span className="hidden min-[400px]:inline">Register Now</span>
+            <span className="min-[400px]:hidden">Register</span>
           </button>
 
-          {/* Mobile menu trigger */}
+          <AmritaLogo className="hidden md:flex" />
+
           <button
             id="btn-mobile-menu"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 rounded-lg text-[#F8F2E3] hover:bg-[#0B1F3A] border border-[#D4A84F]/20"
-            aria-label="Open menu"
+            className={`min-[1200px]:hidden rounded-[8px] border border-[#C9A55A]/55 bg-[rgba(3,12,32,0.45)] p-2 text-[#EBD3A0] hover:border-[#E6C27A] transition-colors duration-[250ms] cursor-pointer ${FOCUS_RING}`}
+            aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={mobileMenuOpen}
           >
-            {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+            {mobileMenuOpen ? <X size={20} className="text-[#F5D58A]" /> : <Menu size={20} />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Drawer */}
+      {/* Menu drawer (below 1200px) */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-[#0B1F3A] border-b border-[#D4A84F]/25 px-4 pt-3 pb-6 space-y-3">
-          {navItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => {
-                onNavigateSection(item.id);
-                setMobileMenuOpen(false);
-              }}
-              className="block w-full text-left py-2 px-3 rounded-md text-base text-[#F8F2E3]/90 hover:bg-[#142B4F] hover:text-[#F5D58A] transition-colors"
-            >
-              {item.label}
-            </button>
-          ))}
-          <div className="pt-3 border-t border-[#D4A84F]/15">
-            <button
-              onClick={() => {
-                onOpenRegister();
-                setMobileMenuOpen(false);
-              }}
-              className="w-full py-3 rounded-full bg-gradient-to-r from-[#D4A84F] to-[#F5D58A] text-[#061426] text-xs uppercase tracking-widest font-bold flex items-center justify-center gap-2"
-            >
-              <span>REGISTER NOW</span>
-              <span>→</span>
-            </button>
+        <div className="relative min-[1200px]:hidden border-t border-[#D4A84F]/[0.12] bg-[rgba(3,12,32,0.9)] px-4 pt-3 pb-5 animate-in fade-in slide-in-from-top-4 duration-200">
+          <nav aria-label="Primary" className="grid sm:grid-cols-2 sm:gap-x-8">
+            {NAV_ITEMS.map((item) => {
+              const isSelected = activeSection === item.id;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => navigate(item.id)}
+                  aria-current={isSelected ? 'true' : undefined}
+                  className={`flex w-full items-center gap-2 border-b border-[#D4A84F]/10 px-1 py-2.5 text-left font-cormorant font-semibold text-lg transition-colors duration-[250ms] cursor-pointer ${FOCUS_RING} ${
+                    isSelected ? 'text-[#F5D58A]' : 'text-[#F8EFDD]/90 hover:text-[#E6C27A]'
+                  }`}
+                >
+                  {item.label}
+                  {isSelected && <span className="text-[0.6em] text-[#D4A84F]" aria-hidden="true">✦</span>}
+                </button>
+              );
+            })}
+          </nav>
+
+          <div className="mt-3 flex items-center justify-between gap-3 border-t border-[#D4A84F]/[0.12] pt-3 md:hidden">
+            <AmritaLogo className="flex md:hidden" />
+            {audioButton('flex sm:hidden')}
           </div>
         </div>
       )}

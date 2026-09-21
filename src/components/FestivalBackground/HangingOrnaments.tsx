@@ -4,6 +4,8 @@ interface HangingOrnamentsProps {
   className?: string;
 }
 
+// On desktop the strand lengths follow the viewport height, so on short
+// laptop screens the ornaments still end just above the Home hero headings.
 export const HangingOrnaments: React.FC<HangingOrnamentsProps> = ({ className = '' }) => {
   return (
     <div
@@ -13,11 +15,11 @@ export const HangingOrnaments: React.FC<HangingOrnamentsProps> = ({ className = 
     >
       <div className="w-full flex justify-between px-4 sm:px-8 md:px-14 lg:px-20 max-w-7xl mx-auto">
         {/* Left corner hanging ornaments cascade */}
-        <div className="flex gap-4 sm:gap-7 md:gap-9 origin-top animate-ornament-sway" style={{ animationDuration: '9s' }}>
+        <div className="flex gap-4 sm:gap-7 md:gap-9">
           {/* Strut 1: Short with lotus & droplet */}
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center origin-top animate-ornament-sway" style={{ animationDuration: '8.4s', animationDelay: '-2.1s' }}>
             {/* Thread */}
-            <div className="w-[1px] h-12 sm:h-20 md:h-28 bg-gradient-to-b from-[#D4A84F]/50 via-[#D4A84F]/30 to-[#F5D58A]" />
+            <div className="w-[1px] h-12 sm:h-20 md:h-[clamp(2.5rem,calc(36vh-135px),7rem)] bg-gradient-to-b from-[#D4A84F]/50 via-[#D4A84F]/30 to-[#F5D58A]" />
             {/* Lotus charm */}
             <svg width="24" height="24" viewBox="0 0 24 24" className="w-4 h-4 sm:w-5 sm:h-5 text-[#F5D58A] opacity-75 -mt-0.5">
               <path
@@ -34,8 +36,8 @@ export const HangingOrnaments: React.FC<HangingOrnamentsProps> = ({ className = 
           </div>
 
           {/* Strut 2: Long with sacred geometric tiers */}
-          <div className="flex flex-col items-center animate-ornament-float-gentle" style={{ animationDuration: '6s', animationDelay: '0.8s' }}>
-            <div className="w-[1px] h-20 sm:h-32 md:h-44 bg-gradient-to-b from-[#D4A84F]/40 via-[#D4A84F]/35 to-[#F5D58A]" />
+          <div className="flex flex-col items-center origin-top animate-ornament-sway" style={{ animationDuration: '9.6s', animationDelay: '-4.2s' }}>
+            <div className="w-[1px] h-20 sm:h-32 md:h-[clamp(3rem,calc(36vh-145px),11rem)] bg-gradient-to-b from-[#D4A84F]/40 via-[#D4A84F]/35 to-[#F5D58A]" />
             {/* Mini chakra circle */}
             <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full border border-[#F5D58A]/80 flex items-center justify-center opacity-80">
               <div className="w-1 h-1 rounded-full bg-[#F5D58A]" />
@@ -54,8 +56,8 @@ export const HangingOrnaments: React.FC<HangingOrnamentsProps> = ({ className = 
           </div>
 
           {/* Strut 3: Medium (visible on sm+) */}
-          <div className="hidden sm:flex flex-col items-center animate-ornament-float-gentle" style={{ animationDuration: '7.5s', animationDelay: '1.4s' }}>
-            <div className="w-[1px] h-14 md:h-24 bg-gradient-to-b from-[#D4A84F]/30 via-[#D4A84F]/25 to-[#F5D58A]" />
+          <div className="hidden sm:flex flex-col items-center origin-top animate-ornament-sway" style={{ animationDuration: '10.4s', animationDelay: '-1.3s' }}>
+            <div className="w-[1px] h-14 md:h-[clamp(2.5rem,calc(36vh-100px),6rem)] bg-gradient-to-b from-[#D4A84F]/30 via-[#D4A84F]/25 to-[#F5D58A]" />
             <div className="w-2 h-2 rotate-45 border border-[#D4A84F] bg-[#F5D58A]/30" />
             <div className="w-[1px] h-3 bg-[#D4A84F]/40" />
             <div className="w-1 h-1 rounded-full bg-[#F5D58A]/90 shadow-[0_0_3px_#F5D58A]" />
@@ -88,18 +90,18 @@ export const HangingOrnaments: React.FC<HangingOrnamentsProps> = ({ className = 
         </div>
 
         {/* Right corner hanging ornaments cascade (mirrored) */}
-        <div className="flex gap-4 sm:gap-7 md:gap-9 origin-top animate-ornament-sway" style={{ animationDuration: '9.5s', animationDelay: '-3s' }}>
+        <div className="flex gap-4 sm:gap-7 md:gap-9">
           {/* Strut 3: Medium (visible on sm+) */}
-          <div className="hidden sm:flex flex-col items-center animate-ornament-float-gentle" style={{ animationDuration: '8s', animationDelay: '1.2s' }}>
-            <div className="w-[1px] h-16 md:h-26 bg-gradient-to-b from-[#D4A84F]/30 via-[#D4A84F]/25 to-[#F5D58A]" />
+          <div className="hidden sm:flex flex-col items-center origin-top animate-ornament-sway" style={{ animationDuration: '8.8s', animationDelay: '-6.1s' }}>
+            <div className="w-[1px] h-16 md:h-[clamp(2.75rem,calc(36vh-100px),6.5rem)] bg-gradient-to-b from-[#D4A84F]/30 via-[#D4A84F]/25 to-[#F5D58A]" />
             <div className="w-2 h-2 rotate-45 border border-[#D4A84F] bg-[#F5D58A]/30" />
             <div className="w-[1px] h-3 bg-[#D4A84F]/40" />
             <div className="w-1 h-1 rounded-full bg-[#F5D58A]/90 shadow-[0_0_3px_#F5D58A]" />
           </div>
 
           {/* Strut 2: Long with bell & chakra */}
-          <div className="flex flex-col items-center animate-ornament-float-gentle" style={{ animationDuration: '6.5s', animationDelay: '0.4s' }}>
-            <div className="w-[1px] h-20 sm:h-32 md:h-44 bg-gradient-to-b from-[#D4A84F]/40 via-[#D4A84F]/35 to-[#F5D58A]" />
+          <div className="flex flex-col items-center origin-top animate-ornament-sway" style={{ animationDuration: '10s', animationDelay: '-3.4s' }}>
+            <div className="w-[1px] h-20 sm:h-32 md:h-[clamp(3rem,calc(36vh-145px),11rem)] bg-gradient-to-b from-[#D4A84F]/40 via-[#D4A84F]/35 to-[#F5D58A]" />
             <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full border border-[#F5D58A]/80 flex items-center justify-center opacity-80">
               <div className="w-1 h-1 rounded-full bg-[#F5D58A]" />
             </div>
@@ -116,8 +118,8 @@ export const HangingOrnaments: React.FC<HangingOrnamentsProps> = ({ className = 
           </div>
 
           {/* Strut 1: Short with lotus charm */}
-          <div className="flex flex-col items-center">
-            <div className="w-[1px] h-12 sm:h-20 md:h-28 bg-gradient-to-b from-[#D4A84F]/50 via-[#D4A84F]/30 to-[#F5D58A]" />
+          <div className="flex flex-col items-center origin-top animate-ornament-sway" style={{ animationDuration: '9.1s', animationDelay: '-5.3s' }}>
+            <div className="w-[1px] h-12 sm:h-20 md:h-[clamp(2.5rem,calc(36vh-135px),7rem)] bg-gradient-to-b from-[#D4A84F]/50 via-[#D4A84F]/30 to-[#F5D58A]" />
             <svg width="24" height="24" viewBox="0 0 24 24" className="w-4 h-4 sm:w-5 sm:h-5 text-[#F5D58A] opacity-75 -mt-0.5">
               <path
                 d="M12 3 C10 8 5 11 3 15 C7 16 11 14 12 18 C13 14 17 16 21 15 C19 11 14 8 12 3 Z"
