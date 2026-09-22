@@ -4,6 +4,7 @@ import {
   Clock as ClockIcon,
   MapPin,
   Sparkles,
+  X,
 } from 'lucide-react';
 import { MoonPhaseGraphic } from './MoonPhaseGraphic';
 import { FestivalEvent } from '../types';
@@ -12,12 +13,14 @@ interface CulturalNightCardProps {
   event?: FestivalEvent;
   className?: string;
   onBookPass?: () => void;
+  onClose?: () => void;
 }
 
 export const CulturalNightCard: React.FC<CulturalNightCardProps> = ({
   event,
   className = '',
   onBookPass,
+  onClose,
 }) => {
   const dayNumber = event?.day || 1;
   const title = event?.title.toUpperCase() || 'SRI BALA TRIPURA SUNDARI DEVI';
@@ -120,10 +123,22 @@ export const CulturalNightCard: React.FC<CulturalNightCardProps> = ({
               </div>
             </div>
 
-            {/* Right Quote */}
-            <p className="hidden sm:block font-garamond italic text-[11px] text-[#FFF4D6]/80 text-right leading-tight max-w-[180px] drop-shadow">
-              “Where tradition meets the present, culture lights the way.”
-            </p>
+            {/* Right: Quote / Close Button */}
+            <div className="flex items-center gap-2">
+              <p className="hidden md:block font-garamond italic text-[11px] text-[#FFF4D6]/80 text-right leading-tight max-w-[180px] drop-shadow">
+                “Where tradition meets the present, culture lights the way.”
+              </p>
+              {onClose && (
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="p-2 sm:p-2.5 rounded-full bg-[#06152D]/90 text-[#FFF4D6] hover:text-[#F5D58A] border border-[#D4A84F]/60 hover:border-[#D4A84F] shadow-lg active:scale-90 transition-all cursor-pointer backdrop-blur-md"
+                  aria-label="Close event card"
+                >
+                  <X size={16} />
+                </button>
+              )}
+            </div>
           </div>
 
           {/* Bottom Hero Overlay: Title & Subtitle */}
@@ -352,6 +367,20 @@ export const CulturalNightCard: React.FC<CulturalNightCardProps> = ({
               ))}
             </div>
           </div>
+
+          {/* Action Row / Bottom Close Button */}
+          {onClose && (
+            <div className="pt-3 flex justify-center border-t border-[#D4A84F]/20 mt-2">
+              <button
+                type="button"
+                onClick={onClose}
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-2.5 rounded-full bg-gradient-to-r from-[#142B4F] via-[#0B1F3A] to-[#142B4F] text-[#F5D58A] hover:text-[#FFF4D6] border border-[#D4A84F]/50 hover:border-[#D4A84F] font-manrope font-bold text-xs uppercase tracking-wider shadow-lg hover:shadow-[0_0_20px_rgba(212,168,79,0.3)] active:scale-95 transition-all cursor-pointer"
+              >
+                <X size={15} />
+                <span>Close Event Details</span>
+              </button>
+            </div>
+          )}
 
         </div>
 
