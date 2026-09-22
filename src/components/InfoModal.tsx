@@ -1,16 +1,52 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Sparkles, Send, Check, Heart, Users, Image as ImageIcon, Info } from 'lucide-react';
+import {
+  X,
+  Sparkles,
+  Send,
+  Check,
+  Users,
+  Image as ImageIcon,
+  Info,
+  Handshake,
+  MessageCircle,
+  MapPin,
+  Phone,
+  Mail,
+  ExternalLink,
+  Award,
+  HeartHandshake,
+  Flame,
+  Globe,
+  Share2,
+} from 'lucide-react';
 
 interface InfoModalProps {
   section: string | null;
   onClose: () => void;
   onRegister: () => void;
+  onNavigateSection?: (section: string) => void;
 }
 
-export const InfoModal: React.FC<InfoModalProps> = ({ section, onClose, onRegister }) => {
+export const InfoModal: React.FC<InfoModalProps> = ({
+  section,
+  onClose,
+  onRegister,
+  onNavigateSection,
+}) => {
+  // Suggestions form state
   const [suggestion, setSuggestion] = useState('');
   const [suggestionSubmitted, setSuggestionSubmitted] = useState(false);
+
+  // Connect form state
+  const [connectName, setConnectName] = useState('');
+  const [connectContact, setConnectContact] = useState('');
+  const [connectTopic, setConnectTopic] = useState('passes');
+  const [connectMessage, setConnectMessage] = useState('');
+  const [connectSubmitted, setConnectSubmitted] = useState(false);
+
+  // Gallery active filter
+  const [galleryFilter, setGalleryFilter] = useState<'all' | 'garba' | 'alankaram' | 'aarti'>('all');
 
   if (!section || section === 'events' || section === 'home') return null;
 
@@ -25,97 +61,497 @@ export const InfoModal: React.FC<InfoModalProps> = ({ section, onClose, onRegist
     }, 2000);
   };
 
+  const handleConnectSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!connectName.trim() || !connectContact.trim()) return;
+    setConnectSubmitted(true);
+    setTimeout(() => {
+      setConnectSubmitted(false);
+      setConnectName('');
+      setConnectContact('');
+      setConnectMessage('');
+      onClose();
+    }, 2500);
+  };
+
+  const galleryItems = [
+    {
+      title: 'Grand Maha Aarti',
+      category: 'aarti',
+      tag: 'Sacred Ritual',
+      img: 'https://images.unsplash.com/photo-1609137144813-7d9921338f24?auto=format&fit=crop&w=800&q=80',
+    },
+    {
+      title: 'Midnight Garba Circles',
+      category: 'garba',
+      tag: 'Folk Dance',
+      img: 'https://images.unsplash.com/photo-1567157577867-05ccb1388e66?auto=format&fit=crop&w=800&q=80',
+    },
+    {
+      title: 'Devi Alankaram & Floral Darshan',
+      category: 'alankaram',
+      tag: 'Daily Darshan',
+      img: 'https://images.unsplash.com/photo-1605379399642-870262d3d051?auto=format&fit=crop&w=800&q=80',
+    },
+    {
+      title: 'Dandiya Percussion Nights',
+      category: 'garba',
+      tag: 'Youth Rhythms',
+      img: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=800&q=80',
+    },
+    {
+      title: 'Classical Odissi Dance Recital',
+      category: 'alankaram',
+      tag: 'Cultural Stage',
+      img: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=800&q=80',
+    },
+    {
+      title: 'Deepotsav — 10,000 Sacred Lamps',
+      category: 'aarti',
+      tag: 'Grand Finale',
+      img: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=800&q=80',
+    },
+  ];
+
+  const filteredGallery =
+    galleryFilter === 'all'
+      ? galleryItems
+      : galleryItems.filter((item) => item.category === galleryFilter);
+
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto">
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+        {/* Backdrop */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
-          className="fixed inset-0 bg-[#061426]/85 backdrop-blur-md"
+          className="fixed inset-0 bg-[#020817]/90 backdrop-blur-xl"
         />
 
+        {/* Modal Box */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95, y: 15 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 15 }}
-          className="relative w-full max-w-2xl bg-[#0B1F3A] border-2 border-[#D4A84F]/40 rounded-2xl shadow-2xl p-6 sm:p-8 z-10 my-8 text-[#F8F2E3] max-h-[85vh] overflow-y-auto"
+          className="relative w-full max-w-3xl bg-[#07172E] border-2 border-[#D4A84F]/40 rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.85)] p-6 sm:p-8 z-10 my-8 text-[#F8F2E3] max-h-[88vh] overflow-y-auto"
         >
+          {/* Close button */}
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 p-2 rounded-full text-[#F8F2E3]/60 hover:text-[#F8F2E3] hover:bg-[#142B4F] transition-colors"
+            className="absolute top-4 right-4 p-2.5 rounded-full text-[#F8F2E3]/60 hover:text-[#F8F2E3] hover:bg-[#0E2548] border border-transparent hover:border-[#D4A84F]/30 transition-all cursor-pointer"
+            aria-label="Close modal"
           >
-            <X size={18} />
+            <X size={20} />
           </button>
 
-          {/* About Section */}
+          {/* ============================================================ */}
+          {/* ABOUT SECTION                                                */}
+          {/* ============================================================ */}
           {section === 'about' && (
-            <div className="space-y-5">
-              <div className="flex items-center gap-2 text-xs font-bold text-[#D4A84F] uppercase tracking-widest">
-                <Info size={14} />
+            <div className="space-y-6">
+              <div className="flex items-center gap-2 text-xs font-bold text-[#D4A84F] uppercase tracking-[0.25em]">
+                <Info size={15} />
                 <span>ABOUT THE CELEBRATION</span>
               </div>
-              <h3 className="font-heading text-2xl sm:text-3xl font-bold text-[#F8F2E3]">
+              <h3 className="font-heading text-2xl sm:text-3xl font-bold text-[#F8F2E3] leading-snug">
                 Shakti Mahotsav 2026
               </h3>
-              <p className="text-sm text-[#F8F2E3]/85 leading-relaxed">
-                Shakti Mahotsav is the flagship annual cultural festival uniting over 15,000 university students, faculty, and cultural connoisseurs. Observed during the sacred autumn Navratri, the festival honors the divine feminine energy through music, classical arts, folk dance, gastronomy, and spiritual devotion.
+              <p className="text-sm text-[#F8F2E3]/90 leading-relaxed font-sans">
+                Shakti Mahotsav is the flagship annual cultural and spiritual confluence uniting over 15,000 university students, traditional artists, scholars, and devotees. Commencing on October 11, 2026 and concluding on Vijayadashami October 20, 2026, this ten-day festival celebrates the eternal feminine principle through sacred alankarams, classical arts, garba, folk music, and divine harmony.
               </p>
-              <div className="p-4 rounded-xl bg-[#061426] border border-[#D4A84F]/30 space-y-2 text-xs">
-                <div className="font-bold text-[#F5D58A]">The 9-Night Lunar Philosophy</div>
-                <p className="text-[#F8F2E3]/75 leading-normal">
-                  Each night follows the cosmic waxing and waning of the moon, corresponding to one of the nine sacred manifestations of Maa Durga (Navadurga). From Shailaputri’s steadfast grounding to Siddhidhatri’s ultimate realization, the festival is a lived journey of transformation.
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                <div className="p-4 rounded-xl bg-[#040D1A] border border-[#D4A84F]/30 space-y-1.5">
+                  <div className="flex items-center gap-2 font-bold text-[#F5D58A] text-xs uppercase tracking-wider">
+                    <Sparkles size={14} className="text-[#D4A84F]" />
+                    <span>10 Sacred Lunar Nights</span>
+                  </div>
+                  <p className="text-[12px] text-[#F8F2E3]/75 leading-relaxed">
+                    Synchronized with the lunar phases from New Moon (Amavasya) to Full Moon (Poornima), honoring the 10 distinct alankarams of the Goddess.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-xl bg-[#040D1A] border border-[#D4A84F]/30 space-y-1.5">
+                  <div className="flex items-center gap-2 font-bold text-[#F5D58A] text-xs uppercase tracking-wider">
+                    <Flame size={14} className="text-[#D4A84F]" />
+                    <span>Maha Annadanam & Aarti</span>
+                  </div>
+                  <p className="text-[12px] text-[#F8F2E3]/75 leading-relaxed">
+                    Daily evening Maha Aarti with 108 lamps, traditional temple bells, sacred conch chants, and satvik prasadam served to all guests.
+                  </p>
+                </div>
+              </div>
+
+              <div className="p-4 rounded-xl bg-gradient-to-r from-[#0E2548]/80 to-[#07172E] border border-[#D4A84F]/40 space-y-2 text-xs">
+                <div className="font-bold text-[#F5D58A] font-heading text-sm">
+                  “Different People · Different Talents · One Shakti”
+                </div>
+                <p className="text-[#F8F2E3]/80 leading-normal">
+                  Our core philosophy invites every student, faculty member, and family to bring their unique creative light to our shared sacred celebration.
                 </p>
               </div>
-              <div className="pt-3 flex justify-end">
+
+              <div className="pt-2 flex flex-wrap items-center justify-between gap-3 border-t border-[#D4A84F]/20">
+                <div className="text-xs text-[#D4A84F]">
+                  Venue: University Grand Amphitheater
+                </div>
                 <button
                   onClick={() => {
                     onClose();
                     onRegister();
                   }}
-                  className="px-5 py-2.5 rounded-full bg-gradient-to-r from-[#D4A84F] to-[#F5D58A] text-[#061426] font-bold text-xs uppercase tracking-wider"
+                  className="px-6 py-2.5 rounded-full bg-gradient-to-r from-[#D4A84F] via-[#F5D58A] to-[#D4A84F] text-[#061426] font-bold text-xs uppercase tracking-wider cursor-pointer shadow-[0_0_16px_rgba(212,168,79,0.35)] hover:scale-105 transition-all"
                 >
-                  Join Us & Register →
+                  Register Free Pass →
                 </button>
               </div>
             </div>
           )}
 
-          {/* Gallery Section */}
+          {/* ============================================================ */}
+          {/* GALLERY SECTION                                              */}
+          {/* ============================================================ */}
           {section === 'gallery' && (
-            <div className="space-y-4">
-              <div className="flex items-center gap-2 text-xs font-bold text-[#D4A84F] uppercase tracking-widest">
-                <ImageIcon size={14} />
+            <div className="space-y-5">
+              <div className="flex items-center gap-2 text-xs font-bold text-[#D4A84F] uppercase tracking-[0.25em]">
+                <ImageIcon size={15} />
                 <span>SACRED VISUAL ARCHIVES</span>
               </div>
-              <h3 className="font-heading text-2xl font-bold text-[#F8F2E3]">
-                Festival Moments Through the Lens
-              </h3>
-              <p className="text-xs text-[#F8F2E3]/70">
-                Glimpses of devotion, swirling Dandiya dresses, and midnight Maha Aarti.
-              </p>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2">
-                {[
-                  { title: 'Garba Circles', img: 'https://images.unsplash.com/photo-1567157577867-05ccb1388e66?auto=format&fit=crop&w=600&q=80' },
-                  { title: 'Sacred Maha Aarti', img: 'https://images.unsplash.com/photo-1609137144813-7d9921338f24?auto=format&fit=crop&w=600&q=80' },
-                  { title: 'Dandiya Percussion', img: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=600&q=80' },
-                  { title: 'Classical Odissi', img: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=600&q=80' },
-                  { title: 'Deepotsav Lamps', img: 'https://images.unsplash.com/photo-1605379399642-870262d3d051?auto=format&fit=crop&w=600&q=80' },
-                  { title: 'Grand Finale Sky', img: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=600&q=80' },
-                ].map((item, i) => (
-                  <div key={i} className="group relative rounded-xl overflow-hidden border border-[#D4A84F]/20 h-32">
-                    <img src={item.img} alt={item.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#061426]/90 via-transparent to-transparent flex items-end p-2">
-                      <span className="text-[10px] font-semibold text-[#F5D58A]">{item.title}</span>
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                <div>
+                  <h3 className="font-heading text-2xl font-bold text-[#F8F2E3]">
+                    Festival Moments Through the Lens
+                  </h3>
+                  <p className="text-xs text-[#F8F2E3]/70">
+                    Glimpses of midnight Garba, temple rituals, and sacred celebrations.
+                  </p>
+                </div>
+
+                {/* Filter pills */}
+                <div className="flex items-center gap-1.5 p-1 rounded-full bg-[#040D1A] border border-[#D4A84F]/30 text-xs">
+                  {(['all', 'garba', 'alankaram', 'aarti'] as const).map((filter) => (
+                    <button
+                      key={filter}
+                      onClick={() => setGalleryFilter(filter)}
+                      className={`px-3 py-1 rounded-full capitalize transition-colors cursor-pointer ${
+                        galleryFilter === filter
+                          ? 'bg-[#D4A84F] text-[#061426] font-bold'
+                          : 'text-[#F8F2E3]/70 hover:text-[#F8F2E3]'
+                      }`}
+                    >
+                      {filter}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 pt-2">
+                {filteredGallery.map((item, i) => (
+                  <div
+                    key={i}
+                    className="group relative rounded-xl overflow-hidden border border-[#D4A84F]/30 bg-[#040D1A] h-44 shadow-lg"
+                  >
+                    <img
+                      src={item.img}
+                      alt={item.title}
+                      loading="lazy"
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#040D1A]/95 via-[#040D1A]/30 to-transparent flex flex-col justify-end p-3">
+                      <span className="text-[9px] uppercase font-bold tracking-widest text-[#D4A84F] mb-0.5">
+                        {item.tag}
+                      </span>
+                      <span className="text-xs font-bold text-[#F8F2E3] group-hover:text-[#F5D58A] transition-colors">
+                        {item.title}
+                      </span>
                     </div>
                   </div>
                 ))}
               </div>
+
+              <div className="pt-2 text-center">
+                <p className="text-xs text-[#F8F2E3]/60 italic">
+                  Have photos from previous editions? Tag us on Instagram <span className="text-[#F5D58A]">#ShaktiMahotsav2026</span> to get featured.
+                </p>
+              </div>
             </div>
           )}
 
-          {/* Team Section */}
+          {/* ============================================================ */}
+          {/* SPONSORS SECTION ("sonsery")                                 */}
+          {/* ============================================================ */}
+          {section === 'sponsors' && (
+            <div className="space-y-6">
+              <div className="flex items-center gap-2 text-xs font-bold text-[#D4A84F] uppercase tracking-[0.25em]">
+                <Handshake size={15} />
+                <span>FESTIVAL PATRONS & PARTNERS</span>
+              </div>
+
+              <div>
+                <h3 className="font-heading text-2xl sm:text-3xl font-bold text-[#F8F2E3] leading-snug">
+                  Our Divine Benefactors & Sponsors
+                </h3>
+                <p className="text-xs sm:text-sm text-[#F8F2E3]/80 mt-1">
+                  We express our heartfelt gratitude to the cultural trusts, philanthropic foundations, and corporate partners whose generous support brings Shakti Mahotsav 2026 to life.
+                </p>
+              </div>
+
+              {/* Tier 1: Grand Title Patrons */}
+              <div className="space-y-2">
+                <div className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-[#F5D58A]">
+                  <Award size={14} className="text-[#D4A84F]" />
+                  <span>Grand Title Patrons</span>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div className="p-4 rounded-xl bg-gradient-to-br from-[#0E2548] to-[#040D1A] border border-[#D4A84F]/50 shadow-md">
+                    <div className="text-[10px] uppercase font-bold tracking-widest text-[#D4A84F]">
+                      Chief Cultural Benefactor
+                    </div>
+                    <div className="font-heading text-base font-bold text-[#FFF4D6] mt-1">
+                      Sri Mahalakshmi Cultural Foundation
+                    </div>
+                    <div className="text-xs text-[#F8F2E3]/70 mt-1">
+                      Pillar support for traditional stage curation, floral alankarams, and heritage illumination.
+                    </div>
+                  </div>
+
+                  <div className="p-4 rounded-xl bg-gradient-to-br from-[#0E2548] to-[#040D1A] border border-[#D4A84F]/50 shadow-md">
+                    <div className="text-[10px] uppercase font-bold tracking-widest text-[#D4A84F]">
+                      Heritage & Arts Patron
+                    </div>
+                    <div className="font-heading text-base font-bold text-[#FFF4D6] mt-1">
+                      National Classical Arts Council
+                    </div>
+                    <div className="text-xs text-[#F8F2E3]/70 mt-1">
+                      Sponsoring master classical vocalists, Odissi, and Bharatanatyam exponents.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Tier 2: Maha Annadanam & Community Partners */}
+              <div className="space-y-2">
+                <div className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-[#F5D58A]">
+                  <HeartHandshake size={14} className="text-[#D4A84F]" />
+                  <span>Annadanam & Community Partners</span>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+                  <div className="p-3.5 rounded-xl bg-[#040D1A] border border-[#D4A84F]/30">
+                    <div className="font-bold text-[#F5D58A]">Sri Annapoorna Seva Trust</div>
+                    <div className="text-[11px] text-[#D4A84F] mt-0.5">Maha Prasadam Benefactor</div>
+                    <p className="text-[11px] text-[#F8F2E3]/65 mt-1">
+                      Providing fresh satvik meals and sacred prasadam to 10,000+ daily visitors.
+                    </p>
+                  </div>
+
+                  <div className="p-3.5 rounded-xl bg-[#040D1A] border border-[#D4A84F]/30">
+                    <div className="font-bold text-[#F5D58A]">Bharatiya Sangeet Sansthan</div>
+                    <div className="text-[11px] text-[#D4A84F] mt-0.5">Folk Instruments & Sound</div>
+                    <p className="text-[11px] text-[#F8F2E3]/65 mt-1">
+                      Curating 50+ Dhol, Nagada, and Shenai musicians across all 10 nights.
+                    </p>
+                  </div>
+
+                  <div className="p-3.5 rounded-xl bg-[#040D1A] border border-[#D4A84F]/30">
+                    <div className="font-bold text-[#F5D58A]">Campus Pulse Network</div>
+                    <div className="text-[11px] text-[#D4A84F] mt-0.5">Youth & Media Partner</div>
+                    <p className="text-[11px] text-[#F8F2E3]/65 mt-1">
+                      4K Live streaming, interactive digital voting, and festival broadcasts.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Become a Sponsor Call-To-Action Box */}
+              <div className="p-4 rounded-xl bg-gradient-to-r from-[#040D1A] via-[#0E2548] to-[#040D1A] border border-[#D4A84F]/40 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div>
+                  <div className="font-bold text-sm text-[#F5D58A]">
+                    Interested in Sponsoring or Setting up a Stall?
+                  </div>
+                  <div className="text-xs text-[#F8F2E3]/75 mt-0.5">
+                    Explore Alankaram sponsorship, brand stalls, cultural awards, and hospitality partnerships.
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (onNavigateSection) {
+                      onNavigateSection('connect');
+                    }
+                  }}
+                  className="px-5 py-2 rounded-full bg-gradient-to-r from-[#D4A84F] to-[#F5D58A] text-[#061426] font-bold text-xs uppercase tracking-wider flex-shrink-0 cursor-pointer shadow-[0_0_15px_rgba(212,168,79,0.3)] hover:scale-105 transition-all"
+                >
+                  Partner With Us →
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* ============================================================ */}
+          {/* CONNECT WITH US SECTION ("connter with us thigns")           */}
+          {/* ============================================================ */}
+          {section === 'connect' && (
+            <div className="space-y-6">
+              <div className="flex items-center gap-2 text-xs font-bold text-[#D4A84F] uppercase tracking-[0.25em]">
+                <MessageCircle size={15} />
+                <span>CONTACT & COMMUNITY</span>
+              </div>
+
+              <div>
+                <h3 className="font-heading text-2xl sm:text-3xl font-bold text-[#F8F2E3] leading-snug">
+                  Connect with Shakti Mahotsav
+                </h3>
+                <p className="text-xs sm:text-sm text-[#F8F2E3]/80 mt-1">
+                  Have questions regarding passes, performance registrations, campus directions, or volunteering? Reach out to our 24/7 student council & secretariat.
+                </p>
+              </div>
+
+              {/* Contact Info Cards */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div className="p-3.5 rounded-xl bg-[#040D1A] border border-[#D4A84F]/30 space-y-1">
+                  <div className="w-7 h-7 rounded-full bg-[#0E2548] flex items-center justify-center text-[#D4A84F] mb-2">
+                    <MapPin size={15} />
+                  </div>
+                  <div className="text-[10px] uppercase tracking-wider text-[#D4A84F] font-bold">
+                    FESTIVAL VENUE
+                  </div>
+                  <div className="text-xs font-semibold text-[#FFF4D6]">
+                    University Grand Amphitheater
+                  </div>
+                  <div className="text-[11px] text-[#F8F2E3]/65">
+                    Central Campus, Gate 2, Sacred Lawns
+                  </div>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-[#040D1A] border border-[#D4A84F]/30 space-y-1">
+                  <div className="w-7 h-7 rounded-full bg-[#0E2548] flex items-center justify-center text-[#D4A84F] mb-2">
+                    <Phone size={15} />
+                  </div>
+                  <div className="text-[10px] uppercase tracking-wider text-[#D4A84F] font-bold">
+                    HELPLINE & WHATSAPP
+                  </div>
+                  <div className="text-xs font-semibold text-[#FFF4D6]">
+                    +91 (080) 4567-8926
+                  </div>
+                  <div className="text-[11px] text-[#F8F2E3]/65">
+                    Helpline: +91 98765 43210 (9am–9pm)
+                  </div>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-[#040D1A] border border-[#D4A84F]/30 space-y-1">
+                  <div className="w-7 h-7 rounded-full bg-[#0E2548] flex items-center justify-center text-[#D4A84F] mb-2">
+                    <Mail size={15} />
+                  </div>
+                  <div className="text-[10px] uppercase tracking-wider text-[#D4A84F] font-bold">
+                    OFFICIAL EMAIL
+                  </div>
+                  <div className="text-xs font-semibold text-[#FFF4D6]">
+                    contact@shaktimahotsav2026.org
+                  </div>
+                  <div className="text-[11px] text-[#F8F2E3]/65">
+                    Response time &lt; 24 hours
+                  </div>
+                </div>
+              </div>
+
+              {/* Direct Message & Volunteer Form */}
+              <div className="p-4 sm:p-5 rounded-xl bg-[#040D1A] border border-[#D4A84F]/40 space-y-4">
+                <div className="flex items-center gap-2 text-xs font-bold text-[#F5D58A] uppercase tracking-wider">
+                  <Send size={14} className="text-[#D4A84F]" />
+                  <span>Send a Message or Volunteer Inquiry</span>
+                </div>
+
+                {!connectSubmitted ? (
+                  <form onSubmit={handleConnectSubmit} className="space-y-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-[11px] text-[#D4A84F] font-semibold mb-1">
+                          Full Name *
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          value={connectName}
+                          onChange={(e) => setConnectName(e.target.value)}
+                          placeholder="e.g. Priya Sharma"
+                          className="w-full px-3 py-2 rounded-lg bg-[#07172E] border border-[#D4A84F]/30 text-xs text-[#F8F2E3] placeholder-[#F8F2E3]/40 focus:border-[#D4A84F] focus:outline-none"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[11px] text-[#D4A84F] font-semibold mb-1">
+                          Email / Phone Number *
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          value={connectContact}
+                          onChange={(e) => setConnectContact(e.target.value)}
+                          placeholder="e.g. priya@university.edu or +91 98..."
+                          className="w-full px-3 py-2 rounded-lg bg-[#07172E] border border-[#D4A84F]/30 text-xs text-[#F8F2E3] placeholder-[#F8F2E3]/40 focus:border-[#D4A84F] focus:outline-none"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-[11px] text-[#D4A84F] font-semibold mb-1">
+                        Topic / Nature of Inquiry
+                      </label>
+                      <select
+                        value={connectTopic}
+                        onChange={(e) => setConnectTopic(e.target.value)}
+                        className="w-full px-3 py-2 rounded-lg bg-[#07172E] border border-[#D4A84F]/30 text-xs text-[#F8F2E3] focus:border-[#D4A84F] focus:outline-none"
+                      >
+                        <option value="passes">Free Festival Passes & Attendance</option>
+                        <option value="volunteer">Volunteer Seva & Committee Joining</option>
+                        <option value="performance">Cultural Performance / Artist Registration</option>
+                        <option value="sponsorship">Sponsorship & Food Stalls</option>
+                        <option value="general">General Inquiries</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block text-[11px] text-[#D4A84F] font-semibold mb-1">
+                        Your Message / Query
+                      </label>
+                      <textarea
+                        rows={3}
+                        value={connectMessage}
+                        onChange={(e) => setConnectMessage(e.target.value)}
+                        placeholder="Write your query or how you would like to participate..."
+                        className="w-full px-3 py-2 rounded-lg bg-[#07172E] border border-[#D4A84F]/30 text-xs text-[#F8F2E3] placeholder-[#F8F2E3]/40 focus:border-[#D4A84F] focus:outline-none"
+                      />
+                    </div>
+
+                    <div className="flex justify-end pt-1">
+                      <button
+                        type="submit"
+                        className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-[#D4A84F] via-[#F5D58A] to-[#D4A84F] text-[#061426] text-xs font-bold uppercase tracking-wider cursor-pointer shadow-[0_0_15px_rgba(212,168,79,0.3)] hover:scale-105 transition-all"
+                      >
+                        <Send size={13} />
+                        <span>Send Message</span>
+                      </button>
+                    </div>
+                  </form>
+                ) : (
+                  <div className="p-6 text-center space-y-2 rounded-xl bg-[#07172E] border border-emerald-500/40">
+                    <Check size={32} className="text-emerald-400 mx-auto" />
+                    <div className="font-bold text-[#F8F2E3] text-sm">
+                      Thank You, {connectName}!
+                    </div>
+                    <div className="text-xs text-[#F8F2E3]/75">
+                      Your message regarding <span className="text-[#F5D58A] font-semibold">{connectTopic}</span> has been received. Our secretariat will connect with you via {connectContact} shortly.
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* ============================================================ */}
+          {/* TEAM SECTION                                                 */}
+          {/* ============================================================ */}
           {section === 'team' && (
             <div className="space-y-4">
               <div className="flex items-center gap-2 text-xs font-bold text-[#D4A84F] uppercase tracking-widest">
@@ -137,7 +573,7 @@ export const InfoModal: React.FC<InfoModalProps> = ({ section, onClose, onRegist
                   { name: 'Rohan Mehta', role: 'Logistics & Security Head' },
                   { name: 'Pooja Bhatt', role: 'Hospitality & Prasadam Coordinator' },
                 ].map((member, i) => (
-                  <div key={i} className="p-3 rounded-xl bg-[#061426]/70 border border-[#D4A84F]/20">
+                  <div key={i} className="p-3 rounded-xl bg-[#040D1A] border border-[#D4A84F]/20">
                     <div className="font-bold text-[#F5D58A]">{member.name}</div>
                     <div className="text-[11px] text-[#F8F2E3]/70 mt-0.5">{member.role}</div>
                   </div>
@@ -146,7 +582,9 @@ export const InfoModal: React.FC<InfoModalProps> = ({ section, onClose, onRegist
             </div>
           )}
 
-          {/* Suggestions Section */}
+          {/* ============================================================ */}
+          {/* SUGGESTIONS SECTION                                          */}
+          {/* ============================================================ */}
           {section === 'suggestions' && (
             <div className="space-y-4">
               <div className="flex items-center gap-2 text-xs font-bold text-[#D4A84F] uppercase tracking-widest">
@@ -168,7 +606,7 @@ export const InfoModal: React.FC<InfoModalProps> = ({ section, onClose, onRegist
                     value={suggestion}
                     onChange={(e) => setSuggestion(e.target.value)}
                     placeholder="Share your thoughts, festival suggestions, or artist requests..."
-                    className="w-full p-3 rounded-xl bg-[#061426] border border-[#D4A84F]/30 text-xs text-[#F8F2E3] placeholder-[#F8F2E3]/40 focus:border-[#D4A84F] focus:outline-none"
+                    className="w-full p-3 rounded-xl bg-[#040D1A] border border-[#D4A84F]/30 text-xs text-[#F8F2E3] placeholder-[#F8F2E3]/40 focus:border-[#D4A84F] focus:outline-none"
                   />
                   <div className="flex justify-end">
                     <button
@@ -181,7 +619,7 @@ export const InfoModal: React.FC<InfoModalProps> = ({ section, onClose, onRegist
                   </div>
                 </form>
               ) : (
-                <div className="p-6 text-center space-y-2 rounded-xl bg-[#061426] border border-emerald-500/40">
+                <div className="p-6 text-center space-y-2 rounded-xl bg-[#040D1A] border border-emerald-500/40">
                   <Check size={28} className="text-emerald-400 mx-auto" />
                   <div className="font-bold text-[#F8F2E3]">Thank you for your feedback!</div>
                   <div className="text-xs text-[#F8F2E3]/70">Our committee will review your note for Shakti Mahotsav 2026.</div>

@@ -260,7 +260,7 @@ export const FestivalSkyline: React.FC = () => {
               </g>
 
               {/* Stepped Tier Ledge Diya Lights */}
-              <g fill="url(#skylineLightDot)">
+              <g fill="url(#skylineLightDot)" className="skyline-lamps">
                 <circle cx="65" cy="25" r="1.2" />
                 <circle cx="134" cy="25" r="1.2" />
                 <circle cx="60" cy="45" r="1.3" />
@@ -498,8 +498,8 @@ export const FestivalSkyline: React.FC = () => {
           <use href="#bottomArch" transform="translate(2270 370)" />
         </g>
 
-        {/* ARCH GOLDEN LIGHTS */}
-        <g fill="url(#skylineWindowGlow)">
+        {/* ARCH GOLDEN LIGHTS (flickering diyas) */}
+        <g fill="url(#skylineWindowGlow)" className="skyline-lamps">
           <ellipse cx="165" cy="360" rx="7" ry="11" />
           <ellipse cx="265" cy="360" rx="7" ry="11" />
           <ellipse cx="365" cy="360" rx="7" ry="11" />
@@ -588,7 +588,7 @@ export const FestivalSkyline: React.FC = () => {
         <line x1="0" y1="404" x2="2400" y2="404" stroke="#1B3553" strokeWidth="1" strokeOpacity="0.35" />
 
         {/* SMALL GOLDEN LIGHTS ACROSS THE HORIZON */}
-        <g fill="url(#skylineLightDot)">
+        <g fill="url(#skylineLightDot)" className="skyline-lamps">
           <circle cx="120" cy="340" r="3" />
           <circle cx="390" cy="340" r="3" />
           <circle cx="680" cy="335" r="2.5" />

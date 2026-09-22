@@ -11,11 +11,13 @@ import { FestivalEvent } from '../types';
 interface CulturalNightCardProps {
   event?: FestivalEvent;
   className?: string;
+  onBookPass?: () => void;
 }
 
 export const CulturalNightCard: React.FC<CulturalNightCardProps> = ({
   event,
   className = '',
+  onBookPass,
 }) => {
   const dayNumber = event?.day || 1;
   const title = event?.title.toUpperCase() || 'SRI BALA TRIPURA SUNDARI DEVI';
@@ -350,6 +352,20 @@ export const CulturalNightCard: React.FC<CulturalNightCardProps> = ({
               ))}
             </div>
           </div>
+
+          {/* Action Row */}
+          {onBookPass && (
+            <div className="pt-2 flex justify-end">
+              <button
+                type="button"
+                onClick={onBookPass}
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-[#D4A84F] via-[#F5D58A] to-[#D4A84F] text-[#061426] font-bold text-xs uppercase tracking-widest shadow-[0_0_20px_rgba(212,168,79,0.35)] hover:shadow-[0_0_28px_rgba(245,213,138,0.55)] hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
+              >
+                <span>BOOK DAY {dayNumber} PASS NOW</span>
+                <span>→</span>
+              </button>
+            </div>
+          )}
 
         </div>
 

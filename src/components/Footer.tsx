@@ -28,28 +28,32 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateSection }) => {
 
         {/* Quick Nav Links */}
         <div className="flex flex-wrap items-center justify-center gap-6 text-xs text-[#F8F2E3]/80 pt-2">
-          <button onClick={() => onNavigateSection('home')} className="hover:text-[#F5D58A] transition-colors">
+          <button onClick={() => onNavigateSection('home')} className="hover:text-[#F5D58A] transition-colors cursor-pointer">
             Home
           </button>
           <span>·</span>
-          <button onClick={() => onNavigateSection('about')} className="hover:text-[#F5D58A] transition-colors">
+          <button onClick={() => onNavigateSection('about')} className="hover:text-[#F5D58A] transition-colors cursor-pointer">
             About Festival
           </button>
           <span>·</span>
-          <button onClick={() => onNavigateSection('events')} className="hover:text-[#F5D58A] transition-colors text-[#F5D58A] font-semibold">
-            10 Alankarams Lineup
+          <button onClick={() => onNavigateSection('events')} className="hover:text-[#F5D58A] transition-colors text-[#F5D58A] font-semibold cursor-pointer">
+            10 Sacred Events
           </button>
           <span>·</span>
-          <button onClick={() => onNavigateSection('gallery')} className="hover:text-[#F5D58A] transition-colors">
+          <button onClick={() => onNavigateSection('gallery')} className="hover:text-[#F5D58A] transition-colors cursor-pointer">
             Sacred Gallery
           </button>
           <span>·</span>
-          <button onClick={() => onNavigateSection('team')} className="hover:text-[#F5D58A] transition-colors">
-            Organizing Committee
+          <button onClick={() => onNavigateSection('sponsors')} className="hover:text-[#F5D58A] transition-colors cursor-pointer">
+            Patrons & Sponsors
           </button>
           <span>·</span>
-          <button onClick={() => onNavigateSection('suggestions')} className="hover:text-[#F5D58A] transition-colors">
-            Student Suggestions
+          <button onClick={() => onNavigateSection('connect')} className="hover:text-[#F5D58A] transition-colors cursor-pointer">
+            Connect with Us
+          </button>
+          <span>·</span>
+          <button onClick={() => onNavigateSection('team')} className="hover:text-[#F5D58A] transition-colors text-[#F8F2E3]/60 cursor-pointer">
+            Committee
           </button>
         </div>
 

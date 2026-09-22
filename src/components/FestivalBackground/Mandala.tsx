@@ -3,30 +3,16 @@ import React from 'react';
 interface MandalaProps {
   position: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
   className?: string;
-  duration?: number;
 }
 
-export const Mandala: React.FC<MandalaProps> = ({
-  position,
-  className = '',
-  duration = 75,
-}) => {
+/** Corner mandala. Background decoration: it only drifts ±2° very slowly. */
+export const Mandala: React.FC<MandalaProps> = ({ position, className = '' }) => {
   const positionClasses = {
     'top-left': '-top-32 -left-32 sm:-top-36 sm:-left-36 md:-top-40 md:-left-40 lg:-top-44 lg:-left-44',
     'top-right': '-top-32 -right-32 sm:-top-36 sm:-right-36 md:-top-40 md:-right-40 lg:-top-44 lg:-right-44',
     'bottom-left': '-bottom-32 -left-32 sm:-bottom-36 sm:-left-36 md:-bottom-40 md:-left-40 lg:-bottom-44 lg:-left-44',
     'bottom-right': '-bottom-32 -right-32 sm:-bottom-36 sm:-right-36 md:-bottom-40 md:-right-40 lg:-bottom-44 lg:-right-44',
   }[position];
-
-  const animName =
-    position === 'top-left' || position === 'bottom-right'
-      ? 'mandala-rotate-clockwise'
-      : 'mandala-rotate-counter';
-
-  const animClass =
-    position === 'top-left' || position === 'bottom-right'
-      ? 'animate-mandala-cw'
-      : 'animate-mandala-ccw';
 
   return (
     <div
@@ -41,8 +27,7 @@ export const Mandala: React.FC<MandalaProps> = ({
     >
       <div
         className={`
-          ${animClass}
-          origin-center
+          animate-mandala-drift
           opacity-20
           sm:opacity-25
           md:opacity-30
@@ -51,12 +36,9 @@ export const Mandala: React.FC<MandalaProps> = ({
           justify-center
         `}
         style={{
-          animationName: animName,
-          animationDuration: `${duration}s`,
-          animationTimingFunction: 'linear',
-          animationIterationCount: 'infinite',
-          transformOrigin: 'center center',
-          willChange: 'transform',
+          // Each corner on its own slow cycle so they never move in lockstep.
+          animationDuration: position === 'top-left' || position === 'bottom-right' ? '64s' : '76s',
+          animationDelay: position === 'top-left' || position === 'bottom-right' ? '0s' : '-19s',
         }}
       >
         <svg

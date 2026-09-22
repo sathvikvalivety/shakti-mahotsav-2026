@@ -7,6 +7,9 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { FESTIVAL_CONFIG, FESTIVAL_EVENTS } from './data/festivalData';
 import { FestivalEvent } from './types';
 import { FestivalBackground } from './components/FestivalBackground';
+import { SacredHero } from './components/SacredHero';
+import { AboutSection } from './components/About';
+import { Header } from './components/Header';
 import { CenterEventInfo } from './components/CenterEventDisplay';
 import { LunarOrbitTimeline } from './components/LunarOrbitTimeline';
 import { NavadurgaGuide } from './components/NavadurgaGuide';
@@ -57,6 +60,47 @@ export default function App() {
   const [isRegisterOpen, setIsRegisterOpen] = useState<boolean>(false);
   const [activeInfoSection, setActiveInfoSection] = useState<string | null>(null);
   const [isAudioPlaying, setIsAudioPlaying] = useState<boolean>(false);
+  const [activeSection, setActiveSection] = useState<string>('home');
+
+  // Navigation handler
+  const handleNavigateSection = useCallback((section: string) => {
+    setActiveSection(section);
+    if (section === 'home') {
+      setActiveInfoSection(null);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (section === 'about' || section === 'events' || section === 'schedule') {
+      setActiveInfoSection(null);
+      const targetId = { about: 'about-section', events: 'events-section', schedule: 'schedule-section' }[section];
+      const eventsEl = document.getElementById(targetId);
+      if (eventsEl) {
+        eventsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        window.scrollTo({ top: 400, behavior: 'smooth' });
+      }
+    } else {
+      // 'gallery', 'sponsors', 'connect', 'team', 'suggestions'
+      setActiveInfoSection(section);
+    }
+  }, []);
+
+  // Sync active navigation state based on scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      if (activeInfoSection) return;
+      const eventsEl = document.getElementById('events-section');
+      const aboutEl = document.getElementById('about-section');
+      if (eventsEl && eventsEl.getBoundingClientRect().top <= 250) {
+        setActiveSection('events');
+      } else if (aboutEl && aboutEl.getBoundingClientRect().top <= 250) {
+        setActiveSection('about');
+      } else {
+        setActiveSection('home');
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [activeInfoSection]);
 
   // Check prefers-reduced-motion
   const [prefersReducedMotion, setPrefersReducedMotion] = useState<boolean>(false);
@@ -197,116 +241,119 @@ export default function App() {
 
   return (
     <div className="relative min-h-screen bg-[#020817] text-[#F8F2E3] overflow-x-hidden">
-      {/* Rich Celestial Festival Background from shakti-mahotsav-2026-background */}
+      {/* Fixed night-sky background behind every section */}
       <FestivalBackground />
+
+      {/* Sticky Top Header / Menu Bar */}
+      <Header
+        onOpenRegister={() => setIsRegisterOpen(true)}
+        onNavigateSection={handleNavigateSection}
+        activeSection={activeSection}
+        isAudioPlaying={isAudioPlaying}
+        onToggleAudio={handleToggleAudio}
+      />
 
       {/* Main Container */}
       <div className="relative z-10 flex flex-col min-h-screen">
+        {/* Home hero: goddess stage with the hero heading and active event card */}
+        <SacredHero
+          event={FESTIVAL_EVENTS.find((e) => e.day === activeDay) || FESTIVAL_EVENTS[0]}
+          onViewDetails={(evt) => setSelectedEventModal(evt)}
+          onExplore={() => handleNavigateSection('about')}
+        />
+
+        {/* About: what Shakti Mahotsav is, and the "More Than a Festival" stories */}
+        <AboutSection />
+
         {/* Main Content: Side-by-side Layout for Lunar Orbit Timeline & Navadurga Guide */}
         <main className="flex-1 w-full max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-10">
-          {/* Centered Hero Section Heading across entire page */}
-          <div className="text-center max-w-4xl mx-auto mb-8 md:mb-12 select-none">
-            {/* Small label: Manrope SemiBold — 10–11px */}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#D4A84F]/30 bg-[#0B1F3A]/60 backdrop-blur-md mb-4 font-manrope font-semibold text-[10px] sm:text-[11px] uppercase tracking-[0.25em] text-[#F5D58A]">
-              <Sparkles size={13} className="text-[#D4A84F]" />
-              <span>EVENT LINEUP · 10 SACRED DAYS · 10 ALANKARAMS</span>
-            </div>
+          <section id="events-section" className="scroll-mt-28">
+            {/* Event lineup label */}
+            <div className="text-center max-w-4xl mx-auto mb-8 md:mb-12 select-none">
+              {/* Small label: Manrope SemiBold — 10–11px */}
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#D4A84F]/30 bg-[#0B1F3A]/60 backdrop-blur-md font-manrope font-semibold text-[10px] sm:text-[11px] uppercase tracking-[0.25em] text-[#F5D58A]">
+                <Sparkles size={13} className="text-[#D4A84F]" />
+                <span>EVENT LINEUP · 10 SACRED DAYS · 10 ALANKARAMS</span>
+              </div>
 
-            {/* Hero: Cormorant Garamond SemiBold — ~48–56px */}
-            <h1 className="font-cormorant font-semibold text-4xl sm:text-5xl md:text-[52px] lg:text-[56px] text-[#F8F2E3] tracking-normal mb-3 leading-tight drop-shadow-md">
-              Ten Sacred Days.<br className="hidden sm:inline" /> Infinite Divine Grace.
-            </h1>
+              {/* Timeline Playback Status Banner */}
+              <div className="mt-4 flex flex-wrap items-center justify-center gap-3 text-xs text-[#F8F2E3]/70">
+                {isPausedByUser && (
+                  <button
+                    onClick={resumeTimeline}
+                    className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#D4A84F]/20 border border-[#D4A84F]/60 text-[#F5D58A] hover:bg-[#D4A84F]/30 transition-all font-medium animate-pulse cursor-pointer"
+                  >
+                    <Play size={12} fill="currentColor" />
+                    <span>Resume Timeline</span>
+                  </button>
+                )}
 
-            {/* Subtitle: Source Serif 4 — 17–18px */}
-            <p className="font-sourceserif text-[17px] sm:text-[18px] text-[#F8F2E3]/85 leading-relaxed">
-              Experience devotion, alankarams, and sacred celebrations.
-            </p>
-
-            {/* Timeline Playback Status Banner */}
-            <div className="mt-4 flex flex-wrap items-center justify-center gap-3 text-xs text-[#F8F2E3]/70">
-              {isPausedByUser && (
-                <button
-                  onClick={resumeTimeline}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#D4A84F]/20 border border-[#D4A84F]/60 text-[#F5D58A] hover:bg-[#D4A84F]/30 transition-all font-medium animate-pulse cursor-pointer"
-                >
-                  <Play size={12} fill="currentColor" />
-                  <span>Resume Timeline</span>
-                </button>
-              )}
-
-              <div className="flex items-center gap-2 bg-[#0B1F3A]/70 px-3.5 py-1 rounded-full border border-[#D4A84F]/20">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-                <span className="text-[#F5D58A] font-semibold">Active Night {activeDay}</span>
-                <span className="text-[#F8F2E3]/40">·</span>
-                <span className="text-[#F8F2E3]/90">
-                  {FESTIVAL_EVENTS.find((e) => e.day === activeDay)?.title || FESTIVAL_EVENTS[0].title}
-                </span>
+                <div className="flex items-center gap-2 bg-[#0B1F3A]/70 px-3.5 py-1 rounded-full border border-[#D4A84F]/20">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+                  <span className="text-[#F5D58A] font-semibold">Active Night {activeDay}</span>
+                  <span className="text-[#F8F2E3]/40">·</span>
+                  <span className="text-[#F8F2E3]/90">
+                    {FESTIVAL_EVENTS.find((e) => e.day === activeDay)?.title || FESTIVAL_EVENTS[0].title}
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* MAIN CONTENT: LUNAR ORBIT LINEUP */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 xl:gap-12 items-start pb-12">
-            {/* Left: Lunar Orbit Timeline (7 cols on desktop) */}
-            <div className="lg:col-span-7 xl:col-span-7 w-full">
-              <LunarOrbitTimeline
-                events={FESTIVAL_EVENTS}
-                activeDay={activeDay}
-                onSelectDay={handleUserSelectMoon}
-                onPrevDay={() => {
-                  previousDay();
-                  setIsPlaying(false);
-                  setIsPausedByUser(true);
-                }}
-                onNextDay={() => {
-                  nextDay();
-                  setIsPlaying(false);
-                  setIsPausedByUser(true);
-                }}
-                isPlaying={isPlaying}
-                onTogglePlay={() => {
-                  if (isPlaying) {
-                    pauseTimeline();
+            {/* MAIN CONTENT: LUNAR ORBIT LINEUP */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 xl:gap-12 items-start pb-12">
+              {/* Left: Lunar Orbit Timeline (7 cols on desktop) */}
+              <div id="schedule-section" className="scroll-mt-28 lg:col-span-7 xl:col-span-7 w-full">
+                <LunarOrbitTimeline
+                  events={FESTIVAL_EVENTS}
+                  activeDay={activeDay}
+                  onSelectDay={handleUserSelectMoon}
+                  onPrevDay={() => {
+                    previousDay();
+                    setIsPlaying(false);
                     setIsPausedByUser(true);
-                  } else {
-                    resumeTimeline();
-                  }
-                }}
-                onViewDetails={(evt) => setSelectedEventModal(evt)}
-                isPausedByUser={isPausedByUser}
-                onResumeTimeline={resumeTimeline}
-              />
-            </div>
+                  }}
+                  onNextDay={() => {
+                    nextDay();
+                    setIsPlaying(false);
+                    setIsPausedByUser(true);
+                  }}
+                  isPlaying={isPlaying}
+                  onTogglePlay={() => {
+                    if (isPlaying) {
+                      pauseTimeline();
+                      setIsPausedByUser(true);
+                    } else {
+                      resumeTimeline();
+                    }
+                  }}
+                  onViewDetails={(evt) => setSelectedEventModal(evt)}
+                  isPausedByUser={isPausedByUser}
+                  onResumeTimeline={resumeTimeline}
+                />
+              </div>
 
-            {/* Right: Active Event Details (Top) + Synchronized Navadurga 1x1 Carousel (Bottom) */}
-            <div className="lg:col-span-5 xl:col-span-5 w-full space-y-6">
-              {/* Active Event Information Card */}
-              <CenterEventInfo
-                event={FESTIVAL_EVENTS.find((e) => e.day === activeDay) || FESTIVAL_EVENTS[0]}
-                onViewDetails={(evt) => setSelectedEventModal(evt)}
-                isFinalNightReached={activeDay === 9 && !loopAtEnd && !isPlaying}
-              />
+              {/* Right: Active Event Details (Top) + Synchronized Navadurga 1x1 Carousel (Bottom) */}
+              <div className="lg:col-span-5 xl:col-span-5 w-full space-y-6">
+                {/* Active Event Information Card */}
+                <CenterEventInfo
+                  event={FESTIVAL_EVENTS.find((e) => e.day === activeDay) || FESTIVAL_EVENTS[0]}
+                  onViewDetails={(evt) => setSelectedEventModal(evt)}
+                  isFinalNightReached={activeDay === 9 && !loopAtEnd && !isPlaying}
+                />
 
-              {/* 1x1 Carousel Card for Navadurga Guide */}
-              <NavadurgaGuide
-                activeDay={activeDay}
-                onSelectDay={handleUserSelectMoon}
-                onViewDetails={(evt) => setSelectedEventModal(evt)}
-              />
+                {/* 1x1 Carousel Card for Navadurga Guide */}
+                <NavadurgaGuide
+                  activeDay={activeDay}
+                  onSelectDay={handleUserSelectMoon}
+                  onViewDetails={(evt) => setSelectedEventModal(evt)}
+                />
+              </div>
             </div>
-          </div>
+          </section>
         </main>
 
         {/* Footer */}
-        <Footer
-          onNavigateSection={(section) => {
-            if (section === 'events' || section === 'home') {
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            } else {
-              setActiveInfoSection(section);
-            }
-          }}
-        />
+        <Footer onNavigateSection={handleNavigateSection} />
       </div>
 
       {/* Event Details Modal */}
@@ -327,11 +374,20 @@ export default function App() {
         selectedDay={activeDay}
       />
 
-      {/* About / Gallery / Team / Suggestions Modal */}
+      {/* About / Gallery / Sponsors / Connect / Team / Suggestions Modal */}
       <InfoModal
         section={activeInfoSection}
-        onClose={() => setActiveInfoSection(null)}
+        onClose={() => {
+          setActiveInfoSection(null);
+          const eventsEl = document.getElementById('events-section');
+          if (eventsEl && eventsEl.getBoundingClientRect().top <= 250) {
+            setActiveSection('events');
+          } else {
+            setActiveSection('home');
+          }
+        }}
         onRegister={() => setIsRegisterOpen(true)}
+        onNavigateSection={handleNavigateSection}
       />
     </div>
   );
