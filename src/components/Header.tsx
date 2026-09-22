@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
-import { Menu, X, Volume2, VolumeX } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
 interface HeaderProps {
   onOpenRegister?: () => void;
   onNavigateSection: (section: string) => void;
   activeSection: string;
-  isAudioPlaying?: boolean;
-  onToggleAudio?: () => void;
 }
 
 // Visible keyboard focus for every control in the bar.
@@ -37,11 +35,8 @@ const AmritaLogo: React.FC<{ className?: string }> = ({ className = '' }) => (
 );
 
 export const Header: React.FC<HeaderProps> = ({
-  onOpenRegister,
   onNavigateSection,
   activeSection,
-  isAudioPlaying = false,
-  onToggleAudio,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -49,22 +44,6 @@ export const Header: React.FC<HeaderProps> = ({
     onNavigateSection(section);
     setMobileMenuOpen(false);
   };
-
-  const audioButton = (className: string, id?: string) =>
-    onToggleAudio && (
-      <button
-        id={id}
-        onClick={onToggleAudio}
-        className={`h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full border bg-[rgba(3,12,32,0.45)] transition-[border-color,color,box-shadow] duration-[250ms] cursor-pointer hover:border-[#E6C27A] hover:text-[#F5D58A] hover:shadow-[0_0_10px_rgba(212,168,79,0.22)] ${FOCUS_RING} ${
-          isAudioPlaying ? 'border-[#E6C27A] text-[#F5D58A]' : 'border-[#C9A55A]/60 text-[#EBD3A0]'
-        } ${className}`}
-        title={isAudioPlaying ? 'Mute Celestial Chimes' : 'Play Celestial Chimes Atmosphere'}
-        aria-label="Toggle ambient atmosphere sound"
-        aria-pressed={isAudioPlaying}
-      >
-        {isAudioPlaying ? <Volume2 size={15} /> : <VolumeX size={15} />}
-      </button>
-    );
 
   return (
     // Transparent navbar: the site's fixed night sky (stars, corner mandalas,
@@ -130,8 +109,6 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Actions */}
         <div className="ml-auto flex shrink-0 items-center gap-[clamp(10px,1.25vw,24px)] min-[1200px]:ml-0">
-          {audioButton('hidden sm:flex', 'btn-toggle-sound')}
-
           <AmritaLogo className="hidden md:flex" />
 
           <button
@@ -170,7 +147,6 @@ export const Header: React.FC<HeaderProps> = ({
 
           <div className="mt-3 flex items-center justify-between gap-3 border-t border-[#D4A84F]/[0.12] pt-3 md:hidden">
             <AmritaLogo className="flex md:hidden" />
-            {audioButton('flex sm:hidden')}
           </div>
         </div>
       )}

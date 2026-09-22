@@ -41,19 +41,33 @@ export const LunarOrbitTimeline: React.FC<LunarOrbitTimelineProps> = ({
 
   // Particle traveling state
   const [particleAngle, setParticleAngle] = useState<number>(-90);
-  const [isTraveling, setIsTraveling] = useState<boolean>(false);
   const prevDayRef = useRef<number>(activeDay);
+  const mobileScrollRef = useRef<HTMLDivElement>(null);
+
+  // Auto-scroll mobile moon carousel when activeDay changes
+  useEffect(() => {
+    if (mobileScrollRef.current) {
+      const activeBtn = mobileScrollRef.current.querySelector<HTMLElement>(`#mobile-moon-${activeDay}`);
+      if (activeBtn) {
+        activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+    }
+  }, [activeDay]);
 
   // Responsive radius calculation
   useEffect(() => {
     const updateDimensions = () => {
       const w = window.innerWidth;
-      if (w < 640) {
-        setOrbitRadius(170);
+      if (w < 360) {
+        setOrbitRadius(118);
+      } else if (w < 420) {
+        setOrbitRadius(135);
+      } else if (w < 640) {
+        setOrbitRadius(155);
       } else if (w < 768) {
-        setOrbitRadius(220);
+        setOrbitRadius(200);
       } else if (w < 1024) {
-        setOrbitRadius(250);
+        setOrbitRadius(235);
       } else if (w < 1280) {
         setOrbitRadius(255);
       } else if (w < 1536) {
@@ -139,35 +153,40 @@ export const LunarOrbitTimeline: React.FC<LunarOrbitTimelineProps> = ({
   const activeMoonAngle = getDayAngle(activeDay);
   const activeMoonPos = polarToCartesian(orbitRadius, activeMoonAngle);
 
+  const isMobile = orbitRadius < 180;
+  const isSmallMobile = orbitRadius < 135;
+  const pad = isSmallMobile ? 42 : isMobile ? 48 : 80;
+
   return (
-    <section className="relative w-full mx-auto select-none">
+    <section className="relative w-full mx-auto select-none flex flex-col items-center justify-center">
       {/* ==================================================== */}
-      {/* DESKTOP & TABLET: Circular Lunar Timeline HERO */}
+      {/* CIRCULAR LUNAR TIMELINE ORBIT (Responsive on all screens) */}
       {/* ==================================================== */}
-      <div className="hidden sm:flex flex-col items-center justify-center relative min-h-[660px] md:min-h-[740px] lg:min-h-[800px]">
+      <div className="flex flex-col items-center justify-center relative w-full overflow-visible py-2 sm:py-4">
         {/* The Central Circular Orbit Canvas */}
         <div
           className="relative flex items-center justify-center"
           style={{
-            width: orbitRadius * 2 + 160,
-            height: orbitRadius * 2 + 160,
+            width: orbitRadius * 2 + pad * 2,
+            height: orbitRadius * 2 + pad * 2,
+            maxWidth: '100%',
           }}
         >
           {/* Subtle Outer Concentric Orbit Decorator */}
           <div
             className="absolute rounded-full border border-[#D4A84F]/10 pointer-events-none"
             style={{
-              width: orbitRadius * 2 + 70,
-              height: orbitRadius * 2 + 70,
+              width: orbitRadius * 2 + (isMobile ? 30 : 70),
+              height: orbitRadius * 2 + (isMobile ? 30 : 70),
             }}
           />
 
           {/* SVG Orbit Track & Glowing Particle */}
           <svg
             className="absolute inset-0 w-full h-full pointer-events-none overflow-visible"
-            viewBox={`-${orbitRadius + 80} -${orbitRadius + 80} ${
-              (orbitRadius + 80) * 2
-            } ${(orbitRadius + 80) * 2}`}
+            viewBox={`-${orbitRadius + pad} -${orbitRadius + pad} ${
+              (orbitRadius + pad) * 2
+            } ${(orbitRadius + pad) * 2}`}
           >
             <defs>
               {/* Golden Orbit Gradient */}
@@ -196,8 +215,8 @@ export const LunarOrbitTimeline: React.FC<LunarOrbitTimelineProps> = ({
               r={orbitRadius}
               fill="none"
               stroke="url(#orbit-gold-gradient)"
-              strokeWidth="1.5"
-              strokeDasharray="4 6"
+              strokeWidth={isMobile ? "1.2" : "1.5"}
+              strokeDasharray={isMobile ? "3 4" : "4 6"}
               className="opacity-75"
             />
 
@@ -219,18 +238,19 @@ export const LunarOrbitTimeline: React.FC<LunarOrbitTimelineProps> = ({
               x2={activeMoonPos.x}
               y2={activeMoonPos.y}
               stroke="#F5D58A"
-              strokeWidth="1.2"
+              strokeWidth={isMobile ? "1" : "1.2"}
               strokeDasharray="3 3"
               className="opacity-60 animate-pulse"
             />
 
-            {/* Small decorative golden ticks/stars along orbit circumference */}
+            {/* Small decorative golden ticks along orbit circumference */}
             {Array.from({ length: 36 }).map((_, i) => {
               const tickAngle = (i * 10 * Math.PI) / 180;
-              const x1 = (orbitRadius - 3) * Math.cos(tickAngle);
-              const y1 = (orbitRadius - 3) * Math.sin(tickAngle);
-              const x2 = (orbitRadius + 3) * Math.cos(tickAngle);
-              const y2 = (orbitRadius + 3) * Math.sin(tickAngle);
+              const tickLen = isMobile ? 2 : 3;
+              const x1 = (orbitRadius - tickLen) * Math.cos(tickAngle);
+              const y1 = (orbitRadius - tickLen) * Math.sin(tickAngle);
+              const x2 = (orbitRadius + tickLen) * Math.cos(tickAngle);
+              const y2 = (orbitRadius + tickLen) * Math.sin(tickAngle);
               return (
                 <line
                   key={i}
@@ -250,12 +270,9 @@ export const LunarOrbitTimeline: React.FC<LunarOrbitTimelineProps> = ({
               transform={`translate(${particlePos.x}, ${particlePos.y})`}
               filter="url(#particle-glow)"
             >
-              {/* Outer Golden Halo Particle */}
-              <circle cx="0" cy="0" r="9" fill="#D4A84F" opacity="0.45" />
-              {/* Middle Luminous Flare */}
-              <circle cx="0" cy="0" r="5" fill="#F5D58A" opacity="0.85" />
-              {/* Bright Core */}
-              <circle cx="0" cy="0" r="2.5" fill="#FFFFFF" />
+              <circle cx="0" cy="0" r={isMobile ? 6 : 9} fill="#D4A84F" opacity="0.45" />
+              <circle cx="0" cy="0" r={isMobile ? 3.5 : 5} fill="#F5D58A" opacity="0.85" />
+              <circle cx="0" cy="0" r={isMobile ? 1.8 : 2.5} fill="#FFFFFF" />
             </g>
           </svg>
 
@@ -264,7 +281,7 @@ export const LunarOrbitTimeline: React.FC<LunarOrbitTimelineProps> = ({
             <CenterEventImage event={activeEvent} />
           </div>
 
-          {/* THE 9 FIXED MOONS AROUND THE ORBIT */}
+          {/* THE 10 FIXED MOONS AROUND THE ORBIT */}
           {events.map((evt) => {
             const angle = getDayAngle(evt.day);
             const pos = polarToCartesian(orbitRadius, angle);
@@ -290,29 +307,45 @@ export const LunarOrbitTimeline: React.FC<LunarOrbitTimelineProps> = ({
                   aria-label={`Day ${evt.day} — ${evt.title} — ${evt.date}`}
                   className={`group relative rounded-full focus:outline-none transition-all duration-700 cursor-pointer ${
                     isActive
-                      ? 'scale-[1.18] opacity-100 z-30'
+                      ? 'scale-[1.15] opacity-100 z-30'
                       : isHovered
                       ? 'scale-110 opacity-90 z-20'
-                      : 'scale-100 opacity-65 hover:opacity-90 z-10'
+                      : 'scale-100 opacity-70 hover:opacity-95 z-10'
                   }`}
                 >
                   <MoonPhaseGraphic
                     phase={evt.lunarPhase}
                     isActive={isActive}
                     isHovered={isHovered}
-                    size={isActive ? 68 : 54}
+                    size={
+                      isActive
+                        ? isSmallMobile
+                          ? 40
+                          : isMobile
+                          ? 46
+                          : 68
+                        : isSmallMobile
+                        ? 28
+                        : isMobile
+                        ? 34
+                        : 54
+                    }
                     dayNumber={evt.day}
                   />
 
                   {/* Day Badge Tag attached to Moon */}
                   <div
-                    className={`absolute -bottom-6 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase whitespace-nowrap transition-all duration-500 ${
+                    className={`absolute ${
+                      isMobile
+                        ? '-bottom-4 text-[8px] px-1 py-0.1'
+                        : '-bottom-6 text-[10px] px-2 py-0.5'
+                    } left-1/2 -translate-x-1/2 rounded-full font-bold tracking-wider uppercase whitespace-nowrap transition-all duration-500 ${
                       isActive
                         ? 'bg-[#D4A84F] text-[#061426] shadow-[0_0_12px_rgba(212,168,79,0.7)] scale-105'
                         : 'bg-[#0B1F3A]/90 border border-[#D4A84F]/30 text-[#F8F2E3]/75 group-hover:text-[#F5D58A]'
                     }`}
                   >
-                    DAY {evt.day}
+                    {isMobile ? `D${evt.day}` : `DAY ${evt.day}`}
                   </div>
                 </button>
 
@@ -335,16 +368,16 @@ export const LunarOrbitTimeline: React.FC<LunarOrbitTimelineProps> = ({
           })}
         </div>
 
-        {/* Bottom Timeline Controls Bar (Desktop / Tablet) */}
-        <div className="mt-8 flex items-center justify-center gap-4 z-30">
+        {/* Bottom Timeline Controls Bar */}
+        <div className="mt-4 sm:mt-8 flex items-center justify-center gap-3 sm:gap-4 z-30">
           {/* Previous Day Button */}
           <button
             id="btn-prev-day"
             onClick={onPrevDay}
-            className="flex items-center gap-2 px-4 py-2 rounded-full border border-[#D4A84F]/30 bg-[#0B1F3A]/80 hover:bg-[#142B4F] hover:border-[#D4A84F] text-[#F8F2E3] text-xs font-semibold uppercase tracking-wider transition-all shadow-md active:scale-95 cursor-pointer"
+            className="flex items-center gap-1.5 sm:gap-2 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full border border-[#D4A84F]/30 bg-[#0B1F3A]/80 hover:bg-[#142B4F] hover:border-[#D4A84F] text-[#F8F2E3] text-[11px] sm:text-xs font-semibold uppercase tracking-wider transition-all shadow-md active:scale-95 cursor-pointer"
             aria-label="Previous Festival Night"
           >
-            <ChevronLeft size={16} className="text-[#D4A84F]" />
+            <ChevronLeft size={15} className="text-[#D4A84F]" />
             <span>Previous</span>
           </button>
 
@@ -352,7 +385,7 @@ export const LunarOrbitTimeline: React.FC<LunarOrbitTimelineProps> = ({
           <button
             id="btn-toggle-play"
             onClick={onTogglePlay}
-            className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest transition-all shadow-lg active:scale-95 cursor-pointer ${
+            className={`flex items-center gap-1.5 sm:gap-2 px-4 py-2 sm:px-5 sm:py-2.5 rounded-full text-[11px] sm:text-xs font-bold uppercase tracking-widest transition-all shadow-lg active:scale-95 cursor-pointer ${
               isPlaying
                 ? 'bg-[#142B4F] border border-[#D4A84F]/60 text-[#F5D58A] hover:bg-[#1D3B6C]'
                 : 'bg-gradient-to-r from-[#D4A84F] to-[#F5D58A] text-[#061426] shadow-[0_0_20px_rgba(212,168,79,0.4)]'
@@ -361,12 +394,12 @@ export const LunarOrbitTimeline: React.FC<LunarOrbitTimelineProps> = ({
           >
             {isPlaying ? (
               <>
-                <Pause size={14} fill="currentColor" />
+                <Pause size={13} fill="currentColor" />
                 <span>Pause</span>
               </>
             ) : (
               <>
-                <Play size={14} fill="currentColor" />
+                <Play size={13} fill="currentColor" />
                 <span>Play Timeline</span>
               </>
             )}
@@ -376,108 +409,18 @@ export const LunarOrbitTimeline: React.FC<LunarOrbitTimelineProps> = ({
           <button
             id="btn-next-day"
             onClick={onNextDay}
-            className="flex items-center gap-2 px-4 py-2 rounded-full border border-[#D4A84F]/30 bg-[#0B1F3A]/80 hover:bg-[#142B4F] hover:border-[#D4A84F] text-[#F8F2E3] text-xs font-semibold uppercase tracking-wider transition-all shadow-md active:scale-95 cursor-pointer"
+            className="flex items-center gap-1.5 sm:gap-2 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full border border-[#D4A84F]/30 bg-[#0B1F3A]/80 hover:bg-[#142B4F] hover:border-[#D4A84F] text-[#F8F2E3] text-[11px] sm:text-xs font-semibold uppercase tracking-wider transition-all shadow-md active:scale-95 cursor-pointer"
             aria-label="Next Festival Night"
           >
             <span>Next</span>
-            <ChevronRight size={16} className="text-[#D4A84F]" />
+            <ChevronRight size={15} className="text-[#D4A84F]" />
           </button>
         </div>
 
         {/* Keyboard hint */}
-        <p className="mt-3 text-[11px] text-[#F8F2E3]/40 tracking-wider">
+        <p className="mt-3 hidden sm:block text-[11px] text-[#F8F2E3]/40 tracking-wider text-center">
           Tip: Use <kbd className="px-1.5 py-0.5 rounded bg-[#142B4F] text-[#F5D58A] border border-[#D4A84F]/20 font-mono text-[10px]">←</kbd> and <kbd className="px-1.5 py-0.5 rounded bg-[#142B4F] text-[#F5D58A] border border-[#D4A84F]/20 font-mono text-[10px]">→</kbd> arrow keys to navigate · <kbd className="px-1.5 py-0.5 rounded bg-[#142B4F] text-[#F5D58A] border border-[#D4A84F]/20 font-mono text-[10px]">Space</kbd> to play/pause
         </p>
-      </div>
-
-      {/* ==================================================== */}
-      {/* MOBILE EXPERIENCE: Center Image -> Active Details -> Horizontal Lunar Timeline */}
-      {/* ==================================================== */}
-      <div className="sm:hidden flex flex-col items-center space-y-6">
-        {/* Center Event Display */}
-        <CenterEventDisplay
-          event={activeEvent}
-          onViewDetails={onViewDetails}
-          isFinalNightReached={false}
-        />
-
-        {/* Timeline Navigation Controls */}
-        <div className="flex items-center justify-between w-full max-w-xs px-2 pt-2">
-          <button
-            id="btn-mobile-prev"
-            onClick={onPrevDay}
-            className="p-2.5 rounded-full bg-[#0B1F3A] border border-[#D4A84F]/40 text-[#F8F2E3] active:scale-90"
-            aria-label="Previous Day"
-          >
-            <ChevronLeft size={18} className="text-[#D4A84F]" />
-          </button>
-
-          <button
-            id="btn-mobile-play"
-            onClick={onTogglePlay}
-            className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 ${
-              isPlaying
-                ? 'bg-[#142B4F] text-[#F5D58A] border border-[#D4A84F]/40'
-                : 'bg-gradient-to-r from-[#D4A84F] to-[#F5D58A] text-[#061426]'
-            }`}
-          >
-            {isPlaying ? <Pause size={13} fill="currentColor" /> : <Play size={13} fill="currentColor" />}
-            <span>{isPlaying ? 'Pause' : 'Play'}</span>
-          </button>
-
-          <button
-            id="btn-mobile-next"
-            onClick={onNextDay}
-            className="p-2.5 rounded-full bg-[#0B1F3A] border border-[#D4A84F]/40 text-[#F8F2E3] active:scale-90"
-            aria-label="Next Day"
-          >
-            <ChevronRight size={18} className="text-[#D4A84F]" />
-          </button>
-        </div>
-
-        {/* Horizontal Scrollable Lunar Timeline */}
-        <div className="w-full pt-4">
-          <div className="text-center mb-2 text-[11px] uppercase tracking-[0.2em] text-[#D4A84F] font-semibold">
-            Scroll 10 Sacred Days
-          </div>
-
-          <div className="flex items-center gap-3 overflow-x-auto pb-4 pt-2 px-4 no-scrollbar scroll-smooth">
-            {events.map((evt) => {
-              const isActive = evt.day === activeDay;
-              return (
-                <button
-                  key={evt.day}
-                  id={`mobile-moon-${evt.day}`}
-                  onClick={() => onSelectDay(evt.day)}
-                  aria-label={`Day ${evt.day} — ${evt.title} — ${evt.date}`}
-                  className={`flex-shrink-0 flex flex-col items-center p-2.5 rounded-2xl transition-all ${
-                    isActive
-                      ? 'bg-[#0B1F3A] border-2 border-[#D4A84F] shadow-[0_0_20px_rgba(212,168,79,0.4)] scale-105'
-                      : 'bg-[#0B1F3A]/40 border border-[#D4A84F]/20 opacity-70'
-                  }`}
-                >
-                  <MoonPhaseGraphic
-                    phase={evt.lunarPhase}
-                    isActive={isActive}
-                    size={48}
-                    dayNumber={evt.day}
-                  />
-
-                  <span
-                    className={`mt-2 text-[11px] font-bold ${
-                      isActive ? 'text-[#F5D58A]' : 'text-[#F8F2E3]/70'
-                    }`}
-                  >
-                    D{evt.day}
-                  </span>
-                  <span className="text-[9px] text-[#F8F2E3]/60 truncate max-w-[60px]">
-                    {evt.title.split(' ')[0]}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
       </div>
     </section>
   );

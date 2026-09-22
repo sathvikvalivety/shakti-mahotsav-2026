@@ -17,7 +17,6 @@ import { Footer } from './components/Footer';
 import { EventDetailsModal } from './components/EventDetailsModal';
 import { RegistrationModal } from './components/RegistrationModal';
 import { InfoModal } from './components/InfoModal';
-import { celestialAudio } from './utils/audio';
 import { Sparkles, Play } from 'lucide-react';
 
 export default function App() {
@@ -59,7 +58,6 @@ export default function App() {
   const [selectedEventModal, setSelectedEventModal] = useState<FestivalEvent | null>(null);
   const [isRegisterOpen, setIsRegisterOpen] = useState<boolean>(false);
   const [activeInfoSection, setActiveInfoSection] = useState<string | null>(null);
-  const [isAudioPlaying, setIsAudioPlaying] = useState<boolean>(false);
   const [activeSection, setActiveSection] = useState<string>('home');
 
   // Navigation handler
@@ -233,12 +231,6 @@ export default function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [nextDay, previousDay, isPlaying, pauseTimeline, resumeTimeline]);
 
-  // Audio atmosphere toggle
-  const handleToggleAudio = () => {
-    const active = celestialAudio.toggle();
-    setIsAudioPlaying(active);
-  };
-
   return (
     <div className="relative min-h-screen bg-[#020817] text-[#F8F2E3] overflow-x-hidden">
       {/* Fixed night-sky background behind every section */}
@@ -248,8 +240,6 @@ export default function App() {
       <Header
         onNavigateSection={handleNavigateSection}
         activeSection={activeSection}
-        isAudioPlaying={isAudioPlaying}
-        onToggleAudio={handleToggleAudio}
       />
 
       {/* Main Container */}
@@ -331,7 +321,7 @@ export default function App() {
                 />
               </div>
 
-              {/* Right: Active Event Details (Top) + Synchronized Navadurga 1x1 Carousel (Bottom) */}
+              {/* Right: Active Event Details (Top on desktop, stacked on mobile) + Synchronized Navadurga 1x1 Carousel (Bottom) */}
               <div className="lg:col-span-5 xl:col-span-5 w-full space-y-6">
                 {/* Active Event Information Card */}
                 <CenterEventInfo
