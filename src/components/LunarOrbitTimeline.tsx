@@ -38,6 +38,7 @@ export const LunarOrbitTimeline: React.FC<LunarOrbitTimelineProps> = ({
 }) => {
   const [hoveredDay, setHoveredDay] = useState<number | null>(null);
   const [orbitRadius, setOrbitRadius] = useState<number>(270);
+  const [isTraveling, setIsTraveling] = useState<boolean>(false);
 
   // Particle traveling state
   const [particleAngle, setParticleAngle] = useState<number>(-90);
@@ -95,6 +96,8 @@ export const LunarOrbitTimeline: React.FC<LunarOrbitTimelineProps> = ({
   // Animate the traveling glowing particle along the circular orbit when activeDay changes
   useEffect(() => {
     const prevDay = prevDayRef.current;
+    prevDayRef.current = activeDay;
+
     if (prevDay === activeDay) {
       setParticleAngle(getDayAngle(activeDay));
       return;
@@ -111,8 +114,9 @@ export const LunarOrbitTimeline: React.FC<LunarOrbitTimelineProps> = ({
     }
 
     setIsTraveling(true);
+    let animId: number;
     const startTime = performance.now();
-    const travelDuration = 800; // ms
+    const travelDuration = 700; // ms
 
     const animateParticle = (currentTime: number) => {
       const elapsed = currentTime - startTime;
@@ -123,16 +127,18 @@ export const LunarOrbitTimeline: React.FC<LunarOrbitTimelineProps> = ({
       setParticleAngle(current);
 
       if (progress < 1) {
-        requestAnimationFrame(animateParticle);
+        animId = requestAnimationFrame(animateParticle);
       } else {
         setParticleAngle(getDayAngle(activeDay));
         setIsTraveling(false);
-        prevDayRef.current = activeDay;
       }
     };
 
-    const animId = requestAnimationFrame(animateParticle);
-    return () => cancelAnimationFrame(animId);
+    animId = requestAnimationFrame(animateParticle);
+    return () => {
+      if (animId) cancelAnimationFrame(animId);
+      setIsTraveling(false);
+    };
   }, [activeDay, totalDays, stepAngle]);
 
   const activeEvent = events.find((e) => e.day === activeDay) || events[0];
