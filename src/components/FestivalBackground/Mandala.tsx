@@ -8,10 +8,10 @@ interface MandalaProps {
 /** Corner mandala background decoration: rotates smoothly clockwise. */
 export const Mandala: React.FC<MandalaProps> = ({ position, className = '' }) => {
   const positionClasses = {
-    'top-left': '-top-32 -left-32 sm:-top-36 sm:-left-36 md:-top-40 md:-left-40 lg:-top-44 lg:-left-44',
-    'top-right': '-top-32 -right-32 sm:-top-36 sm:-right-36 md:-top-40 md:-right-40 lg:-top-44 lg:-right-44',
-    'bottom-left': '-bottom-32 -left-32 sm:-bottom-36 sm:-left-36 md:-bottom-40 md:-left-40 lg:-bottom-44 lg:-left-44',
-    'bottom-right': '-bottom-32 -right-32 sm:-bottom-36 sm:-right-36 md:-bottom-40 md:-right-40 lg:-bottom-44 lg:-right-44',
+    'top-left': '-top-12 -left-12 sm:-top-20 sm:-left-20 md:-top-32 md:-left-32 lg:-top-40 lg:-left-40',
+    'top-right': '-top-12 -right-12 sm:-top-20 sm:-right-20 md:-top-32 md:-right-32 lg:-top-40 lg:-right-40',
+    'bottom-left': '-bottom-12 -left-12 sm:-bottom-20 sm:-left-20 md:-bottom-32 md:-left-32 lg:-bottom-40 lg:-left-40',
+    'bottom-right': '-bottom-12 -right-12 sm:-bottom-20 sm:-right-20 md:-bottom-32 md:-right-32 lg:-bottom-40 lg:-right-40',
   }[position];
 
   return (
@@ -28,8 +28,8 @@ export const Mandala: React.FC<MandalaProps> = ({ position, className = '' }) =>
       <div
         className={`
           animate-mandala-rotate
-          opacity-20
-          sm:opacity-25
+          opacity-45
+          sm:opacity-35
           md:opacity-30
           flex
           items-center
@@ -45,7 +45,7 @@ export const Mandala: React.FC<MandalaProps> = ({ position, className = '' }) =>
         <svg
           viewBox="0 0 600 600"
           className="
-            w-64 h-64
+            w-56 h-56
             sm:w-72 sm:h-72
             md:w-80 md:h-80
             lg:w-[430px] lg:h-[430px]
