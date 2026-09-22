@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Menu, X, Volume2, VolumeX } from 'lucide-react';
 
 interface HeaderProps {
-  onOpenRegister: () => void;
+  onOpenRegister?: () => void;
   onNavigateSection: (section: string) => void;
   activeSection: string;
   isAudioPlaying?: boolean;
@@ -67,10 +67,9 @@ export const Header: React.FC<HeaderProps> = ({
     );
 
   return (
-    // Translucent navy: the site's fixed night sky (stars, corner mandalas,
-    // ornaments) continues behind the bar, softened just enough for legible
-    // navigation. The hairline is an inset shadow so it adds no height.
-    <header className="sticky top-0 z-40 w-full bg-[rgba(3,12,32,0.72)] backdrop-blur-[8px] shadow-[inset_0_-1px_0_rgba(212,170,75,0.12),0_4px_20px_rgba(0,0,0,0.18)]">
+    // Transparent navbar: the site's fixed night sky (stars, corner mandalas,
+    // ornaments) continues seamlessly behind the bar.
+    <header className="sticky top-0 z-40 w-full bg-transparent">
 
       <div className="relative mx-auto flex h-[var(--site-header-h)] max-w-[1920px] items-center gap-[clamp(10px,1.4vw,32px)] px-[clamp(14px,2.4vw,52px)]">
         {/* Festival branding */}
@@ -132,15 +131,6 @@ export const Header: React.FC<HeaderProps> = ({
         {/* Actions */}
         <div className="ml-auto flex shrink-0 items-center gap-[clamp(10px,1.25vw,24px)] min-[1200px]:ml-0">
           {audioButton('hidden sm:flex', 'btn-toggle-sound')}
-
-          <button
-            id="btn-register-header"
-            onClick={onOpenRegister}
-            className={`rounded-[11px] border border-[#D4A84F]/75 bg-gradient-to-b from-[#62101A] to-[#3A080D] px-[clamp(14px,1.4vw,26px)] py-[clamp(6px,0.55vw,10px)] font-cormorant font-semibold text-[14px] md:text-[clamp(15px,1.05vw,19px)] tracking-wide text-[#F8EFDD] shadow-[inset_0_0_0_3px_rgba(58,8,13,0.9),inset_0_0_0_4px_rgba(212,168,79,0.26)] hover:border-[#E6C27A] hover:text-[#FFF6E4] hover:shadow-[inset_0_0_0_3px_rgba(58,8,13,0.9),inset_0_0_0_4px_rgba(230,194,122,0.45),0_0_12px_rgba(212,168,79,0.22)] transition-[border-color,box-shadow,color] duration-[250ms] cursor-pointer whitespace-nowrap ${FOCUS_RING}`}
-          >
-            <span className="hidden min-[400px]:inline">Register Now</span>
-            <span className="min-[400px]:hidden">Register</span>
-          </button>
 
           <AmritaLogo className="hidden md:flex" />
 

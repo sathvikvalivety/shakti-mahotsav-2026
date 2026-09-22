@@ -246,7 +246,6 @@ export default function App() {
 
       {/* Sticky Top Header / Menu Bar */}
       <Header
-        onOpenRegister={() => setIsRegisterOpen(true)}
         onNavigateSection={handleNavigateSection}
         activeSection={activeSection}
         isAudioPlaying={isAudioPlaying}

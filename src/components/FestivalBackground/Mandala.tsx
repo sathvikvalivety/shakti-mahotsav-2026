@@ -5,7 +5,7 @@ interface MandalaProps {
   className?: string;
 }
 
-/** Corner mandala. Background decoration: it only drifts ±2° very slowly. */
+/** Corner mandala background decoration: rotates smoothly clockwise. */
 export const Mandala: React.FC<MandalaProps> = ({ position, className = '' }) => {
   const positionClasses = {
     'top-left': '-top-32 -left-32 sm:-top-36 sm:-left-36 md:-top-40 md:-left-40 lg:-top-44 lg:-left-44',
@@ -27,18 +27,19 @@ export const Mandala: React.FC<MandalaProps> = ({ position, className = '' }) =>
     >
       <div
         className={`
-          animate-mandala-drift
+          animate-mandala-rotate
           opacity-20
           sm:opacity-25
           md:opacity-30
           flex
           items-center
           justify-center
+          origin-center
         `}
         style={{
-          // Each corner on its own slow cycle so they never move in lockstep.
-          animationDuration: position === 'top-left' || position === 'bottom-right' ? '64s' : '76s',
-          animationDelay: position === 'top-left' || position === 'bottom-right' ? '0s' : '-19s',
+          // Smooth clockwise rotation cycle
+          animationDuration: position === 'top-left' || position === 'bottom-right' ? '48s' : '56s',
+          animationDelay: position === 'top-left' || position === 'bottom-right' ? '0s' : '-14s',
         }}
       >
         <svg

@@ -78,22 +78,21 @@
   animation-name: star-twinkle;
 }
 
-/* Corner mandalas: a barely-noticeable ±2° drift about their own centre. */
-@keyframes mandala-drift {
-  0%, 50%, 100% {
+/* Corner mandalas: smooth continuous clockwise rotation */
+@keyframes mandala-rotate-clockwise {
+  from {
     transform: rotate(0deg);
   }
-  25% {
-    transform: rotate(2deg);
-  }
-  75% {
-    transform: rotate(-2deg);
+  to {
+    transform: rotate(360deg);
   }
 }
 
+.animate-mandala-rotate,
 .animate-mandala-drift {
-  animation: mandala-drift 64s ease-in-out infinite;
+  animation: mandala-rotate-clockwise 48s linear infinite;
   transform-origin: center center;
+  will-change: transform;
 }
 
 /* Hanging ornaments: a gentle ±1° swing from the top of each strand. */
@@ -211,6 +210,7 @@
 @media (prefers-reduced-motion: reduce) {
   .animate-twinkle,
   .animate-mandala-drift,
+  .animate-mandala-rotate,
   .animate-ornament-sway,
   .skyline-lamps > *,
   .animate-spin-slow,

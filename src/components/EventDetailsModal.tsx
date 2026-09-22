@@ -8,14 +8,13 @@ interface EventDetailsModalProps {
   event: FestivalEvent | null;
   isOpen: boolean;
   onClose: () => void;
-  onRegister: (dayNumber: number) => void;
+  onRegister?: (dayNumber: number) => void;
 }
 
 export const EventDetailsModal: React.FC<EventDetailsModalProps> = ({
   event,
   isOpen,
   onClose,
-  onRegister,
 }) => {
   if (!isOpen || !event) return null;
 
@@ -52,7 +51,6 @@ export const EventDetailsModal: React.FC<EventDetailsModalProps> = ({
           {/* Master Cultural Night Detail Card */}
           <CulturalNightCard
             event={event}
-            onBookPass={() => onRegister(event.day)}
           />
         </motion.div>
       </div>
