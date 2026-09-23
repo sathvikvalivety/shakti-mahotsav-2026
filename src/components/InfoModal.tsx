@@ -418,10 +418,10 @@ export const InfoModal: React.FC<InfoModalProps> = ({
                     FESTIVAL VENUE
                   </div>
                   <div className="text-xs font-semibold text-[#FFF4D6]">
-                    University Grand Amphitheater
+                    Amrita Vishwa Vidyapeetham
                   </div>
-                  <div className="text-[11px] text-[#F8F2E3]/65">
-                    Central Campus, Gate 2, Sacred Lawns
+                  <div className="text-[11px] text-[#F8F2E3]/70 leading-relaxed">
+                    337/1A, Vengal Village, Thiruvallur Taluk, Tamil Nadu 601103
                   </div>
                 </div>
 
@@ -430,13 +430,15 @@ export const InfoModal: React.FC<InfoModalProps> = ({
                     <Phone size={15} />
                   </div>
                   <div className="text-[10px] uppercase tracking-wider text-[#D4A84F] font-bold">
-                    HELPLINE & WHATSAPP
+                    HELPLINE &amp; WHATSAPP
                   </div>
                   <div className="text-xs font-semibold text-[#FFF4D6]">
-                    +91 (080) 4567-8926
+                    <a href="tel:+919182260650" className="hover:text-[#F5D58A] transition-colors">
+                      +91 91822 60650
+                    </a>
                   </div>
                   <div className="text-[11px] text-[#F8F2E3]/65">
-                    Helpline: +91 98765 43210 (9am–9pm)
+                    Helpline: +91 91822 60650
                   </div>
                 </div>
 
@@ -448,7 +450,9 @@ export const InfoModal: React.FC<InfoModalProps> = ({
                     OFFICIAL EMAIL
                   </div>
                   <div className="text-xs font-semibold text-[#FFF4D6]">
-                    contact@shaktimahotsav2026.org
+                    <a href="mailto:shaktimahotsav@amrita.edu" className="hover:text-[#F5D58A] transition-colors">
+                      shaktimahotsav@amrita.edu
+                    </a>
                   </div>
                   <div className="text-[11px] text-[#F8F2E3]/65">
                     Response time &lt; 24 hours
