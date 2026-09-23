@@ -163,11 +163,11 @@ export const ShaktiEventDetailModal: React.FC<ShaktiEventDetailModalProps> = ({
             {/* Photo Lightbox Slider */}
             {hasImages && (
               <div className="space-y-3">
-                <div className="relative w-full aspect-[16/9] sm:aspect-[21/9] rounded-xl overflow-hidden bg-black border border-[#C49746]/25 group">
+                <div className="relative w-full aspect-[16/11] sm:aspect-[16/10] md:h-[480px] lg:h-[540px] rounded-xl overflow-hidden bg-black border border-[#C49746]/25 group">
                   <img
                     src={images[activeImgIndex]}
                     alt={`${event.title} - Photo ${activeImgIndex + 1}`}
-                    className="w-full h-full object-contain sm:object-cover transition-all duration-300"
+                    className="w-full h-full object-cover object-[center_25%] transition-all duration-300"
                   />
 
                   {images.length > 1 && (

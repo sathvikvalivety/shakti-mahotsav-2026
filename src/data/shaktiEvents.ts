@@ -159,7 +159,6 @@ export const SHAKTI_FESTIVAL_EVENTS: ShaktiFestivalEvent[] = [
       { name: 'Live Dhol & Folk Ensemble', category: 'Live Folk Music', description: 'Authentic high-energy folk vocalists and live percussion masters.' },
     ],
     images: [
-      '/images/events/day-05/dandiya-1.jpg',
       '/images/events/day-05/dandiya-2.jpg',
       '/images/events/day-05/dandiya-3.jpg',
       '/images/events/day-05/dandiya-4.jpg',
@@ -280,7 +279,11 @@ export const SHAKTI_FESTIVAL_EVENTS: ShaktiFestivalEvent[] = [
       { name: 'Cultural Studios & Sports', category: 'Sanctification', description: 'Blessings of musical instruments, dance accessories, and athletic gear.' },
       { name: 'University Transport Fleet', category: 'Vahana Puja', description: 'Ceremonial cleaning and garland adornment of campus buses and emergency fleet.' },
     ],
-    images: [], // Graceful zero-image fallback state demonstration
+    images: [
+      '/images/events/day-09/ayudha-pooja-min.webp',
+      '/images/events/day-09/360_F_1715339706_lXW14KIXy6Um6MIoNPVu9OSs0bwkjatG.jpg',
+      '/images/events/day-09/Kshitija-MruthyunjayaHand-written-music-book-tamboori-music-instrument-and-IPad-worshipped-on-Ayudha-Puja2019.jpg',
+    ],
     date: 'October 19, 2026',
     timing: '9:00 AM – 2:00 PM',
     location: 'Flag Pole',
@@ -306,6 +309,8 @@ export const SHAKTI_FESTIVAL_EVENTS: ShaktiFestivalEvent[] = [
     ],
     images: [
       '/images/events/day-10/visarjan.jpg',
+      '/images/events/day-10/dfa5c2f8-dee6-49d7-b65e-b2eee43bacec.jpg',
+      '/images/events/day-10/SaveClip.App_653398678_17988930617785769_2596859082433635963_n.jpg',
     ],
     date: 'October 20, 2026',
     timing: '4:00 PM – 9:30 PM',

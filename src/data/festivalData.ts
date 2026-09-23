@@ -36,7 +36,7 @@ export const FESTIVAL_EVENTS: FestivalEvent[] = [
       illumination: 0.05,
       type: 'new'
     },
-    highlights: ['Saree Colour: Light Pink', 'Naivedyam: Sweet Boondi and Chickpeas (Senagalu)', 'Alankaram Darshanam after 4:00 PM', 'Special Sahasranama Archana'],
+    highlights: ['DEVI ALANKARAM: Light Pink Saree (Vastram)', 'Naivedyam: Sweet Boondi and Chickpeas (Senagalu)', 'Alankaram Darshanam after 4:00 PM', 'Special Sahasranama Archana'],
     dressCode: 'Light Pink / Silk Traditional Attire',
     entryType: 'Open for All Devotees · Sacred Darshan'
   },
@@ -66,7 +66,7 @@ export const FESTIVAL_EVENTS: FestivalEvent[] = [
       illumination: 0.15,
       type: 'waxing-crescent'
     },
-    highlights: ['Saree Colour: Orange', 'Naivedyam: Pulihora (Tamarind Rice) and Ravva Kesari', 'Gayatri Mantra Maha Japam', 'Veda Parayanam'],
+    highlights: ['DEVI ALANKARAM: Orange Saree (Vastram)', 'Naivedyam: Pulihora (Tamarind Rice) and Ravva Kesari', 'Gayatri Mantra Maha Japam', 'Veda Parayanam'],
     dressCode: 'Orange / Saffron Traditional Attire',
     entryType: 'Open for All Devotees · Sacred Darshan'
   },
@@ -96,7 +96,7 @@ export const FESTIVAL_EVENTS: FestivalEvent[] = [
       illumination: 0.28,
       type: 'waxing-crescent'
     },
-    highlights: ['Saree Colour: Sandalwood Yellow', 'Naivedyam: Katte Pongali (Spiced Rice and Lentil Pongal)', 'Annadanam Distribution', 'Laksha Kumkumarchana'],
+    highlights: ['DEVI ALANKARAM: Sandalwood Yellow Saree (Vastram)', 'Naivedyam: Katte Pongali (Spiced Rice and Lentil Pongal)', 'Annadanam Distribution', 'Laksha Kumkumarchana'],
     dressCode: 'Sandalwood Yellow / Golden Yellow Silk',
     entryType: 'Open for All Devotees · Anna Prasadam'
   },
@@ -126,7 +126,7 @@ export const FESTIVAL_EVENTS: FestivalEvent[] = [
       illumination: 0.42,
       type: 'first-quarter'
     },
-    highlights: ['Saree Colour: Maroon / Dark Red', 'Naivedyam: Kadambam (Mix Vegetable Rice) or Laddu', 'Chandi Parayanam', 'Deeparadhana'],
+    highlights: ['DEVI ALANKARAM: Maroon / Dark Red Saree (Vastram)', 'Naivedyam: Kadambam (Mix Vegetable Rice) or Laddu', 'Chandi Parayanam', 'Deeparadhana'],
     dressCode: 'Maroon or Dark Red Ethnic Wear',
     entryType: 'Open for All Devotees · Sacred Darshan'
   },
@@ -156,7 +156,7 @@ export const FESTIVAL_EVENTS: FestivalEvent[] = [
       illumination: 0.58,
       type: 'waxing-gibbous'
     },
-    highlights: ['Saree Colour: Pure Gold Colour / Yellow', 'Naivedyam: Pulihora and Pesara Boorelu (Green Gram Sweets)', 'Sri Chakra Navavarana Puja', 'Lalita Sahasranama Stotram'],
+    highlights: ['DEVI ALANKARAM: Pure Gold Colour / Yellow Saree (Vastram)', 'Naivedyam: Pulihora and Pesara Boorelu (Green Gram Sweets)', 'Sri Chakra Navavarana Puja', 'Lalita Sahasranama Stotram'],
     dressCode: 'Pure Gold / Vibrant Yellow Handloom',
     entryType: 'Open for All Devotees · Sacred Darshan'
   },
@@ -186,7 +186,7 @@ export const FESTIVAL_EVENTS: FestivalEvent[] = [
       illumination: 0.72,
       type: 'waxing-gibbous'
     },
-    highlights: ['Saree Colour: White', 'Naivedyam: Atukulu (Beaten Rice), Bellam (Jaggery), Sanagapappu (Bengal Gram), and Coconut Payasam', 'Aksharabhyasam for Children', 'Veena Recital & Classical Chants'],
+    highlights: ['DEVI ALANKARAM: White Saree (Vastram)', 'Naivedyam: Atukulu (Beaten Rice), Bellam (Jaggery), Sanagapappu (Bengal Gram), and Coconut Payasam', 'Aksharabhyasam for Children', 'Veena Recital & Classical Chants'],
     dressCode: 'Pure White or Light Ivory Silk',
     entryType: 'Open for All Devotees · Vidyarambham'
   },
@@ -216,7 +216,7 @@ export const FESTIVAL_EVENTS: FestivalEvent[] = [
       illumination: 0.85,
       type: 'waxing-gibbous'
     },
-    highlights: ['Saree Colour: Pink / Rose', 'Naivedyam: Ksheerannam (Milk Kheer / Payasam)', 'Dhana Lakshmi Puja & Suvasini Puja', 'Golden Deepotsav'],
+    highlights: ['DEVI ALANKARAM: Pink / Rose Saree (Vastram)', 'Naivedyam: Ksheerannam (Milk Kheer / Payasam)', 'Dhana Lakshmi Puja & Suvasini Puja', 'Golden Deepotsav'],
     dressCode: 'Pink / Rose or Gold Bordered Attire',
     entryType: 'Open for All Devotees · Sacred Darshan'
   },
@@ -246,7 +246,7 @@ export const FESTIVAL_EVENTS: FestivalEvent[] = [
       illumination: 0.95,
       type: 'full'
     },
-    highlights: ['Saree Colour: Red', 'Naivedyam: Garelu (Vada) and Lemon Juice (Nimma Rasam)', 'Durgashtami Maha Havan', 'Kumkuma Archana with 108 Suvasinis'],
+    highlights: ['DEVI ALANKARAM: Red Saree (Vastram)', 'Naivedyam: Garelu (Vada) and Lemon Juice (Nimma Rasam)', 'Durgashtami Maha Havan', 'Kumkuma Archana with 108 Suvasinis'],
     dressCode: 'Bright Red / Crimson Traditional Attire',
     entryType: 'Open for All Devotees · Maha Prasadam'
   },
@@ -276,7 +276,7 @@ export const FESTIVAL_EVENTS: FestivalEvent[] = [
       illumination: 0.88,
       type: 'waning-gibbous'
     },
-    highlights: ['Saree Colour: Dark Brown or Red Handloom', 'Naivedyam: Chakra Pongali (Sweet Pongal)', 'Ayudha Puja & Vahana Puja', 'Chandi Maha Yajna Purnahuti'],
+    highlights: ['DEVI ALANKARAM: Dark Brown or Red Handloom Saree (Vastram)', 'Naivedyam: Chakra Pongali (Sweet Pongal)', 'Ayudha Puja & Vahana Puja', 'Chandi Maha Yajna Purnahuti'],
     dressCode: 'Dark Brown or Red Handloom Silk',
     entryType: 'Open for All Devotees · Sacred Darshan'
   },
@@ -306,7 +306,7 @@ export const FESTIVAL_EVENTS: FestivalEvent[] = [
       illumination: 0.80,
       type: 'eclipse'
     },
-    highlights: ['Saree Colour: Green', 'Naivedyam: Pulihora, Garelu, and Maha Naivedyam', 'Shami Puja (Jammi Chettu Puja)', 'Grand Teppotsavam & Vijayotsavam'],
+    highlights: ['DEVI ALANKARAM: Green Saree (Vastram)', 'Naivedyam: Pulihora, Garelu, and Maha Naivedyam', 'Shami Puja (Jammi Chettu Puja)', 'Grand Teppotsavam & Vijayotsavam'],
     dressCode: 'Royal Green / Gold Zari Traditional Attire',
     entryType: 'All Access · Grand Vijayotsavam'
   }

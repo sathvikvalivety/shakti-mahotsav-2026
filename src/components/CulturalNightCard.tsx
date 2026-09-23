@@ -44,14 +44,14 @@ export const CulturalNightCard: React.FC<CulturalNightCardProps> = ({
   const deityDescription = event?.navadurga.significance || 'Bala Tripura Sundari is revered as the youthful manifestation of the Divine Mother, symbolizing pure and radiant consciousness, spiritual awakening, and divine grace.';
 
   const attractions = (event?.highlights || [
-    'Saree Colour: Light Pink',
+    'DEVI ALANKARAM: Light Pink Saree (Vastram)',
     'Naivedyam: Sweet Boondi and Chickpeas (Senagalu)',
     'Alankaram Darshanam after 4:00 PM',
     'Special Sahasranama Archana'
   ]).map((h, i) => ({
     symbol: ['❖', '✦', '❀', '✺'][i % 4],
     title: h,
-    desc: h.includes('Saree') ? 'Sacred Alankaram Color' : h.includes('Naivedyam') ? 'Prasadam Offering' : 'Sacred Ritual / Darshan',
+    desc: h.toUpperCase().includes('ALANKARAM') || h.includes('Saree') ? 'Devi Alankaram (Vastram)' : h.includes('Naivedyam') ? 'Prasadam Offering' : 'Sacred Ritual / Darshan',
   }));
 
   return (

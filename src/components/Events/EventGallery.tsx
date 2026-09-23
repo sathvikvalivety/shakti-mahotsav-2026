@@ -60,7 +60,7 @@ export const EventGallery: React.FC<EventGalleryProps> = ({
   if (count === 1) {
     return (
       <div
-        className={`relative w-full aspect-[16/9] sm:aspect-[16/9.5] rounded-xl overflow-hidden bg-[#0D1017] border border-[#C49746]/20 group cursor-pointer ${className}`}
+        className={`relative w-full aspect-[16/10] sm:aspect-[16/10.5] rounded-xl overflow-hidden bg-[#0D1017] border border-[#C49746]/20 group cursor-pointer ${className}`}
         onClick={(e) => handleImageClick(0, e)}
         role="button"
         tabIndex={0}
@@ -86,7 +86,7 @@ export const EventGallery: React.FC<EventGalleryProps> = ({
   // State 2: Two balanced side-by-side images
   if (count === 2) {
     return (
-      <div className={`grid grid-cols-2 gap-2.5 sm:gap-3 w-full aspect-[16/9] sm:aspect-[16/9.5] ${className}`}>
+      <div className={`grid grid-cols-2 gap-2.5 sm:gap-3 w-full aspect-[16/10] sm:aspect-[16/10.5] ${className}`}>
         {images.map((img, idx) => (
           <div
             key={idx}
@@ -122,7 +122,7 @@ export const EventGallery: React.FC<EventGalleryProps> = ({
     return (
       <div className={`w-full ${className}`}>
         {/* Desktop & Tablet Layout (sm and up) */}
-        <div className="hidden sm:grid grid-cols-12 gap-2.5 sm:gap-3 w-full aspect-[16/9.5]">
+        <div className="hidden sm:grid grid-cols-12 gap-2.5 sm:gap-3 w-full aspect-[16/10.5]">
           {/* Dominant Hero Image (7 cols ~ 58.3%) */}
           <div
             className="col-span-7 h-full relative rounded-xl overflow-hidden bg-[#0D1017] border border-[#C49746]/20 group cursor-pointer"
@@ -191,7 +191,7 @@ export const EventGallery: React.FC<EventGalleryProps> = ({
               loading="lazy"
             />
           </div>
-          <div className="grid grid-cols-2 gap-2 w-full aspect-[16/7]">
+          <div className="grid grid-cols-2 gap-2 w-full aspect-[16/7.5]">
             {images.slice(1, 3).map((img, idx) => (
               <div
                 key={idx + 1}
@@ -218,7 +218,7 @@ export const EventGallery: React.FC<EventGalleryProps> = ({
   // State 4: Balanced 2 × 2 editorial grid
   if (count === 4) {
     return (
-      <div className={`grid grid-cols-2 grid-rows-2 gap-2.5 sm:gap-3 w-full aspect-[16/9] sm:aspect-[16/9.5] ${className}`}>
+      <div className={`grid grid-cols-2 grid-rows-2 gap-2.5 sm:gap-3 w-full aspect-[16/10] sm:aspect-[16/10.5] ${className}`}>
         {images.slice(0, 4).map((img, idx) => (
           <div
             key={idx}
@@ -250,7 +250,7 @@ export const EventGallery: React.FC<EventGalleryProps> = ({
   // State 5+: Dominant hero or 4-image grid with refined editorial "+N MORE" overlay
   const extraCount = count - 4;
   return (
-    <div className={`grid grid-cols-2 grid-rows-2 gap-2.5 sm:gap-3 w-full aspect-[16/9] sm:aspect-[16/9.5] ${className}`}>
+    <div className={`grid grid-cols-2 grid-rows-2 gap-2.5 sm:gap-3 w-full aspect-[16/10] sm:aspect-[16/10.5] ${className}`}>
       {images.slice(0, 3).map((img, idx) => (
         <div
           key={idx}
