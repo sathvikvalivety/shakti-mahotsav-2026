@@ -31,7 +31,7 @@ export const CulturalNightCard: React.FC<CulturalNightCardProps> = ({
   const locationTitle = event?.location.toUpperCase() || 'NEAR FLAG POLE';
   const locationSub = event?.category || 'Alankaram';
   const dressCode = event?.dressCode || 'Light Pink / Silk Traditional Attire';
-  
+
   const aboutText = event?.description || 'Sri Bala Tripura Sundari Devi represents the divine innocence, beauty, and youthful radiance of Shakti, embodying purity, grace, and spiritual awakening.';
 
   const heroImage = event?.image || 'https://ik.imagekit.io/z9bvr2bzc/all%20days%20images/day%201.png';
@@ -64,7 +64,7 @@ export const CulturalNightCard: React.FC<CulturalNightCardProps> = ({
           - Corner Mandala fragments
       ========================================================================= */}
       <div className="relative rounded-[18px] bg-gradient-to-b from-[#081B36]/95 via-[#06152D]/95 to-[#040E1E]/98 border border-[#D4A84F]/40 shadow-[0_0_40px_rgba(212,168,79,0.12),0_20px_50px_-10px_rgba(2,8,23,0.85)] backdrop-blur-xl overflow-hidden select-none">
-        
+
         {/* Subtle Decorative Gold Mandala Corner Fragments */}
         <div className="absolute top-0 left-0 w-16 h-16 pointer-events-none opacity-35 z-20">
           <svg viewBox="0 0 100 100" className="w-full h-full text-[#D4A84F] fill-none">
@@ -166,12 +166,12 @@ export const CulturalNightCard: React.FC<CulturalNightCardProps> = ({
           ======================================================================= */}
           <div className="relative rounded-xl bg-gradient-to-r from-[#081B36]/80 via-[#102B50]/50 to-[#081B36]/80 border border-[#D4A84F]/30 p-4 sm:p-4.5 backdrop-blur-md overflow-hidden">
             <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4">
-              
+
               {/* Left: Circular Gold Sacred-Geometry Illustration */}
               <div className="relative flex-shrink-0 w-20 h-20 sm:w-22 sm:h-22 flex items-center justify-center">
                 <div className="absolute inset-0 rounded-full border border-[#D4A84F]/30 animate-spin-slow" />
                 <div className="absolute inset-1 rounded-full border border-dashed border-[#F5D58A]/35 animate-spin-reverse-slow" />
-                
+
                 <svg viewBox="0 0 120 120" className="w-full h-full text-[#F5D58A] drop-shadow-[0_0_8px_rgba(212,168,79,0.4)]">
                   {Array.from({ length: 16 }).map((_, i) => (
                     <line
@@ -243,7 +243,7 @@ export const CulturalNightCard: React.FC<CulturalNightCardProps> = ({
               - Thin vertical gold separators (NO heavy boxes)
           ======================================================================= */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-0 py-1">
-            
+
             {/* Column 1: CALENDAR */}
             <div className="flex items-start gap-2.5 lg:pr-4 lg:border-r border-[#D4A84F]/25">
               <div className="w-7 h-7 rounded-full bg-[#102B50]/60 border border-[#D4A84F]/40 flex items-center justify-center text-[#F5D58A] flex-shrink-0">
@@ -305,7 +305,7 @@ export const CulturalNightCard: React.FC<CulturalNightCardProps> = ({
               </div>
               <div>
                 <span className="block text-[10px] font-bold tracking-[0.18em] text-[#D4A84F] uppercase mb-0.5">
-                  DRESS CODE
+                  Sacred Alankaram
                 </span>
                 <p className="font-sans text-xs font-semibold text-[#FFF4D6] leading-snug">
                   {dressCode}
