@@ -17,6 +17,7 @@ import { Footer } from './components/Footer';
 import { EventDetailsModal } from './components/EventDetailsModal';
 import { RegistrationModal } from './components/RegistrationModal';
 import { InfoModal } from './components/InfoModal';
+import { EventsGrid } from './components/Events';
 import { Sparkles, Play } from 'lucide-react';
 
 export default function App() {
@@ -68,7 +69,11 @@ export default function App() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else if (section === 'about' || section === 'events' || section === 'schedule') {
       setActiveInfoSection(null);
-      const targetId = { about: 'about-section', events: 'events-section', schedule: 'schedule-section' }[section];
+      const targetId = {
+        about: 'about-section',
+        events: 'shakti-events-section',
+        schedule: 'schedule-section',
+      }[section];
       const eventsEl = document.getElementById(targetId);
       if (eventsEl) {
         eventsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -85,10 +90,14 @@ export default function App() {
   useEffect(() => {
     const handleScroll = () => {
       if (activeInfoSection) return;
-      const eventsEl = document.getElementById('events-section');
+      const shaktiEventsEl = document.getElementById('shakti-events-section');
+      const scheduleEl = document.getElementById('schedule-section');
       const aboutEl = document.getElementById('about-section');
-      if (eventsEl && eventsEl.getBoundingClientRect().top <= 250) {
+
+      if (shaktiEventsEl && shaktiEventsEl.getBoundingClientRect().top <= 250) {
         setActiveSection('events');
+      } else if (scheduleEl && scheduleEl.getBoundingClientRect().top <= 250) {
+        setActiveSection('schedule');
       } else if (aboutEl && aboutEl.getBoundingClientRect().top <= 250) {
         setActiveSection('about');
       } else {
@@ -339,6 +348,9 @@ export default function App() {
               </div>
             </div>
           </section>
+
+          {/* 10-Day Shakti Mahotsav 2026 Event Cards 2x5 Grid */}
+          <EventsGrid />
         </main>
 
         {/* Footer */}

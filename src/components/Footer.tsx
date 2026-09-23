@@ -51,12 +51,9 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateSection }) => {
                 <span className="w-1.5 h-1.5 rounded-full bg-[#D4A84F]" />
                 October 11 – October 20, 2026
               </p>
-              <p className="flex items-start gap-2">
-                <MapPin size={14} className="text-[#D4A84F] shrink-0 mt-0.5" />
-                <span>Grand Amphitheater & Sacred Cultural Arena, Amrita Campus</span>
-              </p>
+              
               <p className="text-[#F8F2E3]/60 italic pl-5.5">
-                Evening Celebrations start daily at 6:30 PM IST with sacred Maha Deeparadhana.
+                Evening Celebrations start daily at 4:00 PM IST with sacred Maha Deeparadhana.
               </p>
             </div>
           </div>
