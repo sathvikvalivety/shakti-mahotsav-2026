@@ -18,7 +18,6 @@ const NAV_ITEMS = [
   { id: 'events', label: 'Events' },
   { id: 'schedule', label: 'Schedule' },
   { id: 'gallery', label: 'Gallery' },
-  { id: 'team', label: 'Team' },
   { id: 'connect', label: 'Contact' },
 ];
 

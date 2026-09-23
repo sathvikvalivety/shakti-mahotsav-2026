@@ -125,14 +125,6 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateSection }) => {
               </li>
               <li>
                 <button
-                  onClick={() => onNavigateSection('team')}
-                  className="hover:text-[#F5D58A] transition-colors cursor-pointer text-[#F8F2E3]/80 hover:translate-x-1 inline-flex items-center gap-1.5 duration-150"
-                >
-                  <Users size={13} className="text-[#D4A84F]" /> Organizing Committee
-                </button>
-              </li>
-              <li>
-                <button
                   onClick={() => onNavigateSection('suggestions')}
                   className="hover:text-[#F5D58A] transition-colors cursor-pointer text-[#F8F2E3]/80 hover:translate-x-1 inline-flex items-center gap-1.5 duration-150"
                 >
@@ -151,8 +143,8 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateSection }) => {
             <div className="space-y-2.5 text-xs text-[#F8F2E3]/80">
               <div className="flex items-center gap-2">
                 <Mail size={14} className="text-[#D4A84F] shrink-0" />
-                <a href="mailto:shaktimahotsav@amrita.edu" className="hover:text-[#F5D58A] transition-colors">
-                  shaktimahotsav@amrita.edu
+                <a href="mailto:shaktimahotsav.amritachennai@gmail.com" className="hover:text-[#F5D58A] transition-colors break-all">
+                  shaktimahotsav.amritachennai@gmail.com
                 </a>
               </div>
               <div className="flex items-center gap-2">

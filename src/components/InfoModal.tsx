@@ -5,7 +5,6 @@ import {
   Sparkles,
   Send,
   Check,
-  Users,
   Image as ImageIcon,
   Info,
   Handshake,
@@ -252,11 +251,10 @@ export const InfoModal: React.FC<InfoModalProps> = ({
                     <button
                       key={filter}
                       onClick={() => setGalleryFilter(filter)}
-                      className={`px-3 py-1 rounded-full capitalize transition-colors cursor-pointer ${
-                        galleryFilter === filter
+                      className={`px-3 py-1 rounded-full capitalize transition-colors cursor-pointer ${galleryFilter === filter
                           ? 'bg-[#D4A84F] text-[#061426] font-bold'
                           : 'text-[#F8F2E3]/70 hover:text-[#F8F2E3]'
-                      }`}
+                        }`}
                     >
                       {filter}
                     </button>
@@ -427,51 +425,57 @@ export const InfoModal: React.FC<InfoModalProps> = ({
 
               {/* Contact Info Cards */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <div className="p-3.5 rounded-xl bg-[#040D1A] border border-[#D4A84F]/30 space-y-1">
-                  <div className="w-7 h-7 rounded-full bg-[#0E2548] flex items-center justify-center text-[#D4A84F] mb-2">
-                    <MapPin size={15} />
-                  </div>
-                  <div className="text-[10px] uppercase tracking-wider text-[#D4A84F] font-bold">
-                    FESTIVAL VENUE
-                  </div>
-                  <div className="text-xs font-semibold text-[#FFF4D6]">
-                    Amrita Vishwa Vidyapeetham
-                  </div>
-                  <div className="text-[11px] text-[#F8F2E3]/70 leading-relaxed">
-                    337/1A, Vengal Village, Thiruvallur Taluk, Tamil Nadu 601103
+                <div className="p-3.5 rounded-xl bg-[#040D1A] border border-[#D4A84F]/30 space-y-1 min-w-0 flex flex-col justify-between">
+                  <div>
+                    <div className="w-7 h-7 rounded-full bg-[#0E2548] flex items-center justify-center text-[#D4A84F] mb-2">
+                      <MapPin size={15} />
+                    </div>
+                    <div className="text-[10px] uppercase tracking-wider text-[#D4A84F] font-bold">
+                      FESTIVAL VENUE
+                    </div>
+                    <div className="text-xs font-semibold text-[#FFF4D6]">
+                      Amrita Vishwa Vidyapeetham
+                    </div>
+                    <div className="text-[11px] text-[#F8F2E3]/70 leading-relaxed pt-0.5">
+                      337/1A, Vengal Village, Thiruvallur Taluk, Tamil Nadu 601103
+                    </div>
                   </div>
                 </div>
 
-                <div className="p-3.5 rounded-xl bg-[#040D1A] border border-[#D4A84F]/30 space-y-1">
-                  <div className="w-7 h-7 rounded-full bg-[#0E2548] flex items-center justify-center text-[#D4A84F] mb-2">
-                    <Phone size={15} />
+                <div className="p-3.5 rounded-xl bg-[#040D1A] border border-[#D4A84F]/30 space-y-1 min-w-0 flex flex-col justify-between">
+                  <div>
+                    <div className="w-7 h-7 rounded-full bg-[#0E2548] flex items-center justify-center text-[#D4A84F] mb-2">
+                      <Phone size={15} />
+                    </div>
+                    <div className="text-[10px] uppercase tracking-wider text-[#D4A84F] font-bold">
+                      HELPLINE &amp; WHATSAPP
+                    </div>
+                    <div className="text-xs font-semibold text-[#FFF4D6] pt-0.5">
+                      <a href="tel:+919182260650" className="hover:text-[#F5D58A] transition-colors">
+                        +91 91822 60650
+                      </a>
+                    </div>
                   </div>
-                  <div className="text-[10px] uppercase tracking-wider text-[#D4A84F] font-bold">
-                    HELPLINE &amp; WHATSAPP
-                  </div>
-                  <div className="text-xs font-semibold text-[#FFF4D6]">
-                    <a href="tel:+919182260650" className="hover:text-[#F5D58A] transition-colors">
-                      +91 91822 60650
-                    </a>
-                  </div>
-                  <div className="text-[11px] text-[#F8F2E3]/65">
+                  <div className="text-[11px] text-[#F8F2E3]/65 pt-1">
                     Helpline: +91 91822 60650
                   </div>
                 </div>
 
-                <div className="p-3.5 rounded-xl bg-[#040D1A] border border-[#D4A84F]/30 space-y-1">
-                  <div className="w-7 h-7 rounded-full bg-[#0E2548] flex items-center justify-center text-[#D4A84F] mb-2">
-                    <Mail size={15} />
+                <div className="p-3.5 rounded-xl bg-[#040D1A] border border-[#D4A84F]/30 space-y-1 min-w-0 flex flex-col justify-between">
+                  <div>
+                    <div className="w-7 h-7 rounded-full bg-[#0E2548] flex items-center justify-center text-[#D4A84F] mb-2">
+                      <Mail size={15} />
+                    </div>
+                    <div className="text-[10px] uppercase tracking-wider text-[#D4A84F] font-bold">
+                      OFFICIAL EMAIL
+                    </div>
+                    <div className="text-[11px] sm:text-xs font-semibold text-[#FFF4D6] break-all leading-snug pt-0.5">
+                      <a href="mailto:shaktimahotsav.amritachennai@gmail.com" className="hover:text-[#F5D58A] transition-colors">
+                        shaktimahotsav.amritachennai@gmail.com
+                      </a>
+                    </div>
                   </div>
-                  <div className="text-[10px] uppercase tracking-wider text-[#D4A84F] font-bold">
-                    OFFICIAL EMAIL
-                  </div>
-                  <div className="text-xs font-semibold text-[#FFF4D6]">
-                    <a href="mailto:shaktimahotsav@amrita.edu" className="hover:text-[#F5D58A] transition-colors">
-                      shaktimahotsav@amrita.edu
-                    </a>
-                  </div>
-                  <div className="text-[11px] text-[#F8F2E3]/65">
+                  <div className="text-[11px] text-[#F8F2E3]/65 pt-1">
                     Response time &lt; 24 hours
                   </div>
                 </div>
@@ -570,38 +574,6 @@ export const InfoModal: React.FC<InfoModalProps> = ({
             </div>
           )}
 
-          {/* ============================================================ */}
-          {/* TEAM SECTION                                                 */}
-          {/* ============================================================ */}
-          {section === 'team' && (
-            <div className="space-y-4">
-              <div className="flex items-center gap-2 text-xs font-bold text-[#D4A84F] uppercase tracking-widest">
-                <Users size={14} />
-                <span>FESTIVAL COMMITTEE</span>
-              </div>
-              <h3 className="font-heading text-2xl font-bold text-[#F8F2E3]">
-                The Visionaries Behind Shakti Mahotsav
-              </h3>
-              <p className="text-xs text-[#F8F2E3]/70">
-                Organized under the patronage of the University Cultural Affairs Council and Student Union.
-              </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-xs">
-                {[
-                  { name: 'Dr. Gayatri Ramanathan', role: 'Festival Director & Dean of Cultural Affairs' },
-                  { name: 'Aditya Vardhan', role: 'Student President & Cultural Convener' },
-                  { name: 'Ananya Deshmukh', role: 'Creative Director & Stage Curator' },
-                  { name: 'Kavya Sengupta', role: 'Head of Traditional Arts & Music' },
-                  { name: 'Rohan Mehta', role: 'Logistics & Security Head' },
-                  { name: 'Pooja Bhatt', role: 'Hospitality & Prasadam Coordinator' },
-                ].map((member, i) => (
-                  <div key={i} className="p-3 rounded-xl bg-[#040D1A] border border-[#D4A84F]/20">
-                    <div className="font-bold text-[#F5D58A]">{member.name}</div>
-                    <div className="text-[11px] text-[#F8F2E3]/70 mt-0.5">{member.role}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
 
           {/* ============================================================ */}
           {/* SUGGESTIONS SECTION                                          */}
