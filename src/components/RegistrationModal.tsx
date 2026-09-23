@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Check, Ticket, Sparkles, Shield, QrCode, User, Mail, Phone } from 'lucide-react';
 import { FESTIVAL_EVENTS } from '../data/festivalData';
+import { submitToGoogleSheets } from '../utils/formSubmit';
 
 interface RegistrationModalProps {
   isOpen: boolean;
@@ -25,12 +26,24 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !email) return;
     const generatedId = `SM26-${Math.floor(100000 + Math.random() * 900000)}`;
     setTicketId(generatedId);
     setIsSubmitted(true);
+
+    // Post to Google Sheets
+    await submitToGoogleSheets({
+      formType: 'registration',
+      name,
+      email,
+      phone,
+      rollNo: studentId,
+      tier: tier === 'season' ? '9-Night Season' : tier === 'vip' ? 'VIP Cultural' : `Day ${dayChoice}`,
+      ticketId: generatedId,
+      message: `Festival Pass (${tier.toUpperCase()}) - Day Choice: ${dayChoice}`,
+    });
   };
 
   const handleReset = () => {

@@ -20,6 +20,7 @@ import {
   Globe,
   Share2,
 } from 'lucide-react';
+import { submitToGoogleSheets } from '../utils/formSubmit';
 
 interface InfoModalProps {
   section: string | null;
@@ -50,10 +51,17 @@ export const InfoModal: React.FC<InfoModalProps> = ({
 
   if (!section || section === 'events' || section === 'home') return null;
 
-  const handleSuggestionSubmit = (e: React.FormEvent) => {
+  const handleSuggestionSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!suggestion.trim()) return;
     setSuggestionSubmitted(true);
+
+    await submitToGoogleSheets({
+      formType: 'suggestion',
+      category: 'Festival Idea & Recommendation',
+      message: suggestion,
+    });
+
     setTimeout(() => {
       setSuggestionSubmitted(false);
       setSuggestion('');
@@ -61,10 +69,19 @@ export const InfoModal: React.FC<InfoModalProps> = ({
     }, 2000);
   };
 
-  const handleConnectSubmit = (e: React.FormEvent) => {
+  const handleConnectSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!connectName.trim() || !connectContact.trim()) return;
     setConnectSubmitted(true);
+
+    await submitToGoogleSheets({
+      formType: 'contact',
+      name: connectName,
+      contact: connectContact,
+      topic: connectTopic,
+      message: connectMessage,
+    });
+
     setTimeout(() => {
       setConnectSubmitted(false);
       setConnectName('');
