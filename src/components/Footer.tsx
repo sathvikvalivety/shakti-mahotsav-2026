@@ -51,7 +51,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateSection }) => {
                 <span className="w-1.5 h-1.5 rounded-full bg-[#D4A84F]" />
                 October 11 – October 20, 2026
               </p>
-              
+
               <p className="text-[#F8F2E3]/60 italic pl-5.5">
                 Evening Celebrations start daily at 4:00 PM IST with sacred Maha Deeparadhana.
               </p>
@@ -158,7 +158,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateSection }) => {
               <div className="flex items-center gap-2">
                 <Phone size={14} className="text-[#D4A84F] shrink-0" />
                 <a href="tel:+919876543210" className="hover:text-[#F5D58A] transition-colors">
-                  +91 (0422) 2685 000
+                  +91 91822 60650
                 </a>
               </div>
               <div className="pt-2">
