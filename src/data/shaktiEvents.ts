@@ -51,7 +51,7 @@ export const SHAKTI_FESTIVAL_EVENTS: ShaktiFestivalEvent[] = [
     ],
     date: 'October 11, 2026',
     timing: '5:00 PM Onwards',
-    location: 'Campus Main Grounds to Flag Pole',
+    location: 'Flag Pole',
     participation: 'Open for all students, faculty, and devotees',
   },
   {
@@ -78,7 +78,7 @@ export const SHAKTI_FESTIVAL_EVENTS: ShaktiFestivalEvent[] = [
     ],
     date: 'October 12, 2026',
     timing: '6:00 PM – 9:00 PM',
-    location: 'University Open Air Auditorium',
+    location: 'Flag Pole',
     participation: 'Open Audience & Registered Cultural Teams',
   },
   {
@@ -105,7 +105,7 @@ export const SHAKTI_FESTIVAL_EVENTS: ShaktiFestivalEvent[] = [
     ],
     date: 'October 13, 2026',
     timing: '4:30 PM – 8:00 PM',
-    location: 'Central Lawn & Water Body Courtyard',
+    location: 'Flag Pole',
     participation: 'Open to all women, faculty, students, and guests',
   },
   {
@@ -137,7 +137,7 @@ export const SHAKTI_FESTIVAL_EVENTS: ShaktiFestivalEvent[] = [
     ],
     date: 'October 14, 2026',
     timing: '5:30 PM – 9:00 PM',
-    location: 'Cultural Plaza',
+    location: 'Flag Pole',
     participation: 'All university community members & regional clubs',
   },
   {
@@ -167,7 +167,7 @@ export const SHAKTI_FESTIVAL_EVENTS: ShaktiFestivalEvent[] = [
     ],
     date: 'October 15, 2026',
     timing: '6:30 PM – 10:00 PM',
-    location: 'Main Amphitheater Ground',
+    location: 'Flag Pole',
     participation: 'Traditional attire mandatory · Dandiya sticks provided',
   },
   {
@@ -202,7 +202,7 @@ export const SHAKTI_FESTIVAL_EVENTS: ShaktiFestivalEvent[] = [
     ],
     date: 'October 16, 2026',
     timing: '10:00 AM – 5:30 PM',
-    location: 'Activity Arena & Art Gallery Promenade',
+    location: 'Flag Pole',
     participation: 'Open entry for all workshops and competitive games',
   },
   {
@@ -230,7 +230,7 @@ export const SHAKTI_FESTIVAL_EVENTS: ShaktiFestivalEvent[] = [
     ],
     date: 'October 17, 2026',
     timing: '8:00 AM – 1:00 PM',
-    location: 'Yagashala & Main Temple Mandapam',
+    location: 'Flag Pole',
     participation: 'Devotees & families welcome · Pooja items arranged',
   },
   {
@@ -257,7 +257,7 @@ export const SHAKTI_FESTIVAL_EVENTS: ShaktiFestivalEvent[] = [
     ],
     date: 'October 18, 2026',
     timing: '11:00 AM – 4:00 PM',
-    location: 'Food Pavilion & Hospitality Hall',
+    location: 'Flag Pole',
     participation: 'Tasting open to all · Student cooking competitions',
   },
   {
@@ -283,7 +283,7 @@ export const SHAKTI_FESTIVAL_EVENTS: ShaktiFestivalEvent[] = [
     images: [], // Graceful zero-image fallback state demonstration
     date: 'October 19, 2026',
     timing: '9:00 AM – 2:00 PM',
-    location: 'All Departments, Laboratories & Transport Depot',
+    location: 'Flag Pole',
     participation: 'All faculty, research scholars, staff, and students',
   },
   {
@@ -309,7 +309,7 @@ export const SHAKTI_FESTIVAL_EVENTS: ShaktiFestivalEvent[] = [
     ],
     date: 'October 20, 2026',
     timing: '4:00 PM – 9:30 PM',
-    location: 'Central Mandapam to University Sports Grounds',
+    location: 'Flag Pole',
     participation: 'All university community, families, and honored dignitaries',
   },
 ];

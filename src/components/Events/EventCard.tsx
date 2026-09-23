@@ -118,7 +118,7 @@ export const EventCard: React.FC<EventCardProps> = ({
           <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 font-manrope text-[11px] text-[#E8DFD1]/65 uppercase tracking-wider">
             {timing && <span>{timing.split('–')[0].trim()}</span>}
             {timing && location && <span className="text-[#C49746]/40">·</span>}
-            {location && <span className="truncate max-w-[170px]">{location.split('to')[0].trim()}</span>}
+            {location && <span>{location}</span>}
           </div>
 
           {/* Right: Clean Editorial Button */}
