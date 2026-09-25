@@ -15,6 +15,7 @@ export interface ShaktiFestivalEvent {
   highlights: string[];
   programs: ProgramItem[];
   images: string[];
+  imagePositions?: string[];
   date?: string;
   timing?: string;
   location?: string;
@@ -164,6 +165,7 @@ export const SHAKTI_FESTIVAL_EVENTS: ShaktiFestivalEvent[] = [
       '/images/events/day-05/dandiya-4.jpg',
       '/images/events/day-05/dandiya-5.jpg',
     ],
+    imagePositions: ['object-center', 'object-top', 'object-center', 'object-center'],
     date: 'October 15, 2026',
     timing: '6:30 PM – 10:00 PM',
     location: 'Flag Pole',
@@ -192,9 +194,9 @@ export const SHAKTI_FESTIVAL_EVENTS: ShaktiFestivalEvent[] = [
       { name: 'On-Spot Sketching & Caricature', category: 'Visual Arts', description: 'Live portraits, thematic charcoal sketches, and caricature kiosks.' },
     ],
     images: [
-      '/images/events/day-06/carrom.jpg',
+      'https://ik.imagekit.io/2ecf22k5j/shakti%20mahotsav/14.png',
       '/images/events/day-06/housie.png',
-      '/images/events/day-06/tug-of-war.jpg',
+      'https://ik.imagekit.io/2ecf22k5j/shakti%20mahotsav/7.png',
       '/images/events/day-06/pot-1.jpeg',
       '/images/events/day-06/pottery-2.jpg',
       '/images/events/day-06/live-drawing.webp',

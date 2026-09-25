@@ -23,6 +23,7 @@ export const EventCard: React.FC<EventCardProps> = ({
     description,
     highlights = [],
     images = [],
+    imagePositions,
     date,
     timing,
     location,
@@ -86,6 +87,7 @@ export const EventCard: React.FC<EventCardProps> = ({
         <div className="my-0.5">
           <EventGallery
             images={images}
+            imagePositions={imagePositions}
             title={title}
             day={day}
             onOpenLightbox={(initialIndex) => onExplore(event, initialIndex)}

@@ -1,16 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ChevronDown } from 'lucide-react';
-import { FestivalEvent } from '../../types';
 import { PARALLAX } from '../../motion/motionConfig';
 import { useParallaxLayer } from '../../motion/pointerParallax';
 import { GoddessCanvas } from './GoddessCanvas';
 import { FallingPetals } from './FallingPetals';
-import { HeroEventCard } from './HeroEventCard';
 import { HeroValues } from './HeroValues';
 
 interface SacredHeroProps {
-  event: FestivalEvent;
-  onViewDetails: (event: FestivalEvent) => void;
   onExplore: () => void;
 }
 
@@ -36,7 +32,7 @@ const OrnamentDivider: React.FC = () => (
  * stacks: heading, goddess, second heading, card, values.
  * Only the artwork layers react to the pointer — text and card stay anchored.
  */
-export const SacredHero: React.FC<SacredHeroProps> = ({ event, onViewDetails, onExplore }) => {
+export const SacredHero: React.FC<SacredHeroProps> = ({ onExplore }) => {
   const sectionRef = useRef<HTMLElement>(null);
   const [inView, setInView] = useState(true);
   const glowRef = useParallaxLayer<HTMLDivElement>(PARALLAX.glow);
@@ -97,9 +93,6 @@ export const SacredHero: React.FC<SacredHeroProps> = ({ event, onViewDetails, on
             </p>
           </div>
 
-          <div className="sacred-hero__card sacred-reveal sacred-reveal--card">
-            <HeroEventCard event={event} onViewDetails={onViewDetails} />
-          </div>
         </div>
       </div>
 

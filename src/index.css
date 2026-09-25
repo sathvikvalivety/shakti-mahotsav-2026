@@ -13,18 +13,18 @@
     --font-sourceserif: 'Source Serif 4', serif;
 
     /* Header height, shared by the header and the Home hero sizing */
-    --site-header-h: 64px;
+    --site-header-h: 72px;
   }
 
   @media (min-width: 768px) {
     :root {
-      --site-header-h: 76px;
+      --site-header-h: 72px;
     }
   }
 
   @media (min-width: 1440px) {
     :root {
-      --site-header-h: 84px;
+      --site-header-h: 72px;
     }
   }
 

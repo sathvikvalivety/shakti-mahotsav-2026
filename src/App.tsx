@@ -4,6 +4,7 @@
  */
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { useNavigate as useRouterNavigate } from 'react-router-dom';
 import { FESTIVAL_CONFIG, FESTIVAL_EVENTS } from './data/festivalData';
 import { FestivalEvent } from './types';
 import { FestivalBackground } from './components/FestivalBackground';
@@ -18,9 +19,11 @@ import { EventDetailsModal } from './components/EventDetailsModal';
 import { RegistrationModal } from './components/RegistrationModal';
 import { InfoModal } from './components/InfoModal';
 import { EventsGrid } from './components/Events';
-import { Sparkles, Play } from 'lucide-react';
+import { Sparkles, Play, Download } from 'lucide-react';
 
 export default function App() {
+  const routerNavigate = useRouterNavigate();
+
   // ====================================================
   // CONFIGURATION SECTION (Default fixed configuration)
   // ====================================================
@@ -63,6 +66,10 @@ export default function App() {
 
   // Navigation handler
   const handleNavigateSection = useCallback((section: string) => {
+    if (section === 'gallery') {
+      routerNavigate('/gallery');
+      return;
+    }
     setActiveSection(section);
     if (section === 'home') {
       setActiveInfoSection(null);
@@ -81,10 +88,10 @@ export default function App() {
         window.scrollTo({ top: 400, behavior: 'smooth' });
       }
     } else {
-      // 'gallery', 'sponsors', 'connect', 'team', 'suggestions'
+      // 'sponsors', 'connect', 'team', 'suggestions'
       setActiveInfoSection(section);
     }
-  }, []);
+  }, [routerNavigate]);
 
   // Sync active navigation state based on scroll
   useEffect(() => {
@@ -241,7 +248,7 @@ export default function App() {
   }, [nextDay, previousDay, isPlaying, pauseTimeline, resumeTimeline]);
 
   return (
-    <div className="relative min-h-screen bg-[#020817] text-[#F8F2E3] overflow-x-hidden">
+    <div className="relative min-h-screen bg-[#020817] text-[#F8F2E3] overflow-x-clip">
       {/* Fixed night-sky background behind every section */}
       <FestivalBackground />
 
@@ -255,8 +262,6 @@ export default function App() {
       <div className="relative z-10 flex flex-col min-h-screen">
         {/* Home hero: goddess stage with the hero heading and active event card */}
         <SacredHero
-          event={FESTIVAL_EVENTS.find((e) => e.day === activeDay) || FESTIVAL_EVENTS[0]}
-          onViewDetails={(evt) => setSelectedEventModal(evt)}
           onExplore={() => handleNavigateSection('about')}
         />
 
@@ -351,6 +356,37 @@ export default function App() {
 
           {/* 10-Day Shakti Mahotsav 2026 Event Cards 2x5 Grid */}
           <EventsGrid />
+
+          {/* Brochure Download */}
+          <div className="mt-20 mb-6 flex flex-col items-center text-center px-4">
+            <div className="flex items-center gap-3 mb-4">
+              <span className="h-px w-16 bg-gradient-to-r from-transparent to-[#D4A84F]/40" />
+              <span className="text-[#D4A84F] text-xs">✦</span>
+              <span className="h-px w-16 bg-gradient-to-l from-transparent to-[#D4A84F]/40" />
+            </div>
+            <p className="font-manrope text-[10px] font-bold uppercase tracking-[0.35em] text-[#D4A84F] mb-2">
+              Festival Guide
+            </p>
+            <h2 className="font-cormorant font-semibold text-[clamp(26px,3.5vw,44px)] leading-tight text-[#F0DDB0] mb-3">
+              Download the Brochure
+            </h2>
+            <p className="font-manrope text-[13px] text-[#F8F2E3]/55 max-w-sm mb-8 leading-relaxed">
+              Complete schedule, event details &amp; venue information — all in one beautifully crafted PDF.
+            </p>
+            <a
+              href="/brochure/shakti-mahotsav-2026.pdf"
+              download
+              className="group inline-flex items-center gap-3 px-8 py-3.5 rounded-full
+                bg-[#D4A84F]/12 border border-[#D4A84F]/45 text-[#F5D58A]
+                hover:bg-[#D4A84F]/22 hover:border-[#D4A84F]/75
+                font-manrope font-semibold text-[12px] uppercase tracking-[0.22em]
+                transition-all duration-300 cursor-pointer shadow-[0_0_24px_rgba(212,168,79,0.08)]
+                hover:shadow-[0_0_32px_rgba(212,168,79,0.18)]"
+            >
+              <Download size={15} className="group-hover:-translate-y-0.5 transition-transform duration-300" />
+              Download Brochure
+            </a>
+          </div>
         </main>
 
         {/* Footer */}

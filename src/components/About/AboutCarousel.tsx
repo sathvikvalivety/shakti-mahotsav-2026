@@ -153,7 +153,7 @@ const StoryCard: React.FC<CardProps> = ({ story, offset, slot, wrapped, reduceMo
               isActive ? 'grid-rows-[1fr] opacity-100 delay-150' : 'grid-rows-[0fr] opacity-0'
             }`}
           >
-            <p className="min-h-0 overflow-hidden pt-2 font-manrope leading-snug text-[#F8F2E3]/88 text-[clamp(11.5px,calc(var(--about-card-w)*0.037),14px)]">
+            <p className="min-h-0 overflow-hidden pt-2 font-manrope leading-snug text-[#F8F2E3]/88 text-[clamp(11.5px,calc(var(--about-card-w)*0.037),14px)] line-clamp-2">
               {story.description}
             </p>
           </div>
@@ -169,13 +169,21 @@ const StoryCard: React.FC<CardProps> = ({ story, offset, slot, wrapped, reduceMo
  */
 export const AboutCarousel: React.FC = () => {
   const [active, setActive] = useState(ABOUT_DEFAULT_STORY);
+  const [paused, setPaused] = useState(false);
   const layout = useLayout();
   const reduceMotion = useReducedMotion() ?? false;
   const previousOffsets = useRef<number[]>(ABOUT_STORIES.map((_, i) => offsetOf(i, ABOUT_DEFAULT_STORY)));
 
-  const goTo = useCallback((index: number) => setActive(((index % COUNT) + COUNT) % COUNT), []);
+  const goTo = useCallback((index: number) => { setPaused(true); setActive(((index % COUNT) + COUNT) % COUNT); setTimeout(() => setPaused(false), 6000); }, []);
   const next = useCallback(() => setActive((a) => (a + 1) % COUNT), []);
-  const prev = useCallback(() => setActive((a) => (a - 1 + COUNT) % COUNT), []);
+  const prev = useCallback(() => { setPaused(true); setActive((a) => (a - 1 + COUNT) % COUNT); setTimeout(() => setPaused(false), 6000); }, []);
+
+  // Auto-advance to the right every 3.5 s; pause on hover or manual interaction.
+  useEffect(() => {
+    if (paused || reduceMotion) return;
+    const id = setInterval(next, 3500);
+    return () => clearInterval(id);
+  }, [paused, reduceMotion, next]);
 
   const offsets = ABOUT_STORIES.map((_, i) => offsetOf(i, active));
   const wrappedFlags = offsets.map((o, i) => Math.abs(o - previousOffsets.current[i]) > 2);
@@ -203,6 +211,10 @@ export const AboutCarousel: React.FC = () => {
         aria-label="What makes Shakti Mahotsav special"
         tabIndex={0}
         onKeyDown={onKeyDown}
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+        onFocus={() => setPaused(true)}
+        onBlur={() => setPaused(false)}
         className="relative mx-auto mt-4 max-w-[1680px] rounded-2xl [--about-card-w:min(80vw,340px)] sm:[--about-card-w:clamp(270px,37vw,340px)] xl:[--about-card-w:clamp(260px,21vw,380px)] focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-8 focus-visible:outline-[#E6C27A]/60"
       >
         <p className="sr-only" aria-live="polite">

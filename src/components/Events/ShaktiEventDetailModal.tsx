@@ -160,65 +160,142 @@ export const ShaktiEventDetailModal: React.FC<ShaktiEventDetailModalProps> = ({
               )}
             </div>
 
-            {/* Photo Lightbox Slider */}
+            {/* Photo Grid */}
             {hasImages && (
-              <div className="space-y-3">
-                <div className="relative w-full aspect-[16/11] sm:aspect-[16/10] md:h-[480px] lg:h-[540px] rounded-xl overflow-hidden bg-black border border-[#C49746]/25 group">
-                  <img
-                    src={images[activeImgIndex]}
-                    alt={`${event.title} - Photo ${activeImgIndex + 1}`}
-                    className="w-full h-full object-cover object-[center_25%] transition-all duration-300"
-                  />
-
-                  {images.length > 1 && (
-                    <>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setActiveImgIndex((prev) => (prev - 1 + images.length) % images.length);
-                        }}
-                        className="absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/60 text-[#FAF6EE] hover:bg-[#C49746] hover:text-[#0A0D14] transition-colors cursor-pointer"
-                        aria-label="Previous image"
-                      >
-                        <ChevronLeft size={20} />
-                      </button>
-
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setActiveImgIndex((prev) => (prev + 1) % images.length);
-                        }}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/60 text-[#FAF6EE] hover:bg-[#C49746] hover:text-[#0A0D14] transition-colors cursor-pointer"
-                        aria-label="Next image"
-                      >
-                        <ChevronRight size={20} />
-                      </button>
-
-                      <div className="absolute bottom-3 right-3 px-2.5 py-0.5 rounded bg-black/75 font-manrope text-[11px] text-[#FAF6EE] tracking-wider">
-                        {activeImgIndex + 1} / {images.length}
-                      </div>
-                    </>
-                  )}
+              <div className="space-y-2">
+                {/* Label */}
+                <div className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rotate-45 bg-[#C49746] shrink-0" />
+                  <p className="font-manrope text-[10px] font-semibold uppercase tracking-[0.25em] text-[#C49746]">
+                    Event Gallery
+                  </p>
+                  <div className="flex-1 h-px bg-gradient-to-r from-[#C49746]/30 to-transparent" />
                 </div>
 
-                {/* Thumbnails Row */}
-                {images.length > 1 && (
-                  <div className="flex items-center gap-2 overflow-x-auto pb-1">
+                {/* 1 image — full width */}
+                {images.length === 1 && (
+                  <div className="w-full h-64 sm:h-80 md:h-96 rounded-xl overflow-hidden border border-[#C49746]/20">
+                    <img src={images[0]} alt={`${event.title} — 1`} className="w-full h-full object-cover object-top" />
+                  </div>
+                )}
+
+                {/* 2 images — side by side */}
+                {images.length === 2 && (
+                  <div className="grid grid-cols-2 gap-2 h-64 sm:h-80">
                     {images.map((img, idx) => (
                       <button
                         key={idx}
                         onClick={() => setActiveImgIndex(idx)}
-                        className={`relative w-20 h-14 sm:w-24 sm:h-16 rounded-lg overflow-hidden border-2 shrink-0 transition-all cursor-pointer ${
-                          activeImgIndex === idx
-                            ? 'border-[#C49746] opacity-100'
-                            : 'border-transparent opacity-50 hover:opacity-90'
-                        }`}
+                        className={`relative rounded-xl overflow-hidden border-2 transition-all cursor-pointer ${activeImgIndex === idx ? 'border-[#C49746]' : 'border-transparent hover:border-[#C49746]/50'}`}
                         aria-label={`View photo ${idx + 1}`}
                       >
-                        <img src={img} alt="" className="w-full h-full object-cover" />
+                        <img src={img} alt={`${event.title} — ${idx + 1}`} className="w-full h-full object-cover object-top" />
                       </button>
                     ))}
                   </div>
+                )}
+
+                {/* 3 images — 1 large left + 2 stacked right */}
+                {images.length === 3 && (
+                  <div className="grid grid-cols-3 gap-2 h-64 sm:h-80 md:h-[360px]">
+                    <button
+                      onClick={() => setActiveImgIndex(0)}
+                      className={`col-span-2 relative rounded-xl overflow-hidden border-2 transition-all cursor-pointer ${activeImgIndex === 0 ? 'border-[#C49746]' : 'border-transparent hover:border-[#C49746]/50'}`}
+                      aria-label="View photo 1"
+                    >
+                      <img src={images[0]} alt={`${event.title} — 1`} className="w-full h-full object-cover object-top" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent pointer-events-none" />
+                    </button>
+                    <div className="flex flex-col gap-2">
+                      {images.slice(1).map((img, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => setActiveImgIndex(idx + 1)}
+                          className={`flex-1 relative rounded-xl overflow-hidden border-2 transition-all cursor-pointer ${activeImgIndex === idx + 1 ? 'border-[#C49746]' : 'border-transparent hover:border-[#C49746]/50'}`}
+                          aria-label={`View photo ${idx + 2}`}
+                        >
+                          <img src={img} alt={`${event.title} — ${idx + 2}`} className="w-full h-full object-cover object-top" />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent pointer-events-none" />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* 4+ images — large featured + scrollable row below */}
+                {images.length >= 4 && (
+                  <div className="space-y-2">
+                    {/* Featured */}
+                    <div className="relative w-full h-56 sm:h-72 md:h-80 rounded-xl overflow-hidden border border-[#C49746]/20">
+                      <AnimatePresence mode="wait">
+                        <motion.img
+                          key={activeImgIndex}
+                          src={images[activeImgIndex]}
+                          alt={`${event.title} — ${activeImgIndex + 1}`}
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                          transition={{ duration: 0.25 }}
+                          className="w-full h-full object-cover object-top"
+                        />
+                      </AnimatePresence>
+                      {/* nav arrows */}
+                      <button
+                        onClick={(e) => { e.stopPropagation(); setActiveImgIndex((p) => (p - 1 + images.length) % images.length); }}
+                        className="absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/60 text-white hover:bg-[#C49746] hover:text-[#0A0D14] transition-colors cursor-pointer"
+                        aria-label="Previous image"
+                      ><ChevronLeft size={18} /></button>
+                      <button
+                        onClick={(e) => { e.stopPropagation(); setActiveImgIndex((p) => (p + 1) % images.length); }}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/60 text-white hover:bg-[#C49746] hover:text-[#0A0D14] transition-colors cursor-pointer"
+                        aria-label="Next image"
+                      ><ChevronRight size={18} /></button>
+                      <div className="absolute bottom-3 right-3 px-2 py-0.5 rounded bg-black/70 font-manrope text-[11px] text-white tracking-wider">
+                        {activeImgIndex + 1} / {images.length}
+                      </div>
+                    </div>
+                    {/* Strip */}
+                    <div className="grid grid-cols-4 gap-2">
+                      {images.map((img, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => setActiveImgIndex(idx)}
+                          className={`relative h-16 sm:h-20 rounded-lg overflow-hidden border-2 transition-all cursor-pointer ${activeImgIndex === idx ? 'border-[#C49746]' : 'border-transparent opacity-55 hover:opacity-90 hover:border-[#C49746]/40'}`}
+                          aria-label={`View photo ${idx + 1}`}
+                        >
+                          <img src={img} alt="" className="w-full h-full object-cover object-top" />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Expanded view of active image (click any grid photo to see it large) */}
+                {images.length > 1 && images.length <= 3 && (
+                  <AnimatePresence>
+                    {activeImgIndex !== null && (
+                      <motion.div
+                        key={activeImgIndex}
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                        className="overflow-hidden rounded-xl"
+                      >
+                        <div className="relative w-full h-56 sm:h-72 rounded-xl overflow-hidden border border-[#C49746]/30">
+                          <img
+                            src={images[activeImgIndex]}
+                            alt={`${event.title} — expanded`}
+                            className="w-full h-full object-cover object-top"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none" />
+                          <div className="absolute bottom-3 left-3 px-2 py-0.5 rounded bg-black/70 font-manrope text-[11px] text-white">
+                            Photo {activeImgIndex + 1} of {images.length}
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 )}
               </div>
             )}

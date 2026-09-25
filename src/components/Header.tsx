@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Menu, X } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 interface HeaderProps {
   onOpenRegister?: () => void;
@@ -15,9 +16,10 @@ const FOCUS_RING =
 const NAV_ITEMS = [
   { id: 'home', label: 'Home' },
   { id: 'about', label: 'About' },
-  { id: 'events', label: 'Events' },
   { id: 'schedule', label: 'Schedule' },
+  { id: 'events', label: 'Events' },
   { id: 'gallery', label: 'Gallery' },
+  { id: 'team', label: 'Team' },
   { id: 'connect', label: 'Contact' },
 ];
 
@@ -38,16 +40,25 @@ export const Header: React.FC<HeaderProps> = ({
   activeSection,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const routerNavigate = useNavigate();
 
   const navigate = (section: string) => {
+    if (section === 'team') {
+      routerNavigate('/team');
+      setMobileMenuOpen(false);
+      return;
+    }
+    if (section === 'gallery') {
+      routerNavigate('/gallery');
+      setMobileMenuOpen(false);
+      return;
+    }
     onNavigateSection(section);
     setMobileMenuOpen(false);
   };
 
   return (
-    // Transparent navbar: the site's fixed night sky (stars, corner mandalas,
-    // ornaments) continues seamlessly behind the bar.
-    <header className="sticky top-0 z-40 w-full bg-transparent">
+    <header className="sticky top-0 z-40 w-full bg-[rgba(3,10,28,0.55)] backdrop-blur-md border-b border-[#D4A84F]/15 shadow-[0_4px_24px_rgba(0,0,0,0.35)]">
 
       <div className="relative mx-auto flex h-[var(--site-header-h)] max-w-[1920px] items-center gap-[clamp(10px,1.4vw,32px)] px-[clamp(14px,2.4vw,52px)]">
         {/* Festival branding */}

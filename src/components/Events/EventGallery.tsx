@@ -3,6 +3,7 @@ import { Sparkles } from 'lucide-react';
 
 interface EventGalleryProps {
   images: string[];
+  imagePositions?: string[];
   title: string;
   day: number;
   onOpenLightbox?: (initialIndex: number) => void;
@@ -11,6 +12,7 @@ interface EventGalleryProps {
 
 export const EventGallery: React.FC<EventGalleryProps> = ({
   images = [],
+  imagePositions = [],
   title,
   day,
   onOpenLightbox,
@@ -121,58 +123,32 @@ export const EventGallery: React.FC<EventGalleryProps> = ({
   if (count === 3) {
     return (
       <div className={`w-full ${className}`}>
-        {/* Desktop & Tablet Layout (sm and up) */}
-        <div className="hidden sm:grid grid-cols-12 gap-2.5 sm:gap-3 w-full aspect-[16/10.5]">
-          {/* Dominant Hero Image (7 cols ~ 58.3%) */}
-          <div
-            className="col-span-7 h-full relative rounded-xl overflow-hidden bg-[#0D1017] border border-[#C49746]/20 group cursor-pointer"
-            onClick={(e) => handleImageClick(0, e)}
-            role="button"
-            tabIndex={0}
-            aria-label={`View primary photo for ${title}`}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                handleImageClick(0, e as unknown as React.MouseEvent);
-              }
-            }}
-          >
-            <img
-              src={images[0]}
-              alt={`${title} - Primary visual`}
-              className="w-full h-full object-cover object-[center_28%] transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-              loading="lazy"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent opacity-40 group-hover:opacity-15 transition-opacity duration-300" />
-          </div>
-
-          {/* 2 Supporting Stacked Images (5 cols ~ 41.7%) */}
-          <div className="col-span-5 grid grid-rows-2 gap-2.5 sm:gap-3 h-full">
-            {images.slice(1, 3).map((img, idx) => (
-              <div
-                key={idx + 1}
-                className="relative h-full rounded-xl overflow-hidden bg-[#0D1017] border border-[#C49746]/20 group cursor-pointer"
-                onClick={(e) => handleImageClick(idx + 1, e)}
-                role="button"
-                tabIndex={0}
-                aria-label={`View photo ${idx + 2} for ${title}`}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    handleImageClick(idx + 1, e as unknown as React.MouseEvent);
-                  }
-                }}
-              >
-                <img
-                  src={img}
-                  alt={`${title} - Photo ${idx + 2}`}
-                  className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.04]"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-30 group-hover:opacity-10 transition-opacity duration-300" />
-              </div>
-            ))}
-          </div>
+        {/* Desktop & Tablet Layout (sm and up) — 3 equal columns */}
+        <div className="hidden sm:grid grid-cols-3 gap-2.5 sm:gap-3 w-full aspect-[16/10.5]">
+          {images.map((img, idx) => (
+            <div
+              key={idx}
+              className="relative h-full rounded-xl overflow-hidden bg-[#0D1017] border border-[#C49746]/20 group cursor-pointer"
+              onClick={(e) => handleImageClick(idx, e)}
+              role="button"
+              tabIndex={0}
+              aria-label={`View photo ${idx + 1} for ${title}`}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  handleImageClick(idx, e as unknown as React.MouseEvent);
+                }
+              }}
+            >
+              <img
+                src={img}
+                alt={`${title} - Photo ${idx + 1}`}
+                className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent opacity-40 group-hover:opacity-15 transition-opacity duration-300" />
+            </div>
+          ))}
         </div>
 
         {/* Mobile Layout (<sm): Hero on top + 2 side-by-side underneath */}
@@ -237,7 +213,7 @@ export const EventGallery: React.FC<EventGalleryProps> = ({
             <img
               src={img}
               alt={`${title} - Photo ${idx + 1}`}
-              className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+              className={`w-full h-full object-cover ${imagePositions[idx] ?? 'object-center'} transition-transform duration-700 ease-out group-hover:scale-[1.04]`}
               loading="lazy"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-30 group-hover:opacity-10 transition-opacity duration-300" />

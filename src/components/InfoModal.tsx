@@ -5,7 +5,6 @@ import {
   Sparkles,
   Send,
   Check,
-  Image as ImageIcon,
   Info,
   Handshake,
   MessageCircle,
@@ -18,6 +17,7 @@ import {
   Flame,
   Globe,
   Share2,
+  Users,
 } from 'lucide-react';
 import { submitToGoogleSheets } from '../utils/formSubmit';
 
@@ -48,7 +48,7 @@ export const InfoModal: React.FC<InfoModalProps> = ({
   // Gallery active filter
   const [galleryFilter, setGalleryFilter] = useState<'all' | 'garba' | 'alankaram' | 'aarti'>('all');
 
-  if (!section || section === 'events' || section === 'home') return null;
+  if (!section || section === 'events' || section === 'home' || section === 'team' || section === 'gallery') return null;
 
   const handleSuggestionSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -231,30 +231,31 @@ export const InfoModal: React.FC<InfoModalProps> = ({
           {/* ============================================================ */}
           {section === 'gallery' && (
             <div className="space-y-5">
-              <div className="flex items-center gap-2 text-xs font-bold text-[#D4A84F] uppercase tracking-[0.25em]">
-                <ImageIcon size={15} />
-                <span>SACRED VISUAL ARCHIVES</span>
-              </div>
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                <div>
-                  <h3 className="font-heading text-2xl font-bold text-[#F8F2E3]">
-                    Festival Moments Through the Lens
-                  </h3>
-                  <p className="text-xs text-[#F8F2E3]/70">
-                    Glimpses of midnight Garba, temple rituals, and sacred celebrations.
-                  </p>
+              {/* Header: minimal title + filter pills */}
+              <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-[3px] h-10 rounded-full bg-gradient-to-b from-[#D4A84F] via-[#F5D58A] to-[#D4A84F]/10 shrink-0" />
+                  <div>
+                    <p className="font-manrope text-[10px] font-bold uppercase tracking-[0.3em] text-[#D4A84F] leading-none mb-1">
+                      Photo Gallery
+                    </p>
+                    <p className="font-cormorant text-2xl font-bold text-[#F8F2E3] leading-tight">
+                      Moments of Shakti
+                    </p>
+                  </div>
                 </div>
 
                 {/* Filter pills */}
-                <div className="flex items-center gap-1.5 p-1 rounded-full bg-[#040D1A] border border-[#D4A84F]/30 text-xs">
+                <div className="flex items-center gap-1.5 flex-wrap">
                   {(['all', 'garba', 'alankaram', 'aarti'] as const).map((filter) => (
                     <button
                       key={filter}
                       onClick={() => setGalleryFilter(filter)}
-                      className={`px-3 py-1 rounded-full capitalize transition-colors cursor-pointer ${galleryFilter === filter
-                          ? 'bg-[#D4A84F] text-[#061426] font-bold'
-                          : 'text-[#F8F2E3]/70 hover:text-[#F8F2E3]'
-                        }`}
+                      className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all duration-200 cursor-pointer ${
+                        galleryFilter === filter
+                          ? 'bg-[#D4A84F] text-[#061426] shadow-[0_0_12px_rgba(212,168,79,0.4)]'
+                          : 'text-[#F8F2E3]/55 hover:text-[#F8F2E3] border border-[#D4A84F]/25 hover:border-[#D4A84F]/55'
+                      }`}
                     >
                       {filter}
                     </button>
@@ -262,34 +263,61 @@ export const InfoModal: React.FC<InfoModalProps> = ({
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 pt-2">
+              {/* Card Grid — portrait editorial layout */}
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-2.5">
                 {filteredGallery.map((item, i) => (
-                  <div
-                    key={i}
-                    className="group relative rounded-xl overflow-hidden border border-[#D4A84F]/30 bg-[#040D1A] h-44 shadow-lg"
+                  <motion.div
+                    key={`${galleryFilter}-${i}`}
+                    initial={{ opacity: 0, scale: 0.97 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.28, delay: i * 0.06 }}
+                    className="group relative rounded-2xl overflow-hidden cursor-pointer aspect-[3/4] bg-[#050E1D]"
                   >
+                    {/* Image */}
                     <img
                       src={item.img}
                       alt={item.title}
                       loading="lazy"
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#040D1A]/95 via-[#040D1A]/30 to-transparent flex flex-col justify-end p-3">
-                      <span className="text-[9px] uppercase font-bold tracking-widest text-[#D4A84F] mb-0.5">
+
+                    {/* Base gradient — keeps bottom legible */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#020B18]/92 via-[#020B18]/15 to-transparent" />
+
+                    {/* Hover warm shimmer */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#7B5A10]/35 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                    {/* Tag badge — top left */}
+                    <div className="absolute top-3 left-3">
+                      <span className="inline-flex px-2 py-0.5 rounded-full text-[8px] sm:text-[9px] font-bold uppercase tracking-widest bg-black/55 backdrop-blur-md border border-[#D4A84F]/25 text-[#F5D58A]">
                         {item.tag}
                       </span>
-                      <span className="text-xs font-bold text-[#F8F2E3] group-hover:text-[#F5D58A] transition-colors">
-                        {item.title}
-                      </span>
                     </div>
-                  </div>
+
+                    {/* Bottom info */}
+                    <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4">
+                      {/* Animated accent bar */}
+                      <div className="h-[1.5px] w-5 rounded-full bg-[#D4A84F] mb-2 group-hover:w-10 transition-all duration-500 ease-out" />
+                      <p className="font-cormorant font-semibold text-[13px] sm:text-[15px] leading-tight text-[#F8EFDD] group-hover:text-[#F5D58A] transition-colors duration-300">
+                        {item.title}
+                      </p>
+                    </div>
+
+                    {/* Gold ring on hover */}
+                    <div className="absolute inset-0 rounded-2xl ring-1 ring-transparent group-hover:ring-[#D4A84F]/40 transition-all duration-500 pointer-events-none" />
+                  </motion.div>
                 ))}
               </div>
 
-              <div className="pt-2 text-center">
-                <p className="text-xs text-[#F8F2E3]/60 italic">
-                  Have photos from previous editions? Tag us on Instagram <span className="text-[#F5D58A]">#ShaktiMahotsav2026</span> to get featured.
+              {/* Instagram callout */}
+              <div className="flex items-center gap-3 pt-0.5">
+                <div className="h-px flex-1 bg-gradient-to-r from-transparent to-[#D4A84F]/20" />
+                <p className="text-[11px] text-center text-[#F8F2E3]/45 shrink-0 px-1">
+                  Have photos? Tag{' '}
+                  <span className="text-[#F5D58A] font-semibold">#ShaktiMahotsav2026</span>
+                  {' '}on Instagram to get featured
                 </p>
+                <div className="h-px flex-1 bg-gradient-to-l from-transparent to-[#D4A84F]/20" />
               </div>
             </div>
           )}
@@ -574,6 +602,114 @@ export const InfoModal: React.FC<InfoModalProps> = ({
             </div>
           )}
 
+
+          {/* ============================================================ */}
+          {/* TEAM SECTION                                                 */}
+          {/* ============================================================ */}
+          {section === 'team' && (
+            <div className="space-y-6">
+              {/* Header */}
+              <div className="flex items-center gap-2 text-xs font-bold text-[#D4A84F] uppercase tracking-[0.25em]">
+                <Users size={15} />
+                <span>THE PEOPLE BEHIND THE CELEBRATION</span>
+              </div>
+
+              <div>
+                <h3 className="font-heading text-2xl sm:text-3xl font-bold text-[#F8F2E3] leading-snug">
+                  Meet the Team
+                </h3>
+                <p className="text-xs sm:text-sm text-[#F8F2E3]/75 mt-1 leading-relaxed">
+                  Shakti Mahotsav 2026 is brought to life by a passionate group of students, faculty, and cultural coordinators — united by devotion and creativity.
+                </p>
+              </div>
+
+              {/* Gold divider */}
+              <div className="flex items-center gap-3" aria-hidden="true">
+                <span className="flex-1 h-px bg-gradient-to-r from-transparent to-[#D4A84F]/40" />
+                <span className="text-[#D4A84F]/60 text-xs">✦</span>
+                <span className="flex-1 h-px bg-gradient-to-l from-transparent to-[#D4A84F]/40" />
+              </div>
+
+              {/* Core Committee */}
+              <div className="space-y-3">
+                <p className="font-manrope text-[10px] font-bold uppercase tracking-[0.28em] text-[#F5D58A]">
+                  Core Committee
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {[
+                    { name: 'Aarav Sharma', role: 'Festival Director', dept: 'Cultural Affairs', initial: 'AS', color: '#D4A84F' },
+                    { name: 'Priya Nair', role: 'Creative Lead', dept: 'Design & Visuals', initial: 'PN', color: '#E6C27A' },
+                    { name: 'Rohan Pillai', role: 'Events Coordinator', dept: 'Programme Management', initial: 'RP', color: '#C9943E' },
+                    { name: 'Ananya Iyer', role: 'Cultural Secretary', dept: 'Rituals & Alankarams', initial: 'AI', color: '#F5D58A' },
+                  ].map((member) => (
+                    <div
+                      key={member.name}
+                      className="flex items-center gap-4 p-4 rounded-xl bg-[#040D1A] border border-[#D4A84F]/25 hover:border-[#D4A84F]/50 transition-all"
+                    >
+                      {/* Avatar */}
+                      <div
+                        className="w-12 h-12 rounded-full flex items-center justify-center font-cormorant font-bold text-lg text-[#061426] shrink-0 shadow-[0_0_16px_rgba(212,168,79,0.3)]"
+                        style={{ background: `radial-gradient(circle at 35% 35%, ${member.color}, #a07030)` }}
+                      >
+                        {member.initial}
+                      </div>
+                      <div className="min-w-0">
+                        <p className="font-cormorant font-semibold text-[16px] text-[#F8EFDD] leading-tight truncate">
+                          {member.name}
+                        </p>
+                        <p className="font-manrope text-[11px] text-[#F5D58A] font-medium">{member.role}</p>
+                        <p className="font-manrope text-[10px] text-[#F8F2E3]/50 mt-0.5">{member.dept}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Faculty Advisors */}
+              <div className="space-y-3">
+                <p className="font-manrope text-[10px] font-bold uppercase tracking-[0.28em] text-[#F5D58A]">
+                  Faculty Advisors
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  {[
+                    { name: 'Dr. Lakshmi Venkat', role: 'Chief Patron', initial: 'LV' },
+                    { name: 'Prof. Suresh Menon', role: 'Academic Advisor', initial: 'SM' },
+                    { name: 'Dr. Meena Krishnan', role: 'Cultural Mentor', initial: 'MK' },
+                  ].map((member) => (
+                    <div
+                      key={member.name}
+                      className="flex flex-col items-center gap-2 p-4 rounded-xl bg-gradient-to-b from-[#0E2548]/60 to-[#040D1A] border border-[#D4A84F]/25 text-center"
+                    >
+                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#D4A84F]/30 to-[#D4A84F]/10 border border-[#D4A84F]/40 flex items-center justify-center font-cormorant font-bold text-sm text-[#F5D58A]">
+                        {member.initial}
+                      </div>
+                      <div>
+                        <p className="font-cormorant font-semibold text-[14px] text-[#F8EFDD] leading-tight">{member.name}</p>
+                        <p className="font-manrope text-[10px] text-[#D4A84F] mt-0.5">{member.role}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Volunteer Callout */}
+              <div className="p-4 rounded-xl bg-gradient-to-r from-[#040D1A] via-[#0E2548] to-[#040D1A] border border-[#D4A84F]/40 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div>
+                  <p className="font-bold text-sm text-[#F5D58A]">Want to join the team?</p>
+                  <p className="text-xs text-[#F8F2E3]/70 mt-0.5">
+                    We're looking for passionate volunteers, performers, and coordinators.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => onNavigateSection && onNavigateSection('connect')}
+                  className="px-5 py-2 rounded-full bg-gradient-to-r from-[#D4A84F] to-[#F5D58A] text-[#061426] font-bold text-xs uppercase tracking-wider shrink-0 cursor-pointer shadow-[0_0_15px_rgba(212,168,79,0.3)] hover:scale-105 transition-all"
+                >
+                  Get Involved →
+                </button>
+              </div>
+            </div>
+          )}
 
           {/* ============================================================ */}
           {/* SUGGESTIONS SECTION                                          */}
