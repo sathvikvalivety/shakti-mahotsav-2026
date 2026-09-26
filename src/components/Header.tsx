@@ -57,7 +57,7 @@ export const Header: React.FC<HeaderProps> = ({ onNavigateSection, activeSection
           <img
             src="/images/brand/shakti-mahotsav-logo.png"
             alt="Shakti Mahotsav"
-            className="h-[clamp(60px,6.5vw,96px)] w-auto object-contain animate-logo-breathe"
+            className="h-[clamp(55px,5.5vw,80px)] w-auto object-contain animate-logo-breathe"
           />
         </button>
 
