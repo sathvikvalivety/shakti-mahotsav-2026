@@ -17,7 +17,6 @@ import {
   Flame,
   Globe,
   Share2,
-  Users,
 } from 'lucide-react';
 import { submitToGoogleSheets } from '../utils/formSubmit';
 
@@ -48,7 +47,7 @@ export const InfoModal: React.FC<InfoModalProps> = ({
   // Gallery active filter
   const [galleryFilter, setGalleryFilter] = useState<'all' | 'garba' | 'alankaram' | 'aarti'>('all');
 
-  if (!section || section === 'events' || section === 'home' || section === 'team' || section === 'gallery') return null;
+  if (!section || section === 'events' || section === 'home' || section === 'gallery') return null;
 
   const handleSuggestionSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -602,114 +601,6 @@ export const InfoModal: React.FC<InfoModalProps> = ({
             </div>
           )}
 
-
-          {/* ============================================================ */}
-          {/* TEAM SECTION                                                 */}
-          {/* ============================================================ */}
-          {section === 'team' && (
-            <div className="space-y-6">
-              {/* Header */}
-              <div className="flex items-center gap-2 text-xs font-bold text-[#D4A84F] uppercase tracking-[0.25em]">
-                <Users size={15} />
-                <span>THE PEOPLE BEHIND THE CELEBRATION</span>
-              </div>
-
-              <div>
-                <h3 className="font-heading text-2xl sm:text-3xl font-bold text-[#F8F2E3] leading-snug">
-                  Meet the Team
-                </h3>
-                <p className="text-xs sm:text-sm text-[#F8F2E3]/75 mt-1 leading-relaxed">
-                  Shakti Mahotsav 2026 is brought to life by a passionate group of students, faculty, and cultural coordinators — united by devotion and creativity.
-                </p>
-              </div>
-
-              {/* Gold divider */}
-              <div className="flex items-center gap-3" aria-hidden="true">
-                <span className="flex-1 h-px bg-gradient-to-r from-transparent to-[#D4A84F]/40" />
-                <span className="text-[#D4A84F]/60 text-xs">✦</span>
-                <span className="flex-1 h-px bg-gradient-to-l from-transparent to-[#D4A84F]/40" />
-              </div>
-
-              {/* Core Committee */}
-              <div className="space-y-3">
-                <p className="font-manrope text-[10px] font-bold uppercase tracking-[0.28em] text-[#F5D58A]">
-                  Core Committee
-                </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {[
-                    { name: 'Aarav Sharma', role: 'Festival Director', dept: 'Cultural Affairs', initial: 'AS', color: '#D4A84F' },
-                    { name: 'Priya Nair', role: 'Creative Lead', dept: 'Design & Visuals', initial: 'PN', color: '#E6C27A' },
-                    { name: 'Rohan Pillai', role: 'Events Coordinator', dept: 'Programme Management', initial: 'RP', color: '#C9943E' },
-                    { name: 'Ananya Iyer', role: 'Cultural Secretary', dept: 'Rituals & Alankarams', initial: 'AI', color: '#F5D58A' },
-                  ].map((member) => (
-                    <div
-                      key={member.name}
-                      className="flex items-center gap-4 p-4 rounded-xl bg-[#040D1A] border border-[#D4A84F]/25 hover:border-[#D4A84F]/50 transition-all"
-                    >
-                      {/* Avatar */}
-                      <div
-                        className="w-12 h-12 rounded-full flex items-center justify-center font-cormorant font-bold text-lg text-[#061426] shrink-0 shadow-[0_0_16px_rgba(212,168,79,0.3)]"
-                        style={{ background: `radial-gradient(circle at 35% 35%, ${member.color}, #a07030)` }}
-                      >
-                        {member.initial}
-                      </div>
-                      <div className="min-w-0">
-                        <p className="font-cormorant font-semibold text-[16px] text-[#F8EFDD] leading-tight truncate">
-                          {member.name}
-                        </p>
-                        <p className="font-manrope text-[11px] text-[#F5D58A] font-medium">{member.role}</p>
-                        <p className="font-manrope text-[10px] text-[#F8F2E3]/50 mt-0.5">{member.dept}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Faculty Advisors */}
-              <div className="space-y-3">
-                <p className="font-manrope text-[10px] font-bold uppercase tracking-[0.28em] text-[#F5D58A]">
-                  Faculty Advisors
-                </p>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  {[
-                    { name: 'Dr. Lakshmi Venkat', role: 'Chief Patron', initial: 'LV' },
-                    { name: 'Prof. Suresh Menon', role: 'Academic Advisor', initial: 'SM' },
-                    { name: 'Dr. Meena Krishnan', role: 'Cultural Mentor', initial: 'MK' },
-                  ].map((member) => (
-                    <div
-                      key={member.name}
-                      className="flex flex-col items-center gap-2 p-4 rounded-xl bg-gradient-to-b from-[#0E2548]/60 to-[#040D1A] border border-[#D4A84F]/25 text-center"
-                    >
-                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#D4A84F]/30 to-[#D4A84F]/10 border border-[#D4A84F]/40 flex items-center justify-center font-cormorant font-bold text-sm text-[#F5D58A]">
-                        {member.initial}
-                      </div>
-                      <div>
-                        <p className="font-cormorant font-semibold text-[14px] text-[#F8EFDD] leading-tight">{member.name}</p>
-                        <p className="font-manrope text-[10px] text-[#D4A84F] mt-0.5">{member.role}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Volunteer Callout */}
-              <div className="p-4 rounded-xl bg-gradient-to-r from-[#040D1A] via-[#0E2548] to-[#040D1A] border border-[#D4A84F]/40 flex flex-col sm:flex-row items-center justify-between gap-4">
-                <div>
-                  <p className="font-bold text-sm text-[#F5D58A]">Want to join the team?</p>
-                  <p className="text-xs text-[#F8F2E3]/70 mt-0.5">
-                    We're looking for passionate volunteers, performers, and coordinators.
-                  </p>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => onNavigateSection && onNavigateSection('connect')}
-                  className="px-5 py-2 rounded-full bg-gradient-to-r from-[#D4A84F] to-[#F5D58A] text-[#061426] font-bold text-xs uppercase tracking-wider shrink-0 cursor-pointer shadow-[0_0_15px_rgba(212,168,79,0.3)] hover:scale-105 transition-all"
-                >
-                  Get Involved →
-                </button>
-              </div>
-            </div>
-          )}
 
           {/* ============================================================ */}
           {/* SUGGESTIONS SECTION                                          */}

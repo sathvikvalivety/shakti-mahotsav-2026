@@ -12,7 +12,6 @@
     --font-cormorant: 'Cormorant Garamond', serif;
     --font-sourceserif: 'Source Serif 4', serif;
 
-    /* Header height, shared by the header and the Home hero sizing */
     --site-header-h: 72px;
   }
 
@@ -56,6 +55,69 @@
 
   .font-sourceserif {
     font-family: var(--font-sourceserif);
+  }
+}
+
+/* ======================================================================= */
+/* NAV PILL — rotating border shimmer + logo breathing                     */
+/* The conic-gradient border references the gold kangan (bracelet) of the  */
+/* goddess — a single bright spark of light rotating slowly around the     */
+/* pill, like flame catching ornate jewelry. 9 s is intentionally slow.   */
+/* ======================================================================= */
+
+@property --shimmer-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes shimmer-rotate {
+  to { --shimmer-angle: 360deg; }
+}
+
+@keyframes logo-breathe {
+  0%, 100% {
+    filter:
+      drop-shadow(0 0 16px rgba(212,168,79,0.55))
+      drop-shadow(0 0  6px rgba(160, 20, 20, 0.38));
+  }
+  50% {
+    filter:
+      drop-shadow(0 0 30px rgba(212,168,79,0.88))
+      drop-shadow(0 0 12px rgba(160, 20, 20, 0.62));
+  }
+}
+
+/* Wrapper that provides the animated border — inner pill sits inside at 1px offset */
+.nav-pill-wrapper {
+  border-radius: 9999px;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--shimmer-angle, 0deg),
+    rgba(212,168,79,0.18)  0%,
+    rgba(212,168,79,0.18) 68%,
+    rgba(245,213,138,0.75) 78%,
+    rgba(255,242,185,1)   83%,
+    rgba(245,213,138,0.75) 88%,
+    rgba(212,168,79,0.18)  100%
+  );
+  animation: shimmer-rotate 9s linear infinite;
+}
+
+.animate-logo-breathe {
+  animation: logo-breathe 3.5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-pill-wrapper {
+    animation: none;
+    background: rgba(212, 168, 79, 0.22);
+  }
+  .animate-logo-breathe {
+    animation: none;
+    filter:
+      drop-shadow(0 0 18px rgba(212,168,79,0.6))
+      drop-shadow(0 0 6px rgba(160,20,20,0.4));
   }
 }
 
