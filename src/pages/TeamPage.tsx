@@ -147,6 +147,10 @@ const SpotlightCard: React.FC<{ isLarge: boolean; index: number; children: React
 export const TeamPage: React.FC = () => {
   const navigate = useNavigate();
 
+  React.useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, []);
+
   return (
     <div className="relative min-h-screen bg-[#020817] text-[#F8F2E3] overflow-x-hidden">
       <FestivalBackground />
@@ -247,7 +251,7 @@ export const TeamPage: React.FC = () => {
 
         {/* Footer note */}
         <div className="text-center mt-16 text-sm sm:text-base font-manrope text-transparent bg-clip-text bg-gradient-to-r from-[#D4A84F] via-[#F5D58A] to-[#D4A84F]">
-          Made with ♥ by Shakti Mahotsav Team
+          Made with ♥ by Shakti Mahotsav Tech Team
         </div>
       </div>
     </div>
