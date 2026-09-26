@@ -176,9 +176,9 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateSection }) => {
 
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-1.5 text-[#F8F2E3]/70">
-              <span>Celebrated with</span>
+              <span>Made with</span>
               <Heart size={13} className="text-rose-400 fill-current animate-pulse" />
-              <span>under Divine Grace</span>
+              <span>by Shakti Mahotsav Team</span>
             </div>
 
             <button
