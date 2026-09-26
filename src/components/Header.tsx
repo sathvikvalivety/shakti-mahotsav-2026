@@ -17,6 +17,7 @@ const NAV_ITEMS = [
   { id: 'schedule', label: 'Schedule' },
   { id: 'events',   label: 'Events' },
   { id: 'gallery',  label: 'Gallery' },
+  { id: 'team',     label: 'Team' },
   { id: 'connect',  label: 'Contact' },
 ];
 
@@ -38,6 +39,7 @@ export const Header: React.FC<HeaderProps> = ({ onNavigateSection, activeSection
 
   const navigate = (section: string) => {
     if (section === 'gallery') { routerNavigate('/gallery'); setOpen(false); return; }
+    if (section === 'team') { routerNavigate('/team'); setOpen(false); return; }
     onNavigateSection(section);
     setOpen(false);
   };

@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import App from './App.tsx';
 import { GalleryPage } from './pages/GalleryPage.tsx';
+import { TeamPage } from './pages/TeamPage.tsx';
 import { ErrorBoundary } from './components/ErrorBoundary.tsx';
 import './index.css';
 
@@ -13,6 +14,7 @@ createRoot(document.getElementById('root')!).render(
         <Routes>
           <Route path="/" element={<App />} />
           <Route path="/gallery" element={<GalleryPage />} />
+          <Route path="/team" element={<TeamPage />} />
         </Routes>
       </BrowserRouter>
     </ErrorBoundary>
