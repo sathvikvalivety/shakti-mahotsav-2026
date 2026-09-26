@@ -7,7 +7,9 @@
       "Bash(npx tsc *)",
       "Bash(New-Item -ItemType Directory -Path \"C:\\\\Varshit's Workspace\\\\shakti-mahotsav-2026\\\\public\\\\brochure\" -Force)",
       "Bash(Copy-Item \"C:\\\\Varshit's Workspace\\\\shakti-mahotsav-2026\\\\shakthi mahotsav sponsership brochure_20260924_060011_0000.pdf\" \"C:\\\\Varshit's Workspace\\\\shakti-mahotsav-2026\\\\public\\\\brochure\\\\shakti-mahotsav-2026.pdf\")",
-      "PowerShell(New-Item *)"
+      "PowerShell(New-Item *)",
+      "Bash(Copy-Item *)",
+      "PowerShell(Copy-Item *)"
     ]
   }
 }
