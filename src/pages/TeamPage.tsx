@@ -82,6 +82,7 @@ const TEAM: TeamDepartment[] = [
       { name: 'Navaneeswar Reddy' },
       { name: 'Abishek' },
       { name: 'Sanjay' },
+      { name: 'K Ajay Kumar' },
     ],
   },
   {
