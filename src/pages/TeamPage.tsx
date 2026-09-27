@@ -26,7 +26,7 @@ const TEAM: TeamDepartment[] = [
     members: [
       { name: 'Praveen Preetham' },
       { name: 'Vivek Reddy' },
-      { name: 'Monish' },
+      { name: 'CH Monish' },
       { name: 'Phani Chandan Reddy' },
       { name: 'Ajay' },
     ],
@@ -52,6 +52,7 @@ const TEAM: TeamDepartment[] = [
     title: 'Sponsors',
     members: [
       { name: 'Bhoomika M' },
+      { name: 'Soorya Narayanan' },
     ],
   },
   {
@@ -66,7 +67,7 @@ const TEAM: TeamDepartment[] = [
   {
     title: 'Decoration',
     members: [
-      { name: 'Ayila Susmitha' },
+      { name: 'Susmitha' },
       { name: 'Bhoomika' },
       { name: 'Manisree' },
       { name: 'Archanaa' },
@@ -74,6 +75,9 @@ const TEAM: TeamDepartment[] = [
       { name: 'Madhumita' },
       { name: 'Hema' },
       { name: 'Chaarvi Sree' },
+      { name: 'Jahnavi' },
+      { name: 'Chandana' },
+      { name: 'Surarchitha' },
     ],
   },
   {
@@ -88,6 +92,7 @@ const TEAM: TeamDepartment[] = [
   {
     title: 'Management',
     members: [
+      { name: 'Naga Sai Chotu' },
       { name: 'Ravi' },
       { name: 'Koushik' },
       { name: 'Jenith Sai' },
@@ -219,6 +224,7 @@ export const TeamPage: React.FC = () => {
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 [grid-auto-flow:dense]">
           {TEAM.filter(d => d.title !== 'Faculty Coordinator').map((dept, i) => {
             const isLarge = dept.members.length >= 6;
+            const isExtraLarge = dept.members.length >= 9;
             return (
               <SpotlightCard
                 key={dept.title}
@@ -235,7 +241,7 @@ export const TeamPage: React.FC = () => {
                 </div>
 
                 {/* Members */}
-                <ul className={`gap-2 ${isLarge ? 'grid grid-cols-2' : 'flex flex-col'}`}>
+                <ul className={`gap-2 ${isExtraLarge ? 'grid grid-cols-3' : isLarge ? 'grid grid-cols-2' : 'flex flex-col'}`}>
                   {dept.members.map((member) => (
                     <li
                       key={member.name}
