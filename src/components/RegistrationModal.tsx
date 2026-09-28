@@ -245,7 +245,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
                   </div>
                   <div className="text-right">
                     <div className="text-[10px] text-[#F8F2E3]/60">Festival Dates</div>
-                    <div className="font-semibold text-[#F8F2E3]">Oct 12–20, 2026</div>
+                    <div className="font-semibold text-[#F8F2E3]">Oct 11–20, 2026</div>
                   </div>
                 </div>
 

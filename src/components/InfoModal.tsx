@@ -475,7 +475,7 @@ export const InfoModal: React.FC<InfoModalProps> = ({
                       <Phone size={15} />
                     </div>
                     <div className="text-[10px] uppercase tracking-wider text-[#D4A84F] font-bold">
-                      HELPLINE &amp; WHATSAPP
+                      HELPLINE & WHATSAPP
                     </div>
                     <div className="text-xs font-semibold text-[#FFF4D6] pt-0.5">
                       <a href="tel:+919182260650" className="hover:text-[#F5D58A] transition-colors">
@@ -503,7 +503,7 @@ export const InfoModal: React.FC<InfoModalProps> = ({
                     </div>
                   </div>
                   <div className="text-[11px] text-[#F8F2E3]/65 pt-1">
-                    Response time &lt; 24 hours
+                    Response time {'<'} 24 hours
                   </div>
                 </div>
               </div>
