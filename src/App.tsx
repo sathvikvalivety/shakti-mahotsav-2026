@@ -19,7 +19,7 @@ import { EventDetailsModal } from './components/EventDetailsModal';
 import { RegistrationModal } from './components/RegistrationModal';
 import { InfoModal } from './components/InfoModal';
 import { EventsGrid } from './components/Events';
-import { Sparkles, Play } from 'lucide-react';
+import { Sparkles, Play, Images, Users } from 'lucide-react';
 
 export default function App() {
   const routerNavigate = useRouterNavigate();
@@ -356,6 +356,101 @@ export default function App() {
 
           {/* 10-Day Shakti Mahotsav 2026 Event Cards 2x5 Grid */}
           <EventsGrid />
+
+          {/* Gallery Preview — mobile & tablet only (hidden on lg+) */}
+          <section className="lg:hidden mt-14 mb-2">
+            {/* Section header */}
+            <div className="text-center mb-6">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#D4A84F]/30 bg-[#0B1F3A]/60 backdrop-blur-md font-manrope font-semibold text-[10px] sm:text-[11px] uppercase tracking-[0.25em] text-[#F5D58A] mb-4">
+                <Images size={12} className="text-[#D4A84F]" />
+                <span>Festival Gallery</span>
+              </div>
+              <h2 className="font-cormorant font-semibold text-[clamp(26px,7vw,38px)] leading-tight text-[#F0DDB0]">
+                Captured Moments
+              </h2>
+              <div className="flex items-center justify-center gap-3 mt-2">
+                <span className="h-px w-12 bg-gradient-to-r from-transparent to-[#D4A84F]/50" />
+                <span className="text-[#D4A84F] text-xs">✦</span>
+                <span className="h-px w-12 bg-gradient-to-l from-transparent to-[#D4A84F]/50" />
+              </div>
+            </div>
+
+            {/* 3-photo grid */}
+            <div className="grid grid-cols-3 gap-2 sm:gap-3">
+              {[
+                { img: 'https://ik.imagekit.io/2ecf22k5j/shakti%20mahotsav/1.png',  alt: 'Midnight Garba Circles' },
+                { img: 'https://ik.imagekit.io/2ecf22k5j/shakti%20mahotsav/4.png',  alt: 'Dandia — A Sacred Rhythm' },
+                { img: 'https://ik.imagekit.io/2ecf22k5j/shakti%20mahotsav/11.png', alt: 'Grand Maha Aarti' },
+              ].map(({ img, alt }) => (
+                <div
+                  key={alt}
+                  onClick={() => handleNavigateSection('gallery')}
+                  className="relative aspect-[3/4] rounded-2xl overflow-hidden bg-[#050E1D] cursor-pointer group"
+                >
+                  <img
+                    src={img}
+                    alt={alt}
+                    loading="lazy"
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#020817]/50 to-transparent" />
+                  <div className="absolute inset-0 rounded-2xl ring-1 ring-transparent group-hover:ring-[#D4A84F]/50 transition-all duration-500 pointer-events-none" />
+                </div>
+              ))}
+            </div>
+
+            {/* View Full Gallery CTA */}
+            <div className="text-center mt-5">
+              <button
+                onClick={() => handleNavigateSection('gallery')}
+                className="inline-flex items-center gap-2.5 px-7 py-3 rounded-full
+                  bg-[#D4A84F]/15 border border-[#D4A84F]/50 text-[#F5D58A]
+                  font-manrope font-semibold text-[12px] uppercase tracking-[0.18em]
+                  hover:bg-[#D4A84F]/28 active:scale-95 transition-all duration-200
+                  shadow-[0_0_18px_rgba(212,168,79,0.12)] cursor-pointer"
+              >
+                <Images size={14} />
+                <span>View Full Gallery</span>
+              </button>
+            </div>
+          </section>
+
+          {/* Meet the Team — mobile & tablet only */}
+          <section className="lg:hidden mt-10 mb-2">
+            <div className="relative rounded-2xl overflow-hidden border border-[#D4A84F]/25 bg-[#0B1F3A]/50 backdrop-blur-md px-6 py-8 text-center">
+              {/* Ambient glow */}
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-20 bg-[#D4A84F]/10 blur-3xl pointer-events-none" />
+
+              <div className="relative z-10 space-y-3">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#D4A84F]/30 bg-[#020817]/60 font-manrope font-semibold text-[10px] uppercase tracking-[0.25em] text-[#F5D58A]">
+                  <Users size={11} className="text-[#D4A84F]" />
+                  <span>The People Behind It</span>
+                </div>
+
+                <h2 className="font-cormorant font-semibold text-[clamp(24px,6.5vw,34px)] leading-tight text-[#F0DDB0]">
+                  Meet Our Team
+                </h2>
+
+                <p className="text-[#F8F2E3]/60 font-manrope text-[12px] leading-relaxed max-w-xs mx-auto">
+                  Faculty coordinators, core members, and every department that makes Shakti Mahotsav happen.
+                </p>
+
+                <div className="pt-2">
+                  <button
+                    onClick={() => routerNavigate('/team')}
+                    className="inline-flex items-center gap-2.5 px-7 py-3 rounded-full
+                      bg-[#D4A84F]/15 border border-[#D4A84F]/50 text-[#F5D58A]
+                      font-manrope font-semibold text-[12px] uppercase tracking-[0.18em]
+                      hover:bg-[#D4A84F]/28 active:scale-95 transition-all duration-200
+                      shadow-[0_0_18px_rgba(212,168,79,0.12)] cursor-pointer"
+                  >
+                    <Users size={14} />
+                    <span>View Full Team</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
 
         </main>
 
