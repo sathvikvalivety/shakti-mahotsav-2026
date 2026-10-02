@@ -36,7 +36,7 @@ Navaratri (Sanskrit: *nine nights*) is one of the most sacred Hindu festivals, d
 
 ## Contact
 
-**Email:** shaktimahotsav.amritachennai@gmail.com
+**Email:** support@shaktimahotsav.in
 **Phone:** +91 91822 60650
 
 ---

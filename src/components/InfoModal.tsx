@@ -497,8 +497,8 @@ export const InfoModal: React.FC<InfoModalProps> = ({
                       OFFICIAL EMAIL
                     </div>
                     <div className="text-[11px] sm:text-xs font-semibold text-[#FFF4D6] break-all leading-snug pt-0.5">
-                      <a href="mailto:shaktimahotsav.amritachennai@gmail.com" className="hover:text-[#F5D58A] transition-colors">
-                        shaktimahotsav.amritachennai@gmail.com
+                      <a href="mailto:support@shaktimahotsav.in" className="hover:text-[#F5D58A] transition-colors">
+                        support@shaktimahotsav.in
                       </a>
                     </div>
                   </div>
